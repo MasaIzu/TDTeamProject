@@ -1,0 +1,94 @@
+{
+    "Resources/ParticleData/EnemyBoost.json": {
+        "StartPos": {
+            "value0": 0.0,
+            "value1": 0.0,
+            "value2": 0.0,
+            "value3": 0.0
+        },
+        "EndPos": {
+            "value0": 0.0,
+            "value1": 50.0,
+            "value2": 0.0,
+            "value3": 0.0
+        },
+        "StartColor": {
+            "value0": 1.0,
+            "value1": 0.0,
+            "value2": 0.0,
+            "value3": 1.0
+        },
+        "EndColor": {
+            "value0": 1.0,
+            "value1": 0.029999999329447748,
+            "value2": 0.029999999329447748,
+            "value3": 1.0
+        },
+        "Angle": {
+            "value0": 0.0,
+            "value1": 0.0,
+            "value2": 0.0,
+            "value3": 0.0
+        },
+        "Shot": true,
+        "EndPointActive": true,
+        "RandomVelocity": true,
+        "RandomLife": true,
+        "RandomSpeed": true,
+        "RandomScale": true,
+        "Speed": 1.0,
+        "LerpStrength": 0.05000000074505806,
+        "Scale": 1.0,
+        "ScaleTinker": 0.03200000151991844,
+        "MaxLife": 60.0,
+        "MaxParticleCount": 20000,
+        "AdditiveSynthesis": true,
+        "RandomLifeMinMax": {
+            "value0": 1.0,
+            "value1": 16.833999633789064
+        },
+        "RandomSpeedMinMax": {
+            "value0": 1.0,
+            "value1": 10.0
+        },
+        "RandomScaleMinMax": {
+            "value0": 1.0,
+            "value1": 10.0
+        },
+        "SpeedDivideSize": 10.387999534606934,
+        "ScaleDivideSize": 1.0,
+        "GravityStrength": 0.0,
+        "Interlocking": true,
+        "InterlockingStrength": 0.38499999046325686,
+        "InterlockingLength": 21.874000549316408,
+        "ScaleDownLifeTime": true,
+        "EmitParticles": false,
+        "ParticleGroup": false,
+        "ParticleGroupCount": 5,
+        "GroupTimer": 35.20199966430664,
+        "MaxGroupTimer": 934.4970092773438,
+        "RandomGroupTimerMinMax": {
+            "value0": 160.81500244140626,
+            "value1": 300.0
+        },
+        "RandomParticleExplosion": false,
+        "ShapeNumber": 2,
+        "Width": 100.0,
+        "Height": 100.0,
+        "Depth": 100.0,
+        "ShapeScale": {
+            "value0": 1.0,
+            "value1": 1.0,
+            "value2": 1.0,
+            "value3": 1.0
+        },
+        "CollisionON": true,
+        "GettingUpDownScale": false,
+        "VelocityAdjustment": {
+            "value0": 1.0,
+            "value1": 1.0,
+            "value2": 1.0
+        },
+        "PostEffectPow": 1.0
+    }
+}

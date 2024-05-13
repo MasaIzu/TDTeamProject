@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32407.343
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DirectX12Engine", "DirectX 12 first.vcxproj", "{316E2B90-B85E-4F00-BAEF-5EE13DBF4160}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		EditorDebug|x64 = EditorDebug|x64
+		EditorRelease|x64 = EditorRelease|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{316E2B90-B85E-4F00-BAEF-5EE13DBF4160}.Debug|x64.ActiveCfg = Debug|x64
+		{316E2B90-B85E-4F00-BAEF-5EE13DBF4160}.Debug|x64.Build.0 = Debug|x64
+		{316E2B90-B85E-4F00-BAEF-5EE13DBF4160}.EditorDebug|x64.ActiveCfg = EditorDebug|x64
+		{316E2B90-B85E-4F00-BAEF-5EE13DBF4160}.EditorDebug|x64.Build.0 = EditorDebug|x64
+		{316E2B90-B85E-4F00-BAEF-5EE13DBF4160}.EditorRelease|x64.ActiveCfg = EditorRelease|x64
+		{316E2B90-B85E-4F00-BAEF-5EE13DBF4160}.EditorRelease|x64.Build.0 = EditorRelease|x64
+		{316E2B90-B85E-4F00-BAEF-5EE13DBF4160}.Release|x64.ActiveCfg = Release|x64
+		{316E2B90-B85E-4F00-BAEF-5EE13DBF4160}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {93DDED2D-CD68-4DB0-9ADA-0FB06D484069}
+	EndGlobalSection
+EndGlobal

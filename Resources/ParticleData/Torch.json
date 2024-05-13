@@ -1,0 +1,94 @@
+{
+    "Resources/ParticleData/Torch.json": {
+        "StartPos": {
+            "value0": 0.0,
+            "value1": 14.913000106811524,
+            "value2": 0.0,
+            "value3": 0.0
+        },
+        "EndPos": {
+            "value0": 1.9279999732971192,
+            "value1": 23.493000030517579,
+            "value2": 0.0,
+            "value3": 0.0
+        },
+        "StartColor": {
+            "value0": 0.09313726425170899,
+            "value1": 0.006391775328665972,
+            "value2": 0.006391775328665972,
+            "value3": 1.0
+        },
+        "EndColor": {
+            "value0": 1.0,
+            "value1": 0.0,
+            "value2": 0.0,
+            "value3": 1.0
+        },
+        "Angle": {
+            "value0": 0.0,
+            "value1": 0.0,
+            "value2": 0.0,
+            "value3": 0.0
+        },
+        "Shot": true,
+        "EndPointActive": true,
+        "RandomVelocity": true,
+        "RandomLife": true,
+        "RandomSpeed": true,
+        "RandomScale": false,
+        "Speed": 1.0,
+        "LerpStrength": 0.04100000113248825,
+        "Scale": 1.4149999618530274,
+        "ScaleTinker": 0.0,
+        "MaxLife": 60.0,
+        "MaxParticleCount": 10000,
+        "AdditiveSynthesis": true,
+        "RandomLifeMinMax": {
+            "value0": 98.87100219726563,
+            "value1": 449.2330017089844
+        },
+        "RandomSpeedMinMax": {
+            "value0": 1.24399995803833,
+            "value1": 3.990000009536743
+        },
+        "RandomScaleMinMax": {
+            "value0": 1.0,
+            "value1": 100.0
+        },
+        "SpeedDivideSize": 100.0,
+        "ScaleDivideSize": 1.0,
+        "GravityStrength": 0.0,
+        "Interlocking": false,
+        "InterlockingStrength": 0.0,
+        "InterlockingLength": 15.0,
+        "ScaleDownLifeTime": true,
+        "EmitParticles": false,
+        "ParticleGroup": false,
+        "ParticleGroupCount": 5,
+        "GroupTimer": 30.0,
+        "MaxGroupTimer": 300.0,
+        "RandomGroupTimerMinMax": {
+            "value0": 1.0,
+            "value1": 30.0
+        },
+        "RandomParticleExplosion": false,
+        "ShapeNumber": 0,
+        "Width": 1.0,
+        "Height": 1.0,
+        "Depth": 1.0,
+        "ShapeScale": {
+            "value0": 1.0,
+            "value1": 1.0,
+            "value2": 1.0,
+            "value3": 1.0
+        },
+        "CollisionON": false,
+        "GettingUpDownScale": false,
+        "VelocityAdjustment": {
+            "value0": 1.0,
+            "value1": 1.0,
+            "value2": 1.0
+        },
+        "PostEffectPow": 1.0
+    }
+}
