@@ -3,7 +3,7 @@
 
 AddShield::AddShield()
 {
-	ShildModel.reset(Model::CreateFromOBJ("Manshon",true));
+	ShildModel.reset(Model::CreateFromOBJ("cube",true));
 }
 
 AddShield::~AddShield()

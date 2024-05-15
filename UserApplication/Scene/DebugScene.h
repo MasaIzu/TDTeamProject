@@ -7,7 +7,6 @@
 #include "Sprite.h"
 #include "ViewProjection.h"
 #include "WorldTransform.h"
-#include "ParticleCS.h"
 #include "BaseScene.h"
 #include "SceneManager.h"
 
@@ -18,6 +17,7 @@
 #include "TouchableObject.h"
 #include "ParticleEditor.h"
 #include <DebugCamera.h>
+#include "AddShield.h"
 
 /// <summary>
 /// デバッグシーン
@@ -61,6 +61,12 @@ private: // メンバ変数
 	WinApp* winApp_ = nullptr;
 	DirectXCore* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
+
+	std::unique_ptr<ViewProjection> viewProjection_;//ビュープロジェクション
+	std::unique_ptr<ViewProjection> LightViewProjection;//ライトビュープロジェクション
+	std::unique_ptr<DebugCamera> debugCamera;
+	std::unique_ptr<ParticleEditor> particleEditor;
+	std::unique_ptr<AddShield> AddShield_;
 
 	int shadeNumber = 3;
 	int range = 0;//ぼかし強度

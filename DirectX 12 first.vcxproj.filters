@@ -577,16 +577,7 @@
     <ClInclude Include="Engine\Base\CreateResource.h">
       <Filter>Engine\HeaderFile\MyFunction</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\3DEffect\ExplosionParticleSmoke.h">
-      <Filter>Engine\HeaderFile\3DEffect</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\3DEffect\MeshParticle.h">
-      <Filter>Engine\HeaderFile\3DEffect</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\3DEffect\ParticleCS.h">
-      <Filter>Engine\HeaderFile\3DEffect</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\3DEffect\ParticleHandHanabi.h">
       <Filter>Engine\HeaderFile\3DEffect</Filter>
     </ClInclude>
     <ClInclude Include="UserApplication\Scene\DebugScene.h">
@@ -594,9 +585,6 @@
     </ClInclude>
     <ClInclude Include="Engine\Base\MyStruct.h">
       <Filter>Engine\HeaderFile\MyFunction</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\3DEffect\ParticleManager.h">
-      <Filter>Engine\HeaderFile\3DEffect</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Base\Defined.h">
       <Filter>Engine\HeaderFile\Base</Filter>
@@ -615,18 +603,6 @@
     </ClInclude>
     <ClInclude Include="Engine\GameFunction\Numbers.h">
       <Filter>Engine\HeaderFile\MyFunction</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\3DEffect\ParticleBoost.h">
-      <Filter>Engine\HeaderFile\3DEffect</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\3DEffect\ParticleHanabiExplosion.h">
-      <Filter>Engine\HeaderFile\3DEffect</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\3DEffect\BulletSmokeParticle.h">
-      <Filter>Engine\HeaderFile\3DEffect</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\3DEffect\EnemyBoostParticle.h">
-      <Filter>Engine\HeaderFile\3DEffect</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Light\CircleShadow.h">
       <Filter>Engine\HeaderFile\Light</Filter>
@@ -652,9 +628,6 @@
     <ClInclude Include="Engine\2D\NumbersSprite.h">
       <Filter>Engine\HeaderFile\GameFunction</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\3DEffect\Explosion.h">
-      <Filter>Engine\HeaderFile\3DEffect</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\3DEffect\ParticleEditor.h">
       <Filter>Engine\HeaderFile\3DEffect</Filter>
     </ClInclude>
@@ -675,6 +648,9 @@
     </ClInclude>
     <ClInclude Include="Engine\3D\AddShield.h">
       <Filter>Engine\HeaderFile\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Camera\DebugCamera.h">
+      <Filter>Engine\HeaderFile\Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -795,23 +771,11 @@
     <ClCompile Include="Engine\Base\CreateResource.cpp">
       <Filter>Engine\SourceFile\MyFunction</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\3DEffect\ExplosionParticleSmoke.cpp">
-      <Filter>Engine\SourceFile\3DEffect</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\3DEffect\MeshParticle.cpp">
-      <Filter>Engine\SourceFile\3DEffect</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\3DEffect\ParticleCS.cpp">
-      <Filter>Engine\SourceFile\3DEffect</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\3DEffect\ParticleHandHanabi.cpp">
       <Filter>Engine\SourceFile\3DEffect</Filter>
     </ClCompile>
     <ClCompile Include="UserApplication\Scene\DebugScene.cpp">
       <Filter>UserFile\UserSourceFile\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\3DEffect\ParticleManager.cpp">
-      <Filter>Engine\SourceFile\3DEffect</Filter>
     </ClCompile>
     <ClCompile Include="Engine\2D\PostEffectManager.cpp">
       <Filter>Engine\SourceFile\2D</Filter>
@@ -831,18 +795,6 @@
     <ClCompile Include="Engine\GameFunction\Numbers.cpp">
       <Filter>Engine\SourceFile\MyFunction</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\3DEffect\ParticleBoost.cpp">
-      <Filter>Engine\SourceFile\3DEffect</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\3DEffect\ParticleHanabiExplosion.cpp">
-      <Filter>Engine\SourceFile\3DEffect</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\3DEffect\BulletSmokeParticle.cpp">
-      <Filter>Engine\SourceFile\3DEffect</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\3DEffect\EnemyBoostParticle.cpp">
-      <Filter>Engine\SourceFile\3DEffect</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Light\LightGroup.cpp">
       <Filter>Engine\SourceFile\Light</Filter>
     </ClCompile>
@@ -854,9 +806,6 @@
     </ClCompile>
     <ClCompile Include="Engine\2D\NumbersSprite.cpp">
       <Filter>Engine\SourceFile\GameFunction</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\3DEffect\Explosion.cpp">
-      <Filter>Engine\SourceFile\3DEffect</Filter>
     </ClCompile>
     <ClCompile Include="Engine\3DEffect\ParticleEditor.cpp">
       <Filter>Engine\SourceFile\3DEffect</Filter>
@@ -875,6 +824,9 @@
     </ClCompile>
     <ClCompile Include="Engine\3D\AddShield.cpp">
       <Filter>Engine\SourceFile\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Camera\DebugCamera.cpp">
+      <Filter>Engine\SourceFile\Camera</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

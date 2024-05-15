@@ -8,6 +8,7 @@ MY_SUPPRESS_WARNINGS_BEGIN
 #include <string>
 #include <unordered_map>
 #include <wrl.h>
+#include <Vector2.h>
 MY_SUPPRESS_WARNINGS_END
 
 /// <summary>
@@ -95,6 +96,8 @@ public:
 
 	static CD3DX12_RESOURCE_BARRIER Trans(ID3D12GraphicsCommandList* commandList,const uint32_t& texNum,D3D12_RESOURCE_STATES stateBefore,D3D12_RESOURCE_STATES stateAfter);
 
+	static Vector2 GetTexSize(const uint32_t& textureHandle);
+
 private:
 	static TextureManager* TextureManager_;
 
@@ -117,6 +120,7 @@ private:
 	// テクスチャコンテナ
 	std::array<Texture, kNumDescriptors> textures_;
 
+
 	/// <summary>
 	/// 読み込み
 	/// </summary>
@@ -137,4 +141,6 @@ private:
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> GetDescriptorHeaps();
 
 	CD3DX12_RESOURCE_BARRIER TransInternal(ID3D12GraphicsCommandList* commandList,const uint32_t& texNum,D3D12_RESOURCE_STATES stateBefore,D3D12_RESOURCE_STATES stateAfter);
+
+	Vector2 TextureSize(const uint32_t& textureHandle);
 };

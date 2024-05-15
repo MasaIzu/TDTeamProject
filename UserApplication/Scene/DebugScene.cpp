@@ -39,10 +39,37 @@ void DebugScene::Initialize() {
 	winApp_ = WinApp::GetInstance();
 	input_ = Input::GetInstance();
 
+	viewProjection_ = std::make_unique<ViewProjection>();
+	viewProjection_->Initialize();
+	viewProjection_->eye = { 0,5,-100 };
+	viewProjection_->UpdateMatrix();
+
+	LightViewProjection = std::make_unique<ViewProjection>();
+	LightViewProjection->Initialize();
+	LightViewProjection->eye = { -200,400,-800 };
+	LightViewProjection->UpdateMatrix();
+
+	debugCamera = std::make_unique<DebugCamera>();
+	debugCamera->Initialize(viewProjection_.get());
+
+	AddShield_ = std::make_unique<AddShield>();
+
+	uint32_t MaxParticleCountB = 1000000;
+	particleEditor = std::make_unique<ParticleEditor>();
+	particleEditor->SetAddShield(AddShield_.get());
+	particleEditor->Initialize(MaxParticleCountB, true);
+	particleEditor->SetTextureHandle(TextureManager::Load("sprite/effect4.png"));
+
 }
 
 void DebugScene::Update() {
+	particleEditor->EditUpdate();
 
+
+	if (!particleEditor->GetIsWindowFocus())
+	{
+		debugCamera->Update();
+	}
 
 	LightData::GetInstance()->Update();
 }
@@ -59,6 +86,10 @@ void DebugScene::PostEffectDraw()
 
 	Model::PreDraw(commandList);
 
+	if (particleEditor->IsStageDraw())
+	{
+		AddShield_->Draw(*viewProjection_.get(), *LightViewProjection.get());
+	}
 
 	Model::PostDraw();
 
@@ -66,6 +97,7 @@ void DebugScene::PostEffectDraw()
 
 	Model::PostDraw();
 
+	particleEditor->Draw(*viewProjection_);
 
 	PostEffect::PostDrawScene();
 }
@@ -75,14 +107,14 @@ void DebugScene::BackgroundDraw()
 	// コマンドリストの取得
 	ID3D12GraphicsCommandList* commandList = dxCommon_->GetCommandList();
 	Model::PreShadowDraw(commandList);//// 3Dオブジェクト描画前処理
-
+	AddShield_->ShadowDraw(*LightViewProjection.get());
 	Model::PostShadowDraw();
 }
 
 void DebugScene::CSUpdate()
 {
 	ID3D12GraphicsCommandList* commandList = dxCommon_->GetCommandList();
-	
+	particleEditor->CSUpdate(commandList);
 }
 
 bool DebugScene::IsBreak()

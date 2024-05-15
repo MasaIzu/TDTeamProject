@@ -1,7 +1,6 @@
 #include "Framework.h"
 #include "MixPostEffect.h"
 #include <PostEffectManager.h>
-#include <ParticleManager.h>
 #include <Sprite3D.h>
 #include <FbxLoader.h>
 #include <FBXObject3d.h>
@@ -18,7 +17,7 @@ void Framework::Initialize()
 
 	// ゲームウィンドウの作成
 	winApp_ = WinApp::GetInstance();
-	winApp_->MakeWindow(L"Shooting Star");
+	winApp_->MakeWindow(L"Game");
 
 	// DirectX初期化処理
 	directXCore_ = DirectXCore::GetInstance();
@@ -70,8 +69,6 @@ void Framework::Initialize()
 
 	fps = std::make_unique<FPS>();
 
-	ParticleManager::Initialize(DirectXCore::GetInstance()->GetDevice());
-
 	//ポストエフェクトの初期化処理
 	PostEffectManager::Initialize(DirectXCore::GetInstance(), winApp_->window_width, winApp_->window_height);
 
@@ -122,8 +119,6 @@ void Framework::Finalize()
 	NumbersSprite::GetInstance()->Destroy();
 
 	PostEffectManager::Finalize();
-
-	ParticleManager::Finalize();
 
 	imGui->Finalize();
 	sceneFactory_.reset();

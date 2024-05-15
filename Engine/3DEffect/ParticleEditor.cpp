@@ -520,6 +520,13 @@ void ParticleEditor::SetTextureHandle(uint32_t textureHandle) {
 	textureHandle_ = textureHandle;
 }
 
+void ParticleEditor::SetAnimationTextureHandle(const uint32_t& textureHandle, const uint32_t& textureDivisionCount)
+{
+	textureHandle_ = textureHandle;
+	TexMaxSize = TextureManager::GetInstance()->GetTexSize(textureHandle);
+	DivisionCount = textureDivisionCount;
+}
+
 Vector4 ParticleEditor::GetFirstColorParticle() {
 	return shaderDetailParameters.StartColor;
 }

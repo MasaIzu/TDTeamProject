@@ -99,6 +99,11 @@ CD3DX12_RESOURCE_BARRIER TextureManager::Trans(ID3D12GraphicsCommandList* comman
 	return TextureManager::GetInstance()->TransInternal(commandList,texNum,stateBefore,stateAfter);
 }
 
+Vector2 TextureManager::GetTexSize(const uint32_t& textureHandle)
+{
+	return TextureManager::GetInstance()->TextureSize(textureHandle);
+}
+
 
 uint32_t TextureManager::LoadInternal(const std::string& fileName) {
 
@@ -252,6 +257,15 @@ CD3DX12_RESOURCE_BARRIER TextureManager::TransInternal(ID3D12GraphicsCommandList
 	//リソースバリアを変更(シェーダリソース→描画可能)
 	commandList->ResourceBarrier(1,&transitionBarrier);
 	return transitionBarrier;
+}
+
+Vector2 TextureManager::TextureSize(const uint32_t& textureHandle)
+{
+	assert(textureHandle < textures_.size());
+	Texture& texture = textures_.at(textureHandle);
+	Vector2 TexSize = Vector2(static_cast<float>(texture.resource->GetDesc().Width), static_cast<float>(texture.resource->GetDesc().Height));
+
+	return TexSize;
 }
 
 uint32_t TextureManager::CreateShaderResourceView(const D3D12_SHADER_RESOURCE_VIEW_DESC& srvDesc,Microsoft::WRL::ComPtr<ID3D12Resource>& texBuff)

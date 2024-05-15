@@ -38,7 +38,7 @@ void DebugCamera::Update() {
 
 	if ( input_->GetMouseWheelMove() != 0 )
 	{
-		cameraDistance_ -= input_->GetMouseWheelMove() / 5.0f;
+		cameraDistance_ -= input_->GetMouseWheelMove() / 20.0f;
 		cameraDistance_ = max(cameraDistance_,1.0f);
 	}
 

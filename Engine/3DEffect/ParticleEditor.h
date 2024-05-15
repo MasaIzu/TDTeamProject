@@ -361,6 +361,13 @@ public: // メンバ関数
 	/// テクスチャのセット
 	/// </summary>
 	void SetTextureHandle(uint32_t textureHandle);
+	 
+	/// <summary>
+	/// アニメーションテクスチャのセット
+	/// </summary>
+	/// <param name="textureHandle">テクスチャのハンドル</param>
+	/// <param name="textureDivisionCount">テクスチャを何個に割るか</param>
+	void SetAnimationTextureHandle(const uint32_t& textureHandle, const uint32_t& textureDivisionCount);
 
 	/// <summary>
 	/// 全体のサイズ
@@ -446,6 +453,7 @@ private: // メンバ変数
 
 	uint32_t particleCount;
 	uint32_t particleEdiCount = 0;
+	uint32_t DivisionCount = 0;
 
 	float AngleX_ = 0.0f;
 	float AngleY_ = 0.0f;
@@ -459,6 +467,8 @@ private: // メンバ変数
 	float StartColor[ 4 ] = { 1,1,1,1 };
 	float EndColor[ 4 ] = { 1,1,1,1 };
 	float Angle[ 4 ] = { 0,0,0,0 };
+
+	Vector2 TexMaxSize;
 
 	std::string FilePath = "Resources/ParticleData/";
 	std::string SelectedFileName;
