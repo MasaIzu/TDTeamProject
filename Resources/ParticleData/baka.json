@@ -1,0 +1,94 @@
+{
+    "Resources/ParticleData/baka.json": {
+        "StartPos": {
+            "value0": 0.0,
+            "value1": 0.0,
+            "value2": 0.0,
+            "value3": 0.0
+        },
+        "EndPos": {
+            "value0": 0.0,
+            "value1": 0.0,
+            "value2": 0.0,
+            "value3": 0.0
+        },
+        "StartColor": {
+            "value0": 1.0,
+            "value1": 1.0,
+            "value2": 1.0,
+            "value3": 1.0
+        },
+        "EndColor": {
+            "value0": 1.0,
+            "value1": 1.0,
+            "value2": 1.0,
+            "value3": 1.0
+        },
+        "Angle": {
+            "value0": 0.0,
+            "value1": 0.0,
+            "value2": 0.0,
+            "value3": 0.0
+        },
+        "Shot": true,
+        "EndPointActive": true,
+        "RandomVelocity": true,
+        "RandomLife": true,
+        "RandomSpeed": false,
+        "RandomScale": true,
+        "Speed": 1.0,
+        "LerpStrength": 1.0,
+        "Scale": 1.0,
+        "ScaleTinker": 0.0,
+        "MaxLife": 96.29100036621094,
+        "MaxParticleCount": 5000,
+        "AdditiveSynthesis": false,
+        "RandomLifeMinMax": {
+            "value0": 384.3219909667969,
+            "value1": 500.0
+        },
+        "RandomSpeedMinMax": {
+            "value0": 1.0,
+            "value1": 10.0
+        },
+        "RandomScaleMinMax": {
+            "value0": 27.100000381469728,
+            "value1": 71.4729995727539
+        },
+        "SpeedDivideSize": 1.0,
+        "ScaleDivideSize": 1.0,
+        "GravityStrength": 0.0,
+        "Interlocking": false,
+        "InterlockingStrength": 0.0,
+        "InterlockingLength": 15.0,
+        "ScaleDownLifeTime": false,
+        "EmitParticles": false,
+        "ParticleGroup": false,
+        "ParticleGroupCount": 5,
+        "GroupTimer": 30.0,
+        "MaxGroupTimer": 300.0,
+        "RandomGroupTimerMinMax": {
+            "value0": 1.0,
+            "value1": 30.0
+        },
+        "RandomParticleExplosion": false,
+        "ShapeNumber": 1,
+        "Width": 100.0,
+        "Height": 100.0,
+        "Depth": 100.0,
+        "ShapeScale": {
+            "value0": 7.7270002365112309,
+            "value1": 6.817999839782715,
+            "value2": 5.908999919891357,
+            "value3": 1.0
+        },
+        "CollisionON": false,
+        "GettingUpDownScale": false,
+        "VelocityAdjustment": {
+            "value0": 1.0,
+            "value1": 1.0,
+            "value2": 1.0
+        },
+        "PostEffectPow": 0.0
+    }
+}
