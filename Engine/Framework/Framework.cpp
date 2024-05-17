@@ -9,6 +9,7 @@
 #include "RadialBlurPostEffect.h"
 #include "DescHeapSRV.h"
 #include "Trail.h"
+#include <ParticleEditor.h>
 
 uint32_t Framework::Time = 0;
 
@@ -68,6 +69,8 @@ void Framework::Initialize()
 	imGui->Initialize(winApp_, directXCore_);
 
 	fps = std::make_unique<FPS>();
+
+	ParticleEditor::StaticInitialize(directXCore_->GetDevice());
 
 	//ポストエフェクトの初期化処理
 	PostEffectManager::Initialize(DirectXCore::GetInstance(), winApp_->window_width, winApp_->window_height);
