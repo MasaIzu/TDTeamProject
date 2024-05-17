@@ -57,6 +57,7 @@ public: // サブクラス
 		uint32_t alive = 0; // このパーティクルが生きているかどうか
 		float MinusAlpha = 0.0f;
 		float DownScale = 0;
+		Vector2 UVPos = { 0,0 };
 	};
 
 	struct GpuParticleElement
@@ -75,6 +76,8 @@ public: // サブクラス
 		float GroupTimer;
 		float MaxGroupTimer;
 		float PostEffectPow;
+		float LeftUVPos;
+		float RightUVPos;
 	};
 
 	struct ShaderViewParameters
@@ -131,6 +134,7 @@ public: // サブクラス
 		Vector3 VelocityAdjustment = { 1,1,1 };
 		uint32_t GettingUpDownScale = 0;
 		float PostEffectPow = 0.0f;
+		uint32_t DivisionCount = 1;
 	};
 	ShaderDetailPointGenerationParameters shaderDetailParameters;
 
@@ -181,6 +185,7 @@ public: // サブクラス
 		bool GettingUpDownScale = false;
 		float VelocityAdjustment[ 3 ] = { 1,1,1 };
 		float PostEffectPow = 0.0f;
+		uint32_t DivisionCount = 1;
 	};
 	SendPointGenerationParameters sendParameters;
 
@@ -453,7 +458,7 @@ private: // メンバ変数
 
 	uint32_t particleCount;
 	uint32_t particleEdiCount = 0;
-	uint32_t DivisionCount = 0;
+	uint32_t DivisionCount = 1;
 
 	float AngleX_ = 0.0f;
 	float AngleY_ = 0.0f;

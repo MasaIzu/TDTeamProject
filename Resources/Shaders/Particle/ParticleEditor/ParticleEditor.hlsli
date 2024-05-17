@@ -52,6 +52,7 @@ cbuffer ShaderDetailParameters : register(b1)
     float3 VelocityAdjustment : packoffset(c16);
     uint GettingUpDownScale : packoffset(c16.w);
     float PostEffectPow : packoffset(c17);
+    uint DivisionCount : packoffset(c17.y);
 };
 
 
@@ -76,6 +77,7 @@ struct VSOutput
     int MaxFrame : MaxFrame; //このパーティクルの寿命
     uint alive : Alive; // このパーティクルが生きているかどうか
     float MinusAlpha : MinusAlpha;
+    float2 UVPosX : UVPos;
 };
 
 //ジオメトリシェーダからピクセルシェーダーへの出力
@@ -104,6 +106,8 @@ struct GpuParticleElement
     float GroupTimer;
     float MaxGroupTimer;
     float PostEffectPow;
+    float LeftUVPos;
+    float RightUVPos;
 };
 
 uint wang_hash(uint seed)

@@ -238,6 +238,27 @@ void main(uint3 id : SV_DispatchThreadID)
         
         gParticles[index].scale = Scale * ScaleRatio;
     }
+    
+    gParticles[index].LeftUVPos = 0;
+    gParticles[index].RightUVPos = 1;
+    
+    if (DivisionCount != 1)
+    {
+        float UVDiv = 1.0f / DivisionCount;
+    
+        float MaxLifeDiv = gParticles[index].MaxLifeTime / DivisionCount;
+    
+        float NowLife = gParticles[index].MaxLifeTime - gParticles[index].lifeTime;
+        float LifeDiv = NowLife / MaxLifeDiv;
+    
+        uint LifeUint = LifeDiv;
+    
+        gParticles[index].LeftUVPos = UVDiv * LifeUint;
+        gParticles[index].RightUVPos = gParticles[index].LeftUVPos + UVDiv;
+    }
+    
+    
+    
 }
 
 

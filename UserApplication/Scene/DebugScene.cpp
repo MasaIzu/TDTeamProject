@@ -58,7 +58,7 @@ void DebugScene::Initialize() {
 	particleEditor = std::make_unique<ParticleEditor>();
 	particleEditor->SetAddShield(AddShield_.get());
 	particleEditor->Initialize(MaxParticleCountB, true);
-	particleEditor->SetTextureHandle(TextureManager::Load("sprite/effect4.png"));
+	particleEditor->SetAnimationTextureHandle(TextureManager::Load("sprite/playerRun.png"),4);
 
 }
 

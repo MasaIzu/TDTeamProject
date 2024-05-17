@@ -29,6 +29,15 @@ void main(
 	
 	float4 offset;
 	GSOutput element;
+	
+    float2 uv_animArray[vnum] =
+    {
+        float2(input[0].UVPosX.x, 1),
+		float2(input[0].UVPosX.x, 0),
+		float2(input[0].UVPosX.y, 1),
+		float2(input[0].UVPosX.y, 0),
+    };
+	
 	for (int i = 0; i < vnum; i++)
 	{
 		//offset = mul(matBillboard, offset_array[i]);
@@ -37,7 +46,7 @@ void main(
 		element.svpos = input[0].position + offset;
 		//element.svpos = input[0].pos + offset_array[i];
 		element.svpos = mul(mat, element.svpos);
-		element.uv = uv_array[i];
+        element.uv = uv_animArray[i];
 		element.color = input[0].color;
         element.PostEffectPowColor = input[0].DownColor;
 		output.Append(element);

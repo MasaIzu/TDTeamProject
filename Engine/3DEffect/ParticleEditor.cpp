@@ -941,6 +941,8 @@ void ParticleEditor::EditUpdate()
 			sendParameters.Shot = false;
 		}
 
+		sendParameters.DivisionCount = DivisionCount;
+
 		SetParameter();
 		MyFunction::WriteToUploadHeapMemory(m_sceneDetailParameterCB.Get(),sizeof(ShaderDetailPointGenerationParameters),&shaderDetailParameters);
 
@@ -1219,6 +1221,7 @@ void ParticleEditor::SetParameter()
 	shaderDetailParameters.GettingUpDownScale = sendParameters.GettingUpDownScale;
 	shaderDetailParameters.VelocityAdjustment = sendParameters.VelocityAdjustment;
 	shaderDetailParameters.PostEffectPow = sendParameters.PostEffectPow;
+	shaderDetailParameters.DivisionCount = sendParameters.DivisionCount;
 
 	shaderDetailParameters.isLoad = sendParameters.isLoad;
 }
@@ -1279,6 +1282,7 @@ void ParticleEditor::LoadFileParameter(const SendPointGenerationParameters& para
 	sendParameters.CollisionON = params.CollisionON;
 	sendParameters.GettingUpDownScale = params.GettingUpDownScale;
 	sendParameters.PostEffectPow = params.PostEffectPow;
+	sendParameters.DivisionCount = params.DivisionCount;
 
 	sendParameters.isLoad = true;
 }
