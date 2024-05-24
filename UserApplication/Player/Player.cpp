@@ -12,10 +12,8 @@ Player::~Player()
 void Player::Initialize(ViewProjection* viewProjection)
 {
 
-
-
 	model_.reset(Model::CreateFromOBJ("cube", true));
-
+	playerFbx_;
 
 	worldTransform_.Initialize();
 	worldTransform_.translation_ = { 50,0,0 };

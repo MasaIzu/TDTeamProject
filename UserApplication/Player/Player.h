@@ -7,6 +7,7 @@
 #include "Input.h"
 #include "Model.h"
 #include "CollisionManager.h"
+#include "FBXObject3d.h"
 
 #include<memory>
 #include<vector>
@@ -28,6 +29,11 @@ public:
 
 	void Move(Input* input);
 
+	//•`‰æ
+	void FbxDraw(const ViewProjection& lightViewProjection_);
+	//•`‰æ
+	void FbxShadowDraw(const ViewProjection& lightViewProjection_);
+
 	//ŒoŒ±’l‚Ì‘‰ÁŠÖ”
 	void AddExperience(int amount);
 
@@ -47,7 +53,7 @@ private:
 	ViewProjection* viewProjection_;
 	std::unique_ptr<Model> model_;// 3Dƒ‚ƒfƒ‹
 	CollisionManager* collisionManager = nullptr;//“–‚½‚è”»’è
-
+	std::unique_ptr<FBXObject3d> playerFbx_;
 
 	Vector3 velocity_;
 	float speed = 0.1f;
