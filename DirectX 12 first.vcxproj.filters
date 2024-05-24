@@ -178,6 +178,18 @@
     <Filter Include="ResourceFile\Shaders\Trail">
       <UniqueIdentifier>{22d538e6-e28c-4e6f-9a57-a02a7f737edb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UserFile\UserHeaderFile\Player">
+      <UniqueIdentifier>{7f27d9fb-7132-463b-94df-b88816331231}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UserFile\UserSourceFile\Player">
+      <UniqueIdentifier>{ad91329d-dc87-4864-8a67-036c1c685f0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UserFile\UserSourceFile\Enemy">
+      <UniqueIdentifier>{a549c45c-ead2-4dbf-b1b0-8238f50f0c6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UserFile\UserHeaderFile\Enemy">
+      <UniqueIdentifier>{2310975f-e104-4344-be97-51a34d4749c1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shaders\Primitive.hlsli">
@@ -652,6 +664,18 @@
     <ClInclude Include="Engine\Camera\DebugCamera.h">
       <Filter>Engine\HeaderFile\Camera</Filter>
     </ClInclude>
+    <ClInclude Include="UserApplication\Scene\TitleScene.h">
+      <Filter>UserFile\UserHeaderFile\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="UserApplication\Scene\SelectScene.h">
+      <Filter>UserFile\UserHeaderFile\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="UserApplication\Player\Player.h">
+      <Filter>UserFile\UserHeaderFile\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="UserApplication\Enemy\Enemy.h">
+      <Filter>UserFile\UserHeaderFile\Enemy</Filter>
+    </ClInclude>
     <ClInclude Include="UserApplication\Tile.h">
       <Filter>UserFile\UserHeaderFile</Filter>
     </ClInclude>
@@ -839,6 +863,18 @@
     </ClCompile>
     <ClCompile Include="UserApplication\RandomMap.cpp">
       <Filter>UserFile\UserSourceFile</Filter>
+    </ClCompile>
+    <ClCompile Include="UserApplication\Scene\TitleScene.cpp">
+      <Filter>UserFile\UserSourceFile\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="UserApplication\Scene\SelectScene.cpp">
+      <Filter>UserFile\UserSourceFile\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="UserApplication\Player\Player.cpp">
+      <Filter>UserFile\UserSourceFile\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="UserApplication\Enemy\Enemy.cpp">
+      <Filter>UserFile\UserSourceFile\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

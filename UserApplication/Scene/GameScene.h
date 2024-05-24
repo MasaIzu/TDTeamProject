@@ -17,6 +17,9 @@
 
 #include "TouchableObject.h"
 
+#include "UserApplication/Player/Player.h";
+#include "UserApplication/Enemy/Enemy.h";
+
 #include"Tile.h"
 #include"RandomMap.h"
 
@@ -81,4 +84,6 @@ private: // メンバ変数
 
 	std::unique_ptr<RandomMap> randomMap = nullptr;
 
+	Player* player_ = nullptr;
+	Enemy* enemy_ = nullptr;
 };

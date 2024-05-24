@@ -13,6 +13,8 @@
 GameScene::GameScene() {}
 GameScene::~GameScene() {
 	collisionManager->AllClearCollider();
+	delete player_;
+	delete enemy_;
 }
 
 void GameScene::Initialize() {
@@ -27,7 +29,7 @@ void GameScene::Initialize() {
 
 	sceneManager_ = SceneManager::GetInstance();
 
-	sprite_ = Sprite::Create(TextureManager::Load("sprite/Blackout.png"));
+	sprite_ = Sprite::Create(TextureManager::Load("sprite/2.png"));
 
 	viewProjection_ = std::make_unique<ViewProjection>();
 	viewProjection_->Initialize();
@@ -46,6 +48,8 @@ void GameScene::Initialize() {
 
 
 	collisionManager = CollisionManager::GetInstance();
+	player_ = new Player();
+	player_->Initialize(viewProjection_.get());
 
 
 	tile.Initialize();
@@ -80,6 +84,12 @@ void GameScene::Initialize() {
 void GameScene::Update() {
 
 	int a = 0;
+	if (input_->TriggerKey(DIK_SPACE))
+	{
+		sceneManager_->ChangeScene("TITLE");
+	}
+	player_->Update(input_);
+	enemy_->Update();
 
 	Vector2 tPos = { 320.0f,180.0f };
 	tile.SetSpritePos(tPos);
@@ -140,6 +150,7 @@ void GameScene::Draw() {
 	//tile.Draw();
 
 	randomMap->Draw();
+	sprite_->Draw({ 100,100 }, { 1,1,1,1 }, 1);
 
 #pragma endregion
 
@@ -147,8 +158,9 @@ void GameScene::Draw() {
 
 	//// 3Dオブジェクト描画前処理
 	Model::PreDraw(commandList);
-
-
+	
+	player_->Draw(*LightViewProjection.get());
+	enemy_->Draw(*LightViewProjection.get());
 	//3Dオブジェクト描画後処理
 	Model::PostDraw();
 

@@ -1,4 +1,6 @@
 #include "SceneFactory.h"
+#include "TitleScene.h"
+#include "SelectScene.h"
 #include "GameScene.h"
 #include "DebugScene.h"
 
@@ -9,7 +11,11 @@ BaseScene* SceneFactory::CreateScene(const std::string& sceneName)
     BaseScene* newScene = nullptr;
 
     if (sceneName == "TITLE") {
-        newScene = new GameScene();
+        newScene = new TitleScene();
+    }
+    else if (sceneName == "SELECT")
+    {
+        newScene = new SelectScene();
     }
     else if (sceneName == "GAMEPLAY") {
         newScene = new GameScene();
