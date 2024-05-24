@@ -50,8 +50,6 @@ void GameScene::Initialize() {
 	player_ = std::make_unique<Player>();
 	player_->Initialize(viewProjection_.get());
 
-	enemy_ = new Enemy();
-	enemy_->Initialize(viewProjection_.get());
 
 	tile.Initialize();
 
