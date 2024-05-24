@@ -17,6 +17,9 @@
 
 #include "TouchableObject.h"
 
+#include"Tile.h"
+#include"RandomMap.h"
+
 /// <summary>
 /// ゲームシーン
 /// </summary>
@@ -73,5 +76,9 @@ private: // メンバ変数
 	bool isFinishGame = false;
 
 	uint32_t textureHandle_ = 0;//テクスチャハンドル
+
+	Tile tile;
+
+	std::unique_ptr<RandomMap> randomMap = nullptr;
 
 };

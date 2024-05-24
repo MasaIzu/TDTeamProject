@@ -47,12 +47,46 @@ void GameScene::Initialize() {
 
 	collisionManager = CollisionManager::GetInstance();
 
+
+	tile.Initialize();
+
+	randomMap = std::make_unique<RandomMap>();
+
+	randomMap->Initialize();
+
+	std::unique_ptr<Tile> redTile = std::make_unique<Tile>();
+	redTile->Initialize();
+	redTile->SetSpriteColor({ 1,0,0,1 });
+
+	std::unique_ptr<Tile> blueTile = std::make_unique<Tile>();
+	blueTile->Initialize();
+	blueTile->SetSpriteColor({ 0,0,1,1 });
+
+	std::unique_ptr<Tile> greenTile = std::make_unique<Tile>();
+	greenTile->Initialize();
+	greenTile->SetSpriteColor({ 0,1,0,1 });
+
+	std::unique_ptr<Tile> yellowTile = std::make_unique<Tile>();
+	yellowTile->Initialize();
+	yellowTile->SetSpriteColor({ 0,1,1,1 });
+
+	randomMap->LoadNewTile(std::move(redTile));
+	randomMap->LoadNewTile(std::move(blueTile));
+	randomMap->LoadNewTile(std::move(greenTile));
+	randomMap->LoadNewTile(std::move(yellowTile));
+
 }
 
 void GameScene::Update() {
 
 	int a = 0;
-	
+
+	Vector2 tPos = { 320.0f,180.0f };
+	tile.SetSpritePos(tPos);
+
+	tile.Update();
+
+	randomMap->Update();
 }
 
 void GameScene::PostEffectDraw()
@@ -103,6 +137,9 @@ void GameScene::Draw() {
 	// 深度バッファクリア
 	dxCommon_->ClearDepthBuffer();
 
+	//tile.Draw();
+
+	randomMap->Draw();
 
 #pragma endregion
 
@@ -110,7 +147,7 @@ void GameScene::Draw() {
 
 	//// 3Dオブジェクト描画前処理
 	Model::PreDraw(commandList);
-	
+
 
 	//3Dオブジェクト描画後処理
 	Model::PostDraw();
@@ -121,7 +158,7 @@ void GameScene::Draw() {
 
 #pragma region 前景スプライト描画
 
-	
+
 
 #pragma endregion
 }
