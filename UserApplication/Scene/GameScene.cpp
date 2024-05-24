@@ -51,6 +51,8 @@ void GameScene::Initialize() {
 	player_ = new Player();
 	player_->Initialize(viewProjection_.get());
 
+	enemy_ = new Enemy();
+	enemy_->Initialize(viewProjection_.get());
 
 	tile.Initialize();
 
