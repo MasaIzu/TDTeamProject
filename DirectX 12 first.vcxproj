@@ -852,6 +852,7 @@
     <ClInclude Include="Engine\2D\ShadowMap.h" />
     <ClInclude Include="Engine\2D\Trail.h" />
     <ClInclude Include="Engine\3D\AddShield.h" />
+    <ClInclude Include="Engine\3D\Animation.h" />
     <ClInclude Include="Engine\Base\DescHeapSRV.h" />
     <ClInclude Include="Engine\3DEffect\ParticleEditor.h" />
     <ClInclude Include="Engine\2D\NumbersSprite.h" />
@@ -932,6 +933,7 @@
     <ClCompile Include="Engine\2D\ShadowMap.cpp" />
     <ClCompile Include="Engine\2D\Trail.cpp" />
     <ClCompile Include="Engine\3D\AddShield.cpp" />
+    <ClCompile Include="Engine\3D\Animation.cpp" />
     <ClCompile Include="Engine\Base\DescHeapSRV.cpp" />
     <ClCompile Include="Engine\3DEffect\ParticleEditor.cpp" />
     <ClCompile Include="Engine\2D\NumbersSprite.cpp" />

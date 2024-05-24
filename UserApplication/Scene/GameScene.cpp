@@ -57,7 +57,6 @@ void GameScene::Initialize() {
 
 void GameScene::Update() {
 
-	int a = 0;
 	if (input_->TriggerKey(DIK_SPACE))
 	{
 		sceneManager_->ChangeScene("TITLE");
@@ -84,7 +83,7 @@ void GameScene::PostEffectDraw()
 
 	Model::PostDraw();
 
-
+	player_->FbxDraw(*LightViewProjection.get());
 
 	PostEffect::PostDrawScene();
 }
