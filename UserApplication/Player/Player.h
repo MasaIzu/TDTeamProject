@@ -11,6 +11,7 @@
 
 #include<memory>
 #include<vector>
+#include <Animation.h>
 
 class Player
 {
@@ -54,7 +55,8 @@ private:
 	std::unique_ptr<Model> model_;// 3Dモデル
 	CollisionManager* collisionManager = nullptr;//当たり判定
 	std::unique_ptr<FBXObject3d> playerFbx_;
-
+	//アニメーションクラス
+	std::unique_ptr<Animation> animation;
 	Vector3 velocity_;
 	float speed = 0.1f;
 

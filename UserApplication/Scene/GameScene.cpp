@@ -13,8 +13,7 @@
 GameScene::GameScene() {}
 GameScene::~GameScene() {
 	collisionManager->AllClearCollider();
-	delete player_;
-	delete enemy_;
+
 }
 
 void GameScene::Initialize() {
@@ -48,7 +47,7 @@ void GameScene::Initialize() {
 
 
 	collisionManager = CollisionManager::GetInstance();
-	player_ = new Player();
+	player_ = std::make_unique<Player>();
 	player_->Initialize(viewProjection_.get());
 
 	enemy_ = new Enemy();
@@ -85,13 +84,11 @@ void GameScene::Initialize() {
 
 void GameScene::Update() {
 
-	int a = 0;
 	if (input_->TriggerKey(DIK_SPACE))
 	{
 		sceneManager_->ChangeScene("TITLE");
 	}
 	player_->Update(input_);
-	enemy_->Update();
 
 	Vector2 tPos = { 320.0f,180.0f };
 	tile.SetSpritePos(tPos);
@@ -119,7 +116,7 @@ void GameScene::PostEffectDraw()
 
 	Model::PostDraw();
 
-
+	player_->FbxDraw(*LightViewProjection.get());
 
 	PostEffect::PostDrawScene();
 }
@@ -162,7 +159,6 @@ void GameScene::Draw() {
 	Model::PreDraw(commandList);
 	
 	player_->Draw(*LightViewProjection.get());
-	enemy_->Draw(*LightViewProjection.get());
 	//3Dオブジェクト描画後処理
 	Model::PostDraw();
 
