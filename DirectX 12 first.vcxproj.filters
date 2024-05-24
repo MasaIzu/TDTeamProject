@@ -178,6 +178,12 @@
     <Filter Include="ResourceFile\Shaders\Trail">
       <UniqueIdentifier>{22d538e6-e28c-4e6f-9a57-a02a7f737edb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\HeaderFile\CSV">
+      <UniqueIdentifier>{30e007a5-0e9b-4e5b-b235-ec8169b9f9b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\SourceFile\CSV">
+      <UniqueIdentifier>{41fe56a2-2eff-4bf0-bfeb-0926f45c6d4b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shaders\Primitive.hlsli">
@@ -652,6 +658,9 @@
     <ClInclude Include="Engine\Camera\DebugCamera.h">
       <Filter>Engine\HeaderFile\Camera</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\CSV\CSVLoader.h">
+      <Filter>Engine\HeaderFile\CSV</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -827,6 +836,9 @@
     </ClCompile>
     <ClCompile Include="Engine\Camera\DebugCamera.cpp">
       <Filter>Engine\SourceFile\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\CSV\CSVLoader.cpp">
+      <Filter>Engine\SourceFile\CSV</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

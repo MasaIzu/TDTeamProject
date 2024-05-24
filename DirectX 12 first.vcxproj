@@ -858,6 +858,7 @@
     <ClInclude Include="Engine\2D\RadialBlurPostEffect.h" />
     <ClInclude Include="Engine\2D\TextureMaterial.h" />
     <ClInclude Include="Engine\Camera\DebugCamera.h" />
+    <ClInclude Include="Engine\CSV\CSVLoader.h" />
     <ClInclude Include="Engine\GameFunction\Controller.h" />
     <ClInclude Include="Engine\Light\CircleShadow.h" />
     <ClInclude Include="Engine\Light\DirectionalLight.h" />
@@ -933,6 +934,7 @@
     <ClCompile Include="Engine\2D\NumbersSprite.cpp" />
     <ClCompile Include="Engine\2D\RadialBlurPostEffect.cpp" />
     <ClCompile Include="Engine\Camera\DebugCamera.cpp" />
+    <ClCompile Include="Engine\CSV\CSVLoader.cpp" />
     <ClCompile Include="Engine\GameFunction\Controller.cpp" />
     <ClCompile Include="Engine\Light\LightGroup.cpp" />
     <ClCompile Include="Engine\Light\LightData.cpp" />
