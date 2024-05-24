@@ -17,6 +17,9 @@
 
 #include "TouchableObject.h"
 
+#include "UserApplication/Player/Player.h";
+#include "UserApplication/Enemy/Enemy.h";
+
 /// <summary>
 /// ゲームシーン
 /// </summary>
@@ -74,4 +77,6 @@ private: // メンバ変数
 
 	uint32_t textureHandle_ = 0;//テクスチャハンドル
 
+	Player* player_ = nullptr;
+	Enemy* enemy_ = nullptr;
 };

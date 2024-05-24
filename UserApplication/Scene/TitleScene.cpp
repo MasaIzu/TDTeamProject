@@ -1,4 +1,4 @@
-#include "GameScene.h"
+#include "TitleScene.h"
 #include "TextureManager.h"
 #include <cassert>
 #include <random>
@@ -10,26 +10,25 @@
 #include"WinApp.h"
 
 
-GameScene::GameScene() {}
-GameScene::~GameScene() {
+TitleScene::TitleScene() {}
+
+TitleScene::~TitleScene() {
 	collisionManager->AllClearCollider();
-	delete player_;
-	delete enemy_;
 }
 
-void GameScene::Initialize() {
+void TitleScene::Initialize() {
 
 	dxCommon_ = DirectXCore::GetInstance();
 	winApp_ = WinApp::GetInstance();
 	input_ = Input::GetInstance();
 
-	//å½“ãŸã‚Šåˆ¤å®š
+	//“–‚½‚è”»’è
 	collisionManager = CollisionManager::GetInstance();
 
 
 	sceneManager_ = SceneManager::GetInstance();
 
-	sprite_ = Sprite::Create(TextureManager::Load("sprite/2.png"));
+	sprite_ = Sprite::Create(TextureManager::Load("sprite/0.png"));
 
 	viewProjection_ = std::make_unique<ViewProjection>();
 	viewProjection_->Initialize();
@@ -48,25 +47,19 @@ void GameScene::Initialize() {
 
 
 	collisionManager = CollisionManager::GetInstance();
-	player_ = new Player();
-	player_->Initialize(viewProjection_.get());
 
-	enemy_ = new Enemy();
-	enemy_->Initialize(viewProjection_.get());
 }
 
-void GameScene::Update() {
+void TitleScene::Update() {
 
 	int a = 0;
 	if (input_->TriggerKey(DIK_SPACE))
 	{
-		sceneManager_->ChangeScene("TITLE");
+		sceneManager_->ChangeScene("SELECT");
 	}
-	player_->Update(input_);
-	enemy_->Update();
 }
 
-void GameScene::PostEffectDraw()
+void TitleScene::PostEffectDraw()
 {
 	ID3D12GraphicsCommandList* commandList = dxCommon_->GetCommandList();
 
@@ -89,61 +82,60 @@ void GameScene::PostEffectDraw()
 	PostEffect::PostDrawScene();
 }
 
-void GameScene::BackgroundDraw()
+void TitleScene::BackgroundDraw()
 {
 }
 
-void GameScene::CSUpdate()
+void TitleScene::CSUpdate()
 {
 
 
 }
 
-bool GameScene::IsBreak()
+bool TitleScene::IsBreak()
 {
 	return isFinishGame;
 }
 
-void GameScene::Draw() {
+void TitleScene::Draw() {
 
-	// ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆã®å–å¾—
+	// ƒRƒ}ƒ“ƒhƒŠƒXƒg‚Ìæ“¾
 	ID3D12GraphicsCommandList* commandList = dxCommon_->GetCommandList();
 
-#pragma region èƒŒæ™¯ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæç”»
+#pragma region /*”wŒiƒXƒvƒ‰ƒCƒg•`‰æ*/
 
-	// æ·±åº¦ãƒãƒƒãƒ•ã‚¡ã‚¯ãƒªã‚¢
+	// [“xƒoƒbƒtƒ@ƒNƒŠƒA
 	dxCommon_->ClearDepthBuffer();
-	sprite_->Draw({ 100,100 }, { 1,1,1,1 }, 1);
 
+	sprite_->Draw({ 100,100 }, { 1,1,1,1 }, 1);
 #pragma endregion
 
-#pragma region 3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆæç”»
+#pragma region/* 3DƒIƒuƒWƒFƒNƒg•`‰æ*/
 
-	//// 3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆæç”»å‰å‡¦ç†
+	//// 3DƒIƒuƒWƒFƒNƒg•`‰æ‘Oˆ—
 	Model::PreDraw(commandList);
-	
-	player_->Draw(*LightViewProjection.get());
-	enemy_->Draw(*LightViewProjection.get());
-	//3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆæç”»å¾Œå‡¦ç†
+
+
+	//3DƒIƒuƒWƒFƒNƒg•`‰æŒãˆ—
 	Model::PostDraw();
 
 
 
 #pragma endregion
 
-#pragma region å‰æ™¯ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæç”»
+#pragma region /*‘OŒiƒXƒvƒ‰ƒCƒg•`‰æ*/
 
-	
+
 
 #pragma endregion
 }
 
-void GameScene::Finalize()
+void TitleScene::Finalize()
 {
 }
 
 
-bool GameScene::IsSlow()
+bool TitleScene::IsSlow()
 {
 	return false;
 }
