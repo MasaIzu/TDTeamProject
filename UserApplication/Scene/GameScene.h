@@ -21,6 +21,9 @@
 #include "UserApplication/Enemy/Enemy.h";
 #include "UserApplication/GameCam/GameCamera.h";
 
+#include"Tile.h"
+#include"RandomMap.h"
+
 /// <summary>
 /// ゲームシーン
 /// </summary>
@@ -78,8 +81,12 @@ private: // メンバ変数
 
 	uint32_t textureHandle_ = 0;//テクスチャハンドル
 
-	Player* player_ = nullptr;
-	Enemy* enemy_ = nullptr;
+	Tile tile;
+
+	std::unique_ptr<RandomMap> randomMap = nullptr;
+
+	std::unique_ptr<Player> player_;
+	std::unique_ptr<Enemy> enemy_;
+
 	std::unique_ptr<GameCamera> gameCamera;
-	std::unique_ptr<DebugCamera> debugCamera;
 };

@@ -20,6 +20,9 @@ void Player::Initialize(ViewProjection* viewProjection)
 	worldTransform_.scale_ = { 10.0f,3.0f,4.0f };
 	worldTransform_.TransferMatrix();
 
+	animation = std::make_unique<Animation>();
+	animation->Initialize("katate");
+
 	viewProjection_ = viewProjection;
 
 	experienceToNextLevel = baseExperience;
@@ -33,7 +36,7 @@ void Player::Update(Input* input)
 
 void Player::Draw(const ViewProjection& LightViewProjection_)
 {
-	model_->Draw(worldTransform_, *viewProjection_, LightViewProjection_);
+	//model_->Draw(worldTransform_, *viewProjection_, LightViewProjection_);
 }
 
 void Player::Move(Input* input)
@@ -70,6 +73,16 @@ void Player::Move(Input* input)
 	ImGui::InputInt("Nextexpeience", &experienceToNextLevel);
 	ImGui::InputInt("level", &level);
 	ImGui::End();
+}
+
+void Player::FbxDraw(const ViewProjection& lightViewProjection_)
+{
+	animation->FbxDraw(worldTransform_, *viewProjection_, lightViewProjection_);
+}
+
+void Player::FbxShadowDraw(const ViewProjection& lightViewProjection_)
+{
+	animation->FbxShadowDraw(worldTransform_, lightViewProjection_);
 }
 
 void Player::AddExperience(int amount)

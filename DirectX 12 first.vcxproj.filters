@@ -676,6 +676,12 @@
     <ClInclude Include="UserApplication\Enemy\Enemy.h">
       <Filter>UserFile\UserHeaderFile\Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="UserApplication\Tile.h">
+      <Filter>UserFile\UserHeaderFile</Filter>
+    </ClInclude>
+    <ClInclude Include="UserApplication\RandomMap.h">
+      <Filter>UserFile\UserHeaderFile</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -851,6 +857,12 @@
     </ClCompile>
     <ClCompile Include="Engine\Camera\DebugCamera.cpp">
       <Filter>Engine\SourceFile\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="UserApplication\Tile.cpp">
+      <Filter>UserFile\UserSourceFile</Filter>
+    </ClCompile>
+    <ClCompile Include="UserApplication\RandomMap.cpp">
+      <Filter>UserFile\UserSourceFile</Filter>
     </ClCompile>
     <ClCompile Include="UserApplication\Scene\TitleScene.cpp">
       <Filter>UserFile\UserSourceFile\Scene</Filter>

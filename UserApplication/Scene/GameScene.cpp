@@ -13,8 +13,7 @@
 GameScene::GameScene() {}
 GameScene::~GameScene() {
 	collisionManager->AllClearCollider();
-	delete player_;
-	delete enemy_;
+
 }
 
 void GameScene::Initialize() {
@@ -48,21 +47,45 @@ void GameScene::Initialize() {
 
 
 	collisionManager = CollisionManager::GetInstance();
-	player_ = new Player();
+	player_ = std::make_unique<Player>();
 	player_->Initialize(viewProjection_.get());
 
-	enemy_ = new Enemy();
-	enemy_->Initialize(viewProjection_.get());
-
 	gameCamera = std::make_unique<GameCamera>();
-	gameCamera->Initialize(viewProjection_.get(),50.0f,{0,0,0});
+	gameCamera->Initialize(viewProjection_.get(), 0.0f, { 0,0,0 });
 	gameCamera->SetCameraTargetAndPos({ 0,0,0 }, { 0,200,-1 });
 	gameCamera->SetFreeCamera(true);
+
+	tile.Initialize();
+
+	randomMap = std::make_unique<RandomMap>();
+
+	randomMap->Initialize();
+
+	std::unique_ptr<Tile> redTile = std::make_unique<Tile>();
+	redTile->Initialize();
+	redTile->SetSpriteColor({ 1,0,0,1 });
+
+	std::unique_ptr<Tile> blueTile = std::make_unique<Tile>();
+	blueTile->Initialize();
+	blueTile->SetSpriteColor({ 0,0,1,1 });
+
+	std::unique_ptr<Tile> greenTile = std::make_unique<Tile>();
+	greenTile->Initialize();
+	greenTile->SetSpriteColor({ 0,1,0,1 });
+
+	std::unique_ptr<Tile> yellowTile = std::make_unique<Tile>();
+	yellowTile->Initialize();
+	yellowTile->SetSpriteColor({ 0,1,1,1 });
+
+	randomMap->LoadNewTile(std::move(redTile));
+	randomMap->LoadNewTile(std::move(blueTile));
+	randomMap->LoadNewTile(std::move(greenTile));
+	randomMap->LoadNewTile(std::move(yellowTile));
+
 }
 
 void GameScene::Update() {
 
-	int a = 0;
 	if (input_->TriggerKey(DIK_SPACE))
 	{
 		sceneManager_->ChangeScene("TITLE");
@@ -70,7 +93,13 @@ void GameScene::Update() {
 
 	gameCamera->Update();
 	player_->Update(input_);
-	enemy_->Update();
+
+	Vector2 tPos = { 320.0f,180.0f };
+	tile.SetSpritePos(tPos);
+
+	tile.Update();
+
+	randomMap->Update();
 }
 
 void GameScene::PostEffectDraw()
@@ -91,7 +120,7 @@ void GameScene::PostEffectDraw()
 
 	Model::PostDraw();
 
-
+	player_->FbxDraw(*LightViewProjection.get());
 
 	PostEffect::PostDrawScene();
 }
@@ -120,6 +149,10 @@ void GameScene::Draw() {
 
 	// 深度バッファクリア
 	dxCommon_->ClearDepthBuffer();
+
+	//tile.Draw();
+
+	randomMap->Draw();
 	sprite_->Draw({ 100,100 }, { 1,1,1,1 }, 1);
 
 #pragma endregion
@@ -130,7 +163,6 @@ void GameScene::Draw() {
 	Model::PreDraw(commandList);
 	
 	player_->Draw(*LightViewProjection.get());
-	enemy_->Draw(*LightViewProjection.get());
 	//3Dオブジェクト描画後処理
 	Model::PostDraw();
 
@@ -140,7 +172,7 @@ void GameScene::Draw() {
 
 #pragma region 前景スプライト描画
 
-	
+
 
 #pragma endregion
 }
