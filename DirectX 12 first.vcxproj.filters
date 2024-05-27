@@ -190,6 +190,24 @@
     <Filter Include="UserFile\UserHeaderFile\Enemy">
       <UniqueIdentifier>{2310975f-e104-4344-be97-51a34d4749c1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UserFile\UserSourceFile\Weapon">
+      <UniqueIdentifier>{52d6aae6-c595-4777-9a56-43c6222f986e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UserFile\UserSourceFile\Weapon\EnemyWeapon">
+      <UniqueIdentifier>{dee3a11b-7ef7-46f4-ad2e-7b1fdcb4ee4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UserFile\UserSourceFile\Weapon\PlayerWeapon">
+      <UniqueIdentifier>{ebc95156-89d0-4644-8e8c-16c844bb2da0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UserFile\UserHeaderFile\Weapon">
+      <UniqueIdentifier>{c852ee2e-ca93-4210-97c7-3969af9c5d29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UserFile\UserHeaderFile\Weapon\EnemyWeapon">
+      <UniqueIdentifier>{9c128aab-e0bd-4140-918f-2c848f3b1c60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UserFile\UserHeaderFile\Weapon\PlayerWeapon">
+      <UniqueIdentifier>{7228e2d3-e3f6-408b-819f-bec111b6b122}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shaders\Primitive.hlsli">
@@ -676,6 +694,15 @@
     <ClInclude Include="UserApplication\Enemy\Enemy.h">
       <Filter>UserFile\UserHeaderFile\Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="UserApplication\Player\PlayerAnimation.h">
+      <Filter>UserFile\UserHeaderFile\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="UserApplication\Weapon\Weapon.h">
+      <Filter>UserFile\UserHeaderFile\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="UserApplication\Weapon\PlayerWeapon\PlayerSword.h">
+      <Filter>UserFile\UserHeaderFile\Weapon\PlayerWeapon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -863,6 +890,15 @@
     </ClCompile>
     <ClCompile Include="UserApplication\Enemy\Enemy.cpp">
       <Filter>UserFile\UserSourceFile\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="UserApplication\Player\PlayerAnimation.cpp">
+      <Filter>UserFile\UserSourceFile\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="UserApplication\Weapon\PlayerWeapon\PlayerSword.cpp">
+      <Filter>UserFile\UserSourceFile\Weapon\PlayerWeapon</Filter>
+    </ClCompile>
+    <ClCompile Include="UserApplication\Weapon\Weapon.cpp">
+      <Filter>UserFile\UserSourceFile\Weapon</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

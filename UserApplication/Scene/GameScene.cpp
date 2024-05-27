@@ -52,7 +52,7 @@ void GameScene::Initialize() {
 	player_->Initialize(viewProjection_.get());
 
 	enemy_ = new Enemy();
-	enemy_->Initialize(viewProjection_.get());
+	enemy_->Initialize(viewProjection_.get(),player_);
 }
 
 void GameScene::Update() {
@@ -123,7 +123,7 @@ void GameScene::Draw() {
 	Model::PreDraw(commandList);
 	
 	player_->Draw(*LightViewProjection.get());
-	enemy_->Draw(*LightViewProjection.get());
+	//enemy_->Draw(*LightViewProjection.get());
 	//3Dオブジェクト描画後処理
 	Model::PostDraw();
 

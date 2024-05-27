@@ -873,6 +873,7 @@
     <ClInclude Include="Engine\Base\Defined.h" />
     <ClInclude Include="UserApplication\Enemy\Enemy.h" />
     <ClInclude Include="UserApplication\Player\Player.h" />
+    <ClInclude Include="UserApplication\Player\PlayerAnimation.h" />
     <ClInclude Include="UserApplication\Scene\DebugScene.h" />
     <ClInclude Include="Engine\3DEffect\MeshParticle.h" />
     <ClInclude Include="Engine\Base\CreateResource.h" />
@@ -927,6 +928,8 @@
     <ClInclude Include="Engine\Sound\AudioManager.h" />
     <ClInclude Include="UserApplication\Scene\SelectScene.h" />
     <ClInclude Include="UserApplication\Scene\TitleScene.h" />
+    <ClInclude Include="UserApplication\Weapon\PlayerWeapon\PlayerSword.h" />
+    <ClInclude Include="UserApplication\Weapon\Weapon.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\2D\ShadowMap.cpp" />
@@ -947,6 +950,7 @@
     <ClCompile Include="Engine\3D\Sprite3D.cpp" />
     <ClCompile Include="UserApplication\Enemy\Enemy.cpp" />
     <ClCompile Include="UserApplication\Player\Player.cpp" />
+    <ClCompile Include="UserApplication\Player\PlayerAnimation.cpp" />
     <ClCompile Include="UserApplication\Scene\DebugScene.cpp" />
     <ClCompile Include="Engine\2D\PostEffectManager.cpp" />
     <ClCompile Include="Engine\3DEffect\MeshParticle.cpp" />
@@ -991,6 +995,8 @@
     <ClCompile Include="Engine\Sound\AudioManager.cpp" />
     <ClCompile Include="UserApplication\Scene\SelectScene.cpp" />
     <ClCompile Include="UserApplication\Scene\TitleScene.cpp" />
+    <ClCompile Include="UserApplication\Weapon\PlayerWeapon\PlayerSword.cpp" />
+    <ClCompile Include="UserApplication\Weapon\Weapon.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

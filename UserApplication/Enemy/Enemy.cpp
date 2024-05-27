@@ -8,7 +8,7 @@ Enemy::~Enemy()
 {
 }
 
-void Enemy::Initialize(ViewProjection* viewProjection)
+void Enemy::Initialize(ViewProjection* viewProjection , Player* player)
 {
 
 	model_.reset(Model::CreateFromOBJ("cube", true));
@@ -20,6 +20,8 @@ void Enemy::Initialize(ViewProjection* viewProjection)
 	worldTransform_.TransferMatrix();
 
 	viewProjection_ = viewProjection;
+
+	player_ = player;
 }
 
 void Enemy::Update()
@@ -35,5 +37,6 @@ void Enemy::Draw(const ViewProjection& LightViewProjection_)
 
 void Enemy::Move()
 {
+
 }
 

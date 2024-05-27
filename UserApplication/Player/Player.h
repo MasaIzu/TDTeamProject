@@ -12,6 +12,8 @@
 #include<memory>
 #include<vector>
 
+#include "UserApplication/Weapon/PlayerWeapon/PlayerSword.h"
+
 class Player
 {
 public:
@@ -56,12 +58,14 @@ private:
 	std::unique_ptr<FBXObject3d> playerFbx_;
 
 	Vector3 velocity_;
-	float speed = 0.1f;
+	float speed = 0.5f;
 
 	int level = 1;//レベル
 	int experience = 0;//経験値
 	int experienceToNextLevel;//次のレベルに必要な経験値
 	const int baseExperience = 50;
 	const double ratio = 1.2;
+
+	PlayerSword* playerSword = nullptr;
 };
 

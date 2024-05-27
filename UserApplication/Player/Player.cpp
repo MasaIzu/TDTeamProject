@@ -16,9 +16,18 @@ void Player::Initialize(ViewProjection* viewProjection)
 	playerFbx_;
 
 	worldTransform_.Initialize();
-	worldTransform_.translation_ = { 50,0,0 };
+	worldTransform_.translation_ = { 50,0,50 };
 	worldTransform_.scale_ = { 10.0f,3.0f,4.0f };
 	worldTransform_.TransferMatrix();
+
+	playerSword = new PlayerSword();
+	playerSword->Initialize();
+
+	playerSword->SetParent(&worldTransform_);
+
+	/*playerSword->GetWorldTransform().parent_ = worldTransform_;*/
+
+	//worldTransform_.parent_ = playerSword->GetParent();
 
 	viewProjection_ = viewProjection;
 
@@ -29,11 +38,13 @@ void Player::Update(Input* input)
 {
 	Move(input);
 	worldTransform_.TransferMatrix();
+	playerSword->Update();
 }
 
 void Player::Draw(const ViewProjection& LightViewProjection_)
 {
 	model_->Draw(worldTransform_, *viewProjection_, LightViewProjection_);
+	playerSword->Draw(*viewProjection_, LightViewProjection_);
 }
 
 void Player::Move(Input* input)

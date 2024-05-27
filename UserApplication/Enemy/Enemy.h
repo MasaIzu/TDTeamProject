@@ -13,6 +13,8 @@
 #include<memory>
 #include<vector>
 
+class Player;
+
 class Enemy
 {
 public:
@@ -22,7 +24,7 @@ public:
 	~Enemy();
 
 	//初期化
-	void Initialize(ViewProjection* viewProjection_);
+	void Initialize(ViewProjection* viewProjection_,Player * player);
 	//更新
 	void Update();
 	//描画
@@ -33,12 +35,18 @@ public:
 	//経験値のセッター
 	void SetExp(int experience) { experience_ = experience; }
 
+	//プレイヤーのsetter
+	void SetPlayer(Player* player) { player_ = player; }
+
+
 private:
 
 	WorldTransform worldTransform_;
 	ViewProjection* viewProjection_;
 	std::unique_ptr<Model> model_;// 3Dモデル
 	CollisionManager* collisionManager = nullptr;//当たり判定
+
+	Player* player_ = nullptr;
 
 	Vector3 velocity_;
 	float speed = 0.1f;
