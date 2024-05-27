@@ -19,6 +19,7 @@
 
 #include "UserApplication/Player/Player.h";
 #include "UserApplication/Enemy/Enemy.h";
+#include "UserApplication/GameCam/GameCamera.h";
 
 /// <summary>
 /// ゲームシーン
@@ -79,4 +80,6 @@ private: // メンバ変数
 
 	Player* player_ = nullptr;
 	Enemy* enemy_ = nullptr;
+	std::unique_ptr<GameCamera> gameCamera;
+	std::unique_ptr<DebugCamera> debugCamera;
 };

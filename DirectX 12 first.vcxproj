@@ -872,6 +872,7 @@
     <ClInclude Include="Engine\3D\Sprite3D.h" />
     <ClInclude Include="Engine\Base\Defined.h" />
     <ClInclude Include="UserApplication\Enemy\Enemy.h" />
+    <ClInclude Include="UserApplication\GameCam\GameCamera.h" />
     <ClInclude Include="UserApplication\Player\Player.h" />
     <ClInclude Include="UserApplication\Scene\DebugScene.h" />
     <ClInclude Include="Engine\3DEffect\MeshParticle.h" />
@@ -946,6 +947,7 @@
     <ClCompile Include="Engine\3D\FBXObject3d.cpp" />
     <ClCompile Include="Engine\3D\Sprite3D.cpp" />
     <ClCompile Include="UserApplication\Enemy\Enemy.cpp" />
+    <ClCompile Include="UserApplication\GameCam\GameCamera.cpp" />
     <ClCompile Include="UserApplication\Player\Player.cpp" />
     <ClCompile Include="UserApplication\Scene\DebugScene.cpp" />
     <ClCompile Include="Engine\2D\PostEffectManager.cpp" />

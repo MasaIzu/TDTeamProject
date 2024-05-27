@@ -53,6 +53,11 @@ void GameScene::Initialize() {
 
 	enemy_ = new Enemy();
 	enemy_->Initialize(viewProjection_.get());
+
+	gameCamera = std::make_unique<GameCamera>();
+	gameCamera->Initialize(viewProjection_.get(),50.0f,{0,0,0});
+	gameCamera->SetCameraTargetAndPos({ 0,0,0 }, { 0,200,-1 });
+	gameCamera->SetFreeCamera(true);
 }
 
 void GameScene::Update() {
@@ -62,6 +67,8 @@ void GameScene::Update() {
 	{
 		sceneManager_->ChangeScene("TITLE");
 	}
+
+	gameCamera->Update();
 	player_->Update(input_);
 	enemy_->Update();
 }
