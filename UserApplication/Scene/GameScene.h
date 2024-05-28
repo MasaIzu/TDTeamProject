@@ -19,6 +19,7 @@
 
 #include "UserApplication/Player/Player.h";
 #include "UserApplication/Enemy/Enemy.h";
+#include "UserApplication/GameCam/GameCamera.h";
 
 #include"Tile.h"
 #include"RandomMap.h"
@@ -86,4 +87,6 @@ private: // メンバ変数
 
 	std::unique_ptr<Player> player_;
 	std::unique_ptr<Enemy> enemy_;
+
+	std::unique_ptr<GameCamera> gameCamera;
 };
