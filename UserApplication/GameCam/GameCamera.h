@@ -34,6 +34,9 @@ private:
 	//カメラの視線切れているか
 	bool CheckBetweenToCameraCollider();
 
+	// 見下ろしカメラ
+	void LookDownCamUpdate();
+
 public://getter
 	float GetFovAngle();//アングル
 	float GetCameraDistanse();//離れた距離
@@ -44,11 +47,17 @@ public://getter
 	Vector3 GetPlayerDistanceEyePos(const Vector3& playerPos);//プレイヤーとの距離
 	Matrix4 GetCameraRot() { return CameraRot; }//カメラの回転Matrix4
 
+	float GetLookDownDistans() { return lookDownCamDistans_; }
+	Vector3 GetLookDownPos() { return lookDownCamPos_; }
+
 public://setter
 	void SetCameraMode(const bool& mode);//カメラのモード
 	void SetPlayerPosition(const Vector3& pos);//プレイヤーのポジション
 	void SetFreeCamera(const bool& mode);//フリーカメラ状態か
 	void SetCameraTargetAndPos(const Vector3& target, const Vector3& eye);//ターゲットとアイの位置をセット
+
+	void SetLookDownDistans( const float& distans = 100.0f) { lookDownCamDistans_ = distans; }
+	void SetLookDownPos( const Vector3& position = {0,0,0}) { lookDownCamPos_ = position; }
 private:
 
 private:
@@ -107,6 +116,9 @@ private://プレイヤークラス変数
 	Vector2 MouseMove;
 	Vector2 mouseMoved{ 0, MyMath::PI };
 	Vector2 ConVec;
+
+	Vector3 lookDownCamPos_;
+	float lookDownCamDistans_;
 
 	Vector3 rot;
 	Vector3 eye;
