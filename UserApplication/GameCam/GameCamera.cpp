@@ -10,8 +10,8 @@
 
 GameCamera::GameCamera()
 {
-	winWidth = WinApp::GetInstance()->GetWindowSize().x;
-	winHeight = WinApp::GetInstance()->GetWindowSize().y;
+	winWidth = (uint32_t)WinApp::GetInstance()->GetWindowSize().x;
+	winHeight = (uint32_t)WinApp::GetInstance()->GetWindowSize().y;
 
 	// 画面サイズに対する相対的なスケールに調整
 	scaleX_ = 1.0f / (float)WinApp::GetInstance()->GetWindowSize().x;
@@ -137,8 +137,12 @@ void GameCamera::Update() {
 		}
 	}
 	else {
+
+
 		target = SetTargetVec;
 		eye = SetEyeVec;
+
+		LookDownCamUpdate();
 	}
 
 	if (Input::GetInstance()->TriggerKey(DIK_F2)) {
@@ -397,6 +401,17 @@ bool GameCamera::CheckBetweenToCameraCollider()
 	}
 
 	return isGroundHit;
+}
+
+void GameCamera::LookDownCamUpdate()
+{
+	Vector3 birdCam;
+	birdCam = lookDownCamPos_;
+	birdCam.y = lookDownCamPos_.y + lookDownCamDistans_;
+	birdCam.z -= 1;
+	target = lookDownCamPos_;
+	eye = birdCam;
+
 }
 
 float GameCamera::GetFovAngle()
