@@ -22,7 +22,7 @@ public:
 	~Enemy();
 
 	//初期化
-	void Initialize(ViewProjection* viewProjection_);
+	void Initialize(ViewProjection* viewProjection_, Vector3 enemyPos, int actionNmb);
 	//更新
 	void Update();
 	//描画
@@ -33,6 +33,9 @@ public:
 	//経験値のセッター
 	void SetExp(int experience) { experience_ = experience; }
 
+
+	//死亡判定
+	bool IsDead()const { return isDead_; }
 private:
 
 	WorldTransform worldTransform_;
@@ -43,6 +46,9 @@ private:
 	Vector3 velocity_;
 	float speed = 0.1f;
 	int experience_;//経験値
+
+	//デスフラグ
+	bool isDead_ = false;
 };
 
 

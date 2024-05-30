@@ -20,6 +20,9 @@
 #include "UserApplication/Player/Player.h";
 #include "UserApplication/Enemy/Enemy.h";
 
+#include "CSVLoader.h"
+#include "EnemyManager.h"
+
 /// <summary>
 /// ゲームシーン
 /// </summary>
@@ -44,7 +47,7 @@ public: // メンバ関数
 	void Draw() override;
 	// 終了処理
 	void Finalize() override;
-	
+
 	//ポストエフェクトを掛けるやつ
 	void PostEffectDraw() override;
 	//背景描画
@@ -73,10 +76,15 @@ private: // メンバ変数
 	std::unique_ptr<LoadLevelEditor> levelData;
 	std::unique_ptr<TouchableObject> touchableObject;
 
+	std::unique_ptr<EnemyManager> enemyManager;//エネミーマネージャー
+
 	bool isFinishGame = false;
 
 	uint32_t textureHandle_ = 0;//テクスチャハンドル
 
 	Player* player_ = nullptr;
 	Enemy* enemy_ = nullptr;
+	Enemy* enemys_[10] = {};
+
+	CSVLoader* csv[10]={};
 };

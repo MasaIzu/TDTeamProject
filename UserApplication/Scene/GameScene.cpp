@@ -14,7 +14,7 @@ GameScene::GameScene() {}
 GameScene::~GameScene() {
 	collisionManager->AllClearCollider();
 	delete player_;
-	delete enemy_;
+	//delete enemy_;
 }
 
 void GameScene::Initialize() {
@@ -46,13 +46,16 @@ void GameScene::Initialize() {
 	worldTransform_.scale_ = { 10.0f,3.0f,4.0f };
 	worldTransform_.TransferMatrix();
 
+	enemyManager= std::make_unique<EnemyManager>();
+	enemyManager->Initialize(viewProjection_.get());
 
 	collisionManager = CollisionManager::GetInstance();
 	player_ = new Player();
 	player_->Initialize(viewProjection_.get());
 
-	enemy_ = new Enemy();
-	enemy_->Initialize(viewProjection_.get());
+	//enemy_ = new Enemy();
+	//enemy_->Initialize(viewProjection_.get(),{0,0,0},1);
+	
 }
 
 void GameScene::Update() {
@@ -62,8 +65,9 @@ void GameScene::Update() {
 	{
 		sceneManager_->ChangeScene("TITLE");
 	}
+	enemyManager->Update();
 	player_->Update(input_);
-	enemy_->Update();
+	//enemy_->Update();
 }
 
 void GameScene::PostEffectDraw()
@@ -121,9 +125,9 @@ void GameScene::Draw() {
 
 	//// 3Dオブジェクト描画前処理
 	Model::PreDraw(commandList);
-	
+	enemyManager->Draw(*LightViewProjection.get());
 	player_->Draw(*LightViewProjection.get());
-	enemy_->Draw(*LightViewProjection.get());
+	//enemy_->Draw(*LightViewProjection.get());
 	//3Dオブジェクト描画後処理
 	Model::PostDraw();
 
@@ -133,7 +137,7 @@ void GameScene::Draw() {
 
 #pragma region 前景スプライト描画
 
-	
+
 
 #pragma endregion
 }
