@@ -1,5 +1,5 @@
 #include "Enemy.h"
-
+#include "Player.h"
 Enemy::Enemy()
 {
 }
@@ -8,7 +8,7 @@ Enemy::~Enemy()
 {
 }
 
-void Enemy::Initialize(ViewProjection* viewProjection,Vector3 enemyPos,int actionNmb)
+void Enemy::Initialize(ViewProjection* viewProjection,Vector3 enemyPos,int actionNmb, Player* player)
 {
 
 	model_.reset(Model::CreateFromOBJ("cube", true));
@@ -20,6 +20,8 @@ void Enemy::Initialize(ViewProjection* viewProjection,Vector3 enemyPos,int actio
 	worldTransform_.TransferMatrix();
 
 	viewProjection_ = viewProjection;
+
+	player_ = player;
 }
 
 void Enemy::Update()

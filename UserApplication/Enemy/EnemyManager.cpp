@@ -8,9 +8,10 @@ EnemyManager::~EnemyManager()
 {
 }
 
-void EnemyManager::Initialize(ViewProjection* viewProjection)
+void EnemyManager::Initialize(ViewProjection* viewProjection,Player* player)
 {
 	view = viewProjection;
+	player_ = player;
 }
 
 void EnemyManager::Update()
@@ -143,7 +144,7 @@ void EnemyManager::ExistenceEnemy(const Vector3& EnemyPos)
 {
 	//“GƒLƒƒƒ‰‚Ì¶¬
 	std::unique_ptr<Enemy> newEnemy = std::make_unique<Enemy>();
-	newEnemy->Initialize(view,EnemyPos,0);
+	newEnemy->Initialize(view,EnemyPos,0,player_);
 
 	//ƒŠƒXƒg‚É“o˜^‚·‚é
 	enemy_.push_back(std::move(newEnemy));

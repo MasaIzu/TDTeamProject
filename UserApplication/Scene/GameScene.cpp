@@ -45,17 +45,19 @@ void GameScene::Initialize() {
 	worldTransform_.scale_ = { 10.0f,3.0f,4.0f };
 	worldTransform_.TransferMatrix();
 
-	enemyManager= std::make_unique<EnemyManager>();
-	enemyManager->Initialize(viewProjection_.get());
+
 
 	collisionManager = CollisionManager::GetInstance();
 	player_ = std::make_unique<Player>();
 	player_->Initialize(viewProjection_.get());
 
+	enemyManager = std::make_unique<EnemyManager>();
+	enemyManager->Initialize(viewProjection_.get(),player_.get());
+
 	gameCamera = std::make_unique<GameCamera>();
 	gameCamera->Initialize(viewProjection_.get(), 0.0f, { 0,0,0 });
 	//gameCamera->SetLookDownPos(player_->Getpos());
-	gameCamera->SetLookDownDistans();
+	gameCamera->SetLookDownDistans();//デフォルトは100
 	gameCamera->SetCameraTargetAndPos({ 0,0,0 }, { 0,200,-1 });
 	gameCamera->SetFreeCamera(true);
 

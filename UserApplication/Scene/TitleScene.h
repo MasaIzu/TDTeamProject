@@ -70,5 +70,8 @@ private: // メンバ変数
 
 	uint32_t textureHandle_ = 0;//テクスチャハンドル
 
+	uint32_t titleTexture_;
+	std::unique_ptr<Sprite> titleSprite_ = nullptr;
+
 };
 
