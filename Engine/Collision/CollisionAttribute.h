@@ -3,7 +3,7 @@
 
 const unsigned short COLLISION_ATTR_LANDSHAPE = 0b0;//地形
 const unsigned short COLLISION_ATTR_OBJECT = 0b1;//オブジェクト
-const unsigned short COLLISION_ATTR_ALLIES = 0b10;//味方
+const unsigned short COLLISION_ATTR_ALLIES = 0b10;//自機
 const unsigned short COLLISION_ATTR_ENEMYS = 0b11;//敵
 
 const unsigned short COLLISION_ATTR_ATTACK = 0b100;//攻撃

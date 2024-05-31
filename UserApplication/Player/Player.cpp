@@ -1,6 +1,8 @@
 #include "Player.h"
 #include "ImGuiManager.h"
 #include "Enemy.h"
+#include "SphereCollider.h"
+#include "CollisionAttribute.h"
 Player::Player()
 {
 }
@@ -9,7 +11,7 @@ Player::~Player()
 {
 }
 
-void Player::Initialize(ViewProjection* viewProjection)
+void Player::Initialize(const unsigned short Attribute,ViewProjection* viewProjection)
 {
 
 	model_.reset(Model::CreateFromOBJ("cube", true));
@@ -28,6 +30,17 @@ void Player::Initialize(ViewProjection* viewProjection)
 	experienceToNextLevel = baseExperience;
 
 	speed = 1.0f;
+
+
+	// コリジョンマネージャに追加
+	float sphereF = 0;
+	playerCollider = new SphereCollider(Vector4(sphereF, playerRadius, sphereF, sphereF), playerRadius);
+	CollisionManager::GetInstance()->AddCollider(playerCollider);
+	Attribute_ = Attribute;
+	playerCollider->SetAttribute(Attribute_);
+
+	playerCollider->Update(animation->GetBonePos(0) * worldTransform_.matWorld_);
+
 }
 
 void Player::Update(Input* input)
@@ -67,6 +80,8 @@ void Player::Move(Input* input)
 	{
 		AddExperience(1);
 	}
+
+	playerCollider->Update(animation->GetBonePos(0) * worldTransform_.matWorld_);
 
 	ImGui::Begin("experience");
 	ImGui::SetWindowPos({ 200 , 200 });

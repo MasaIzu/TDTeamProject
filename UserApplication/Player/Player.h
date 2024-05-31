@@ -7,6 +7,7 @@
 #include "Input.h"
 #include "Model.h"
 #include "CollisionManager.h"
+#include "BaseCollider.h"
 #include "FBXObject3d.h"
 
 #include<memory>
@@ -24,7 +25,7 @@ public:
 	~Player();
 
 	//初期化
-	void Initialize(ViewProjection* viewProjection_);
+	void Initialize(const unsigned short Attribute,ViewProjection* viewProjection_);
 	//更新
 	void Update(Input* input);
 	//描画
@@ -55,7 +56,6 @@ private:
 	WorldTransform worldTransform_;
 	ViewProjection* viewProjection_;
 	std::unique_ptr<Model> model_;// 3Dモデル
-	CollisionManager* collisionManager = nullptr;//当たり判定
 	std::unique_ptr<FBXObject3d> playerFbx_;
 	//アニメーションクラス
 	std::unique_ptr<Animation> animation;
@@ -69,6 +69,15 @@ private:
 	int experienceToNextLevel;//次のレベルに必要な経験値
 	const int baseExperience = 50;
 	const double ratio = 1.2;
+#pragma endregion
+
+#pragma region
+	bool isHit_ = false;
+	unsigned short Attribute_;
+	//当たり判定
+	BaseCollider* playerCollider;
+	CollisionManager* collisionManager = nullptr;
+	float playerRadius = 0.5f;
 #pragma endregion
 };
 

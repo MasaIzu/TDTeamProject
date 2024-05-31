@@ -8,10 +8,16 @@
 #include "WorldTransform.h"
 #include "Input.h"
 #include "Model.h"
+#include "FBXObject3d.h"
+
 #include "CollisionManager.h"
+#include "BaseCollider.h"
+
+#include "Vector4.h"
 
 #include<memory>
 #include<vector>
+#include <Animation.h>
 
 class Player;
 
@@ -24,7 +30,7 @@ public:
 	~Enemy();
 
 	//初期化
-	void Initialize(ViewProjection* viewProjection_, Vector3 enemyPos, int actionNmb,Player* player);
+	void Initialize(ViewProjection* viewProjection_, Vector3 enemyPos, int actionNmb,Player* player,const unsigned short Attribute);
 	//更新
 	void Update();
 	//描画
@@ -42,12 +48,13 @@ public:
 	Player* GetPlayer() { return player_; }
 	void SetPlayer(Player* player) { player_ = player_; }
 
+	
+
 private:
 
 	WorldTransform worldTransform_;
 	ViewProjection* viewProjection_;
 	std::unique_ptr<Model> model_;// 3Dモデル
-	CollisionManager* collisionManager = nullptr;//当たり判定
 	Player* player_;
 
 
@@ -57,6 +64,17 @@ private:
 
 	//デスフラグ
 	bool isDead_ = false;
+
+#pragma region
+
+	bool isHit_ = false;
+	unsigned short Attribute_;
+	//当たり判定
+	BaseCollider* enemyCollider;
+	CollisionManager* collisionManager = nullptr;
+	float enemyRadius = 0.5f;
+
+#pragma endregion
 };
 
 
