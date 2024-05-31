@@ -57,7 +57,7 @@ void GameScene::Initialize() {
 	gameCamera->SetCameraTargetAndPos({ 0,0,0 }, { 0,200,-1 });
 	gameCamera->SetFreeCamera(true);
 
-	tile.Initialize();
+//	tile.Initialize();
 
 	randomMap = std::make_unique<RandomMap>();
 
@@ -68,20 +68,20 @@ void GameScene::Initialize() {
 	Tile::SetViewProjection(*viewProjection_.get());
 
 	std::unique_ptr<Tile> redTile = std::make_unique<Tile>();
-	redTile->Initialize("sphere");
+	redTile->Initialize("sphereRed");
 	redTile->SetSpriteColor({ 1,0,0,1 });
 
 
 	std::unique_ptr<Tile> blueTile = std::make_unique<Tile>();
-	blueTile->Initialize("sphere");
+	blueTile->Initialize("sphereBlue");
 	blueTile->SetSpriteColor({ 0,0,1,1 });
 
 	std::unique_ptr<Tile> greenTile = std::make_unique<Tile>();
-	greenTile->Initialize("sphere");
+	greenTile->Initialize("sphereGreen");
 	greenTile->SetSpriteColor({ 0,1,0,1 });
 
 	std::unique_ptr<Tile> yellowTile = std::make_unique<Tile>();
-	yellowTile->Initialize("sphere");
+	yellowTile->Initialize("sphereYellow");
 	yellowTile->SetSpriteColor({ 0,1,1,1 });
 
 	randomMap->LoadNewTile(std::move(redTile));
@@ -101,12 +101,14 @@ void GameScene::Update() {
 	gameCamera->Update();
 	player_->Update(input_);
 
-	Vector2 tPos = { 320.0f,180.0f };
-	tile.SetSpritePos(tPos);
+//	Vector2 tPos = { 320.0f,180.0f };
+	//tile.SetSpritePos(tPos);
 
-	tile.Update();
+	//tile.Update();
 
 	randomMap->Update();
+
+
 }
 
 void GameScene::PostEffectDraw()

@@ -18,6 +18,14 @@ void Tile::Initialize(const std::string& modelFileName)
 	//モデル生成
 	model.reset( Model::CreateFromOBJ(modelFileName));
 	
+	objFileName = modelFileName;
+
+	//一応スプライトの初期化もやる
+	//とりあえず白テクスチャ入れる
+	sprite = Sprite::Create(TextureManager::Load("white1x1.png"));
+	sprite->Initialize();
+	sprite->SetSize(tileSpriteSize);
+
 	//ワールド行列初期化
 	world.Initialize();
 }
@@ -25,10 +33,12 @@ void Tile::Initialize(const std::string& modelFileName)
 void Tile::Update()
 {
 	//とりあえずZは固定
-	world.translation_.z = 50.0f;
+	world.translation_.z = 0.0f;
 	//XYはスプライトで使ってたやつから持ってくる
 	world.translation_.x = sprite->GetPosition().x;
 	world.translation_.y = sprite->GetPosition().y;
+
+
 
 	//ワールド行列更新
 	world.TransferMatrix();

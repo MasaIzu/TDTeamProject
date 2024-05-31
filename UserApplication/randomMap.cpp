@@ -8,7 +8,7 @@ void RandomMap::Initialize()
 
 	//タイルがなにもロードされてなかった時のために白タイルをロードしておく
 	std::unique_ptr<Tile> baseTile = std::make_unique<Tile>();
-	baseTile->Initialize();
+	baseTile->Initialize("cube");
 	baseTile->SetSpriteColor({ 1,1,1,1 });
 	tileIndex.push_back(std::move(baseTile));
 }
@@ -18,6 +18,16 @@ void RandomMap::Update()
 	//Rキーでマップ生成
 	if (Input::GetInstance()->TriggerKey(DIK_R)) {
 		CreateMap();
+	}
+
+	for (uint16_t x = 0; x < mapMaxX; x++) {
+		for (uint16_t y = 0; y < mapMaxY; y++) {
+			if (map[x][y]) {
+				map[x][y]->Update();
+				ImGui::Text("map[%d][%d]:%f,%f", x, y, map[x][y]->GetSpritePos().x, map[x][y]->GetSpritePos().y);
+
+			}
+		}
 	}
 }
 
@@ -43,7 +53,7 @@ void RandomMap::LoadNewTile(std::unique_ptr<Tile> newTile)
 
 void RandomMap::CreateMap()
 {
-	Vector2 tilePosBase = { 320.0f,180.0f };
+	Vector2 tilePosBase = { -40.0f,-40.0f };
 
 	Vector2 tilePos = tilePosBase;
 	uint16_t tileNumber = (uint16_t)tileIndex.size();
@@ -63,7 +73,8 @@ void RandomMap::CreateMap()
 
 			std::unique_ptr<Tile> newTile = std::make_unique<Tile>();
 			Tile* randTile = tileIndex[randNumber].get();
-			newTile->Initialize();
+			std::string filename = randTile->GetFileName();
+			newTile->Initialize(filename);
 			newTile->SetSpriteColor(randTile->GetSpriteColor());
 		//	newTile->SetSpriteColor({1,0,0,1});
 			newTile->SetSpritePos(tilePos);

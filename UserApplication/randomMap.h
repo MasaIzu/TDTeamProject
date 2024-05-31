@@ -23,7 +23,7 @@ private:
 	static const uint16_t mapMaxX = 5;
 	static const uint16_t mapMaxY = 5;
 
-	float tileDistance = 8.0f;
+	float tileDistance = 100.0f;
 
 	std::unique_ptr<Tile> map[mapMaxX][mapMaxY];
 

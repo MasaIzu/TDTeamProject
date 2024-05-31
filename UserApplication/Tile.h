@@ -67,6 +67,7 @@ public:
 	//getter
 	const Vector2& GetSpritePos() const { return spritePos; }
 	const Vector4& GetSpriteColor() const { return spriteColor; }
+	const std::string GetFileName()const { return objFileName; }
 
 private:
 
@@ -74,6 +75,8 @@ private:
 
 	std::unique_ptr<Sprite> sprite = nullptr;
 	std::unique_ptr<Model> model = nullptr;
+
+	std::string objFileName;
 
 	WorldTransform world;
 	Vector2 spritePos = { 0,0 };
