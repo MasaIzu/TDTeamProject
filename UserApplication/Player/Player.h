@@ -33,6 +33,8 @@ public:
 
 	void Move(Input* input);
 
+	Vector3 GetPosition() { return worldTransform_.translation_; }
+
 	//•`‰æ
 	void FbxDraw(const ViewProjection& lightViewProjection_);
 	//•`‰æ
