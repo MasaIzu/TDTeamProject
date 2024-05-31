@@ -1,6 +1,6 @@
 #include "Player.h"
 #include "ImGuiManager.h"
-
+#include "Enemy.h"
 Player::Player()
 {
 }
@@ -16,8 +16,8 @@ void Player::Initialize(ViewProjection* viewProjection)
 	playerFbx_;
 
 	worldTransform_.Initialize();
-	worldTransform_.translation_ = { 50,0,0 };
-	worldTransform_.scale_ = { 10.0f,3.0f,4.0f };
+	worldTransform_.translation_ = { 0,0,0 };
+	worldTransform_.scale_ = { 1.0f,1.0f,1.0f };
 	worldTransform_.TransferMatrix();
 
 	animation = std::make_unique<Animation>();
@@ -26,6 +26,8 @@ void Player::Initialize(ViewProjection* viewProjection)
 	viewProjection_ = viewProjection;
 
 	experienceToNextLevel = baseExperience;
+
+	speed = 1.0f;
 }
 
 void Player::Update(Input* input)

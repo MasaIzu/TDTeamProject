@@ -13,6 +13,8 @@
 #include<vector>
 #include <Animation.h>
 
+class Enemy;
+
 class Player
 {
 public:
@@ -60,10 +62,13 @@ private:
 	Vector3 velocity_;
 	float speed = 0.1f;
 
+
+#pragma region
 	int level = 1;//レベル
 	int experience = 0;//経験値
 	int experienceToNextLevel;//次のレベルに必要な経験値
 	const int baseExperience = 50;
 	const double ratio = 1.2;
+#pragma endregion
 };
 

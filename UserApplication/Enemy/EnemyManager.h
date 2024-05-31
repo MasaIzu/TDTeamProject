@@ -16,7 +16,7 @@ public:
 	EnemyManager();
 	~EnemyManager();
 
-	void Initialize(ViewProjection* viewProjection);
+	void Initialize(ViewProjection* viewProjection,Player* player);
 
 	///<summary>
 	////çXêV
