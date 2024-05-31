@@ -16,7 +16,7 @@ public:
 	EnemyManager();
 	~EnemyManager();
 
-	void Initialize(ViewProjection* viewProjection);
+	void Initialize(ViewProjection* viewProjection,Player* player, const unsigned short Attribute);
 
 	///<summary>
 	////çXêV
@@ -69,4 +69,10 @@ private:
 	ViewProjection* view;
 
 	int enemySpornCount = 2;
+
+#pragma region
+	unsigned short Attribute_;
+
+
+#pragma endregion
 };

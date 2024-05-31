@@ -1,6 +1,8 @@
 #include "Player.h"
 #include "ImGuiManager.h"
-
+#include "Enemy.h"
+#include "SphereCollider.h"
+#include "CollisionAttribute.h"
 Player::Player()
 {
 }
@@ -9,15 +11,15 @@ Player::~Player()
 {
 }
 
-void Player::Initialize(ViewProjection* viewProjection)
+void Player::Initialize(const unsigned short Attribute,ViewProjection* viewProjection)
 {
 
 	model_.reset(Model::CreateFromOBJ("cube", true));
 	playerFbx_;
 
 	worldTransform_.Initialize();
-	worldTransform_.translation_ = { 50,0,0 };
-	worldTransform_.scale_ = { 10.0f,3.0f,4.0f };
+	worldTransform_.translation_ = { 0,0,0 };
+	worldTransform_.scale_ = { 1.0f,1.0f,1.0f };
 	worldTransform_.TransferMatrix();
 
 	animation = std::make_unique<Animation>();
@@ -26,6 +28,19 @@ void Player::Initialize(ViewProjection* viewProjection)
 	viewProjection_ = viewProjection;
 
 	experienceToNextLevel = baseExperience;
+
+	speed = 1.0f;
+
+
+	// コリジョンマネージャに追加
+	float sphereF = 0;
+	playerCollider = new SphereCollider(Vector4(sphereF, playerRadius, sphereF, sphereF), playerRadius);
+	CollisionManager::GetInstance()->AddCollider(playerCollider);
+	Attribute_ = Attribute;
+	playerCollider->SetAttribute(Attribute_);
+
+	playerCollider->Update(animation->GetBonePos(0) * worldTransform_.matWorld_);
+
 }
 
 void Player::Update(Input* input)
@@ -65,6 +80,8 @@ void Player::Move(Input* input)
 	{
 		AddExperience(1);
 	}
+
+	playerCollider->Update(animation->GetBonePos(0) * worldTransform_.matWorld_);
 
 	ImGui::Begin("experience");
 	ImGui::SetWindowPos({ 200 , 200 });
