@@ -8,14 +8,14 @@ Enemy::~Enemy()
 {
 }
 
-void Enemy::Initialize(ViewProjection* viewProjection)
+void Enemy::Initialize(ViewProjection* viewProjection,Vector3 enemyPos,int actionNmb)
 {
 
 	model_.reset(Model::CreateFromOBJ("cube", true));
 
 
 	worldTransform_.Initialize();
-	worldTransform_.translation_ = { 50,0,0 };
+	worldTransform_.translation_ = enemyPos;
 	worldTransform_.scale_ = { 10.0f,3.0f,4.0f };
 	worldTransform_.TransferMatrix();
 
