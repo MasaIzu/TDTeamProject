@@ -98,6 +98,10 @@ void GameCamera::InitializeCameraPosition(const float& cameraAngle)
 	//target = pos;
 	eye = target + (forward * cameraDistance_);
 
+	if (fovYUpdate == true) {
+		fovYUpdate = false;
+		viewProjection_->fovAngleY = Fov;
+	}
 	viewProjection_->target = target;
 	viewProjection_->eye = eye;
 	viewProjection_->UpdateMatrix();
