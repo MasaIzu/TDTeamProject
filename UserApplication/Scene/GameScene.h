@@ -97,4 +97,6 @@ private: // メンバ変数
 	CSVLoader* csv[10]={};
 
 	std::unique_ptr<GameCamera> gameCamera;
+	Vector3 gameCameraPosition_;
+	float gamecameraDistans_;
 };
