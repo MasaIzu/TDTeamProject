@@ -26,7 +26,7 @@ void RandomMap::Draw()
 	for (uint16_t x = 0; x < mapMaxX; x++) {
 		for (uint16_t y = 0; y < mapMaxY; y++) {
 			if (map[x][y]) {
-				map[x][y]->Draw();
+				map[x][y]->DrawObject();
 			}
 		}
 	}

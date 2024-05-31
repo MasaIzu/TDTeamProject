@@ -242,11 +242,16 @@ void main(uint3 id : SV_DispatchThreadID)
     gParticles[index].LeftUVPos = 0;
     gParticles[index].RightUVPos = 1;
     
-    if (DivisionCount != 1)
+    if (VerticalDivisionCount != 1)
     {
-        float UVDiv = 1.0f / DivisionCount;
+        
+        
+        
+        float UVDiv = 1.0f / VerticalDivisionCount;
     
-        float MaxLifeDiv = gParticles[index].MaxLifeTime / DivisionCount;
+        float allDivCount = VerticalDivisionCount * SideDivisionCount;
+        
+        float MaxLifeDiv = gParticles[index].MaxLifeTime / allDivCount;
     
         float NowLife = gParticles[index].MaxLifeTime - gParticles[index].lifeTime;
         float LifeDiv = NowLife / MaxLifeDiv;

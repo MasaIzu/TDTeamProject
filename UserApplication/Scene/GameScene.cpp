@@ -63,20 +63,25 @@ void GameScene::Initialize() {
 
 	randomMap->Initialize();
 
+	//タイルクラスにカメラ行列とかをセット
+	Tile::SetLightView(*LightViewProjection.get());
+	Tile::SetViewProjection(*viewProjection_.get());
+
 	std::unique_ptr<Tile> redTile = std::make_unique<Tile>();
-	redTile->Initialize();
+	redTile->Initialize("sphere");
 	redTile->SetSpriteColor({ 1,0,0,1 });
 
+
 	std::unique_ptr<Tile> blueTile = std::make_unique<Tile>();
-	blueTile->Initialize();
+	blueTile->Initialize("sphere");
 	blueTile->SetSpriteColor({ 0,0,1,1 });
 
 	std::unique_ptr<Tile> greenTile = std::make_unique<Tile>();
-	greenTile->Initialize();
+	greenTile->Initialize("sphere");
 	greenTile->SetSpriteColor({ 0,1,0,1 });
 
 	std::unique_ptr<Tile> yellowTile = std::make_unique<Tile>();
-	yellowTile->Initialize();
+	yellowTile->Initialize("sphere");
 	yellowTile->SetSpriteColor({ 0,1,1,1 });
 
 	randomMap->LoadNewTile(std::move(redTile));
@@ -154,7 +159,6 @@ void GameScene::Draw() {
 
 	//tile.Draw();
 
-	randomMap->Draw();
 	sprite_->Draw({ 100,100 }, { 1,1,1,1 }, 1);
 
 #pragma endregion
@@ -165,6 +169,12 @@ void GameScene::Draw() {
 	Model::PreDraw(commandList);
 	
 	player_->Draw(*LightViewProjection.get());
+
+
+
+	randomMap->Draw();
+
+
 	//3Dオブジェクト描画後処理
 	Model::PostDraw();
 
