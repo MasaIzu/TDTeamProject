@@ -45,6 +45,8 @@ void GameScene::Initialize() {
 	worldTransform_.scale_ = { 10.0f,3.0f,4.0f };
 	worldTransform_.TransferMatrix();
 
+	enemyManager= std::make_unique<EnemyManager>();
+	enemyManager->Initialize(viewProjection_.get());
 
 	collisionManager = CollisionManager::GetInstance();
 	player_ = std::make_unique<Player>();
@@ -92,6 +94,7 @@ void GameScene::Update() {
 	{
 		sceneManager_->ChangeScene("TITLE");
 	}
+	enemyManager->Update();
 	//gameCamera->SetLookDownPos(player_->Getpos());
 	gameCamera->Update();
 	player_->Update(input_);
@@ -163,7 +166,7 @@ void GameScene::Draw() {
 
 	//// 3Dオブジェクト描画前処理
 	Model::PreDraw(commandList);
-	
+	enemyManager->Draw(*LightViewProjection.get());
 	player_->Draw(*LightViewProjection.get());
 	//3Dオブジェクト描画後処理
 	Model::PostDraw();
