@@ -23,6 +23,9 @@
 #include"Tile.h"
 #include"RandomMap.h"
 
+#include "CSVLoader.h"
+#include "EnemyManager.h"
+
 /// <summary>
 /// ゲームシーン
 /// </summary>
@@ -47,7 +50,7 @@ public: // メンバ関数
 	void Draw() override;
 	// 終了処理
 	void Finalize() override;
-	
+
 	//ポストエフェクトを掛けるやつ
 	void PostEffectDraw() override;
 	//背景描画
@@ -76,6 +79,8 @@ private: // メンバ変数
 	std::unique_ptr<LoadLevelEditor> levelData;
 	std::unique_ptr<TouchableObject> touchableObject;
 
+	std::unique_ptr<EnemyManager> enemyManager;//エネミーマネージャー
+
 	bool isFinishGame = false;
 
 	uint32_t textureHandle_ = 0;//テクスチャハンドル
@@ -86,4 +91,7 @@ private: // メンバ変数
 
 	std::unique_ptr<Player> player_;
 	std::unique_ptr<Enemy> enemy_;
+	Enemy* enemys_[10] = {};
+
+	CSVLoader* csv[10]={};
 };

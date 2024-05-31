@@ -190,6 +190,12 @@
     <Filter Include="UserFile\UserHeaderFile\Enemy">
       <UniqueIdentifier>{2310975f-e104-4344-be97-51a34d4749c1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\HeaderFile\CSVLoader">
+      <UniqueIdentifier>{37829233-a371-4267-9cf8-b68508c64a8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\SourceFile\CSVLoader">
+      <UniqueIdentifier>{51edaf9e-bddc-4188-be53-449ee1a31096}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shaders\Primitive.hlsli">
@@ -682,6 +688,12 @@
     <ClInclude Include="UserApplication\RandomMap.h">
       <Filter>UserFile\UserHeaderFile</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\CSVLoader\CSVLoader.h">
+      <Filter>Engine\HeaderFile\CSVLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="UserApplication\Enemy\EnemyManager.h">
+      <Filter>UserFile\UserHeaderFile\Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -874,6 +886,12 @@
       <Filter>UserFile\UserSourceFile\Player</Filter>
     </ClCompile>
     <ClCompile Include="UserApplication\Enemy\Enemy.cpp">
+      <Filter>UserFile\UserSourceFile\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\CSVLoader\CSVLoader.cpp">
+      <Filter>Engine\SourceFile\CSVLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="UserApplication\Enemy\EnemyManager.cpp">
       <Filter>UserFile\UserSourceFile\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
