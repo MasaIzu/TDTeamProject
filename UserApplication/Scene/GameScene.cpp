@@ -49,10 +49,10 @@ void GameScene::Initialize() {
 
 	collisionManager = CollisionManager::GetInstance();
 	player_ = std::make_unique<Player>();
-	player_->Initialize(viewProjection_.get());
+	player_->Initialize( COLLISION_ATTR_ALLIES,viewProjection_.get());
 
 	enemyManager = std::make_unique<EnemyManager>();
-	enemyManager->Initialize(viewProjection_.get(),player_.get());
+	enemyManager->Initialize(viewProjection_.get(),player_.get(), COLLISION_ATTR_ENEMYS);
 
 	gameCamera = std::make_unique<GameCamera>();
 	gameCamera->Initialize(viewProjection_.get(), 0.0f, { 0,0,0 });
