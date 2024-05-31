@@ -58,7 +58,7 @@ void GameCamera::Initialize(ViewProjection* viewProjection, const float& cameraA
 	InitializeCameraPosition(cameraAngle);
 	debugCam_ = std::make_unique<DebugCamera>();
 	debugCam_->Initialize(viewProjection_);
-	FreeCamera = true;
+	FreeCamera = false;
 
 	// コリジョンマネージャに追加
 	CameraCollider = new SphereCollider(Vector4(0, CameraCollisionRadius, 0, 0), CameraCollisionRadius);
@@ -114,37 +114,6 @@ void GameCamera::Update() {
 		}
 	}
 
-	if (FreeCamera == false) {
-		if (cameraMode == false) {
-
-			if (Input::GetInstance()->PushKey(DIK_UP)) {
-				mouseMoved.x += 0.001f;
-			}
-			if (Input::GetInstance()->PushKey(DIK_DOWN)) {
-				mouseMoved.x -= 0.001f;
-			}
-			PlaySceneCamera();
-		}
-		else {
-			SceneCamera();
-		}
-		//オブジェクトが挟まったらオブジェクトの前にカメラを持ってくる
-		CheckBetweenToCameraCollider();
-		CameraCollider->Update(MyMath::Translation(eye));
-
-		if (CameraCollider->GetSphereMeshHit()) {
-			CameraCollider->SphereMeshHitReset();
-		}
-	}
-	else {
-
-
-		target = SetTargetVec;
-		eye = SetEyeVec;
-
-		LookDownCamUpdate();
-	}
-
 	if (Input::GetInstance()->TriggerKey(DIK_F2)) {
 		if (debugMode == false) {
 			debugMode = true;
@@ -153,6 +122,39 @@ void GameCamera::Update() {
 			debugMode = false;
 		}
 	}
+
+	if (FreeCamera == false) {
+		{
+			//if (cameraMode == false) {
+			//	if (Input::GetInstance()->PushKey(DIK_UP)) {
+			//		mouseMoved.x += 0.001f;
+			//	}
+			//	if (Input::GetInstance()->PushKey(DIK_DOWN)) {
+			//		mouseMoved.x -= 0.001f;
+			//	}
+			//	PlaySceneCamera();
+			//}
+			//else {
+			//	SceneCamera();
+			//}
+			////オブジェクトが挟まったらオブジェクトの前にカメラを持ってくる
+			//CheckBetweenToCameraCollider();
+			//CameraCollider->Update(MyMath::Translation(eye));
+			//if (CameraCollider->GetSphereMeshHit()) {
+			//	CameraCollider->SphereMeshHitReset();
+			//}
+		}
+
+		LookDownCamUpdate();
+
+	}
+	else {
+
+		target = SetTargetVec;
+		eye = SetEyeVec;
+
+	}
+
 	viewProjection_->target = target;
 	viewProjection_->eye = eye;
 	viewProjection_->UpdateMatrix();
@@ -482,6 +484,12 @@ void GameCamera::SetCameraTargetAndPos(const Vector3& Target, const Vector3& Eye
 {
 	SetTargetVec = Target;
 	SetEyeVec = Eye;
+}
+
+float GameCamera::FieldOfViewY(const float& focalLengs, const float& sensor)
+{
+	fovYUpdate = true;
+	return float(2 * atan(sensor / (2 * focalLengs)));
 }
 
 

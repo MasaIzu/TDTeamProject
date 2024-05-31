@@ -89,4 +89,6 @@ private: // メンバ変数
 	std::unique_ptr<Enemy> enemy_;
 
 	std::unique_ptr<GameCamera> gameCamera;
+	Vector3 gameCameraPosition_;
+	float gamecameraDistans_;
 };

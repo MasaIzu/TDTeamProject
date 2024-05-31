@@ -52,10 +52,10 @@ void GameScene::Initialize() {
 
 	gameCamera = std::make_unique<GameCamera>();
 	gameCamera->Initialize(viewProjection_.get(), 0.0f, { 0,0,0 });
-	//gameCamera->SetLookDownPos(player_->Getpos());
-	gameCamera->SetLookDownDistans();
-	gameCamera->SetCameraTargetAndPos({ 0,0,0 }, { 0,200,-1 });
-	gameCamera->SetFreeCamera(true);
+	gamecameraDistans_ = 100.0f;
+	gameCameraPosition_ = { 0,0,0 };
+	gameCamera->SetLookDownPos(gameCameraPosition_);
+	gameCamera->SetLookDownDistans(gamecameraDistans_);
 
 	tile.Initialize();
 
@@ -92,7 +92,8 @@ void GameScene::Update() {
 	{
 		sceneManager_->ChangeScene("TITLE");
 	}
-	//gameCamera->SetLookDownPos(player_->Getpos());
+	gameCamera->SetLookDownPos(gameCameraPosition_);
+	gameCamera->SetLookDownDistans(gamecameraDistans_);
 	gameCamera->Update();
 	player_->Update(input_);
 
