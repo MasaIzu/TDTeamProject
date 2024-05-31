@@ -875,6 +875,7 @@
     <ClInclude Include="Engine\Base\Defined.h" />
     <ClInclude Include="UserApplication\Enemy\Enemy.h" />
     <ClInclude Include="UserApplication\Enemy\EnemyManager.h" />
+    <ClInclude Include="UserApplication\GameCam\GameCamera.h" />
     <ClInclude Include="UserApplication\Player\Player.h" />
     <ClInclude Include="UserApplication\RandomMap.h" />
     <ClInclude Include="UserApplication\Tile.h" />
@@ -956,6 +957,7 @@
     <ClCompile Include="UserApplication\Tile.cpp" />
     <ClCompile Include="UserApplication\Enemy\Enemy.cpp" />
     <ClCompile Include="UserApplication\Enemy\EnemyManager.cpp" />
+    <ClCompile Include="UserApplication\GameCam\GameCamera.cpp" />
     <ClCompile Include="UserApplication\Player\Player.cpp" />
     <ClCompile Include="UserApplication\Scene\DebugScene.cpp" />
     <ClCompile Include="Engine\2D\PostEffectManager.cpp" />
