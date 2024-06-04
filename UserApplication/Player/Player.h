@@ -62,7 +62,7 @@ private:
 	//アニメーションクラス
 	std::unique_ptr<Animation> animation;
 	Vector3 velocity_;
-	float speed = 0.1f;
+	float speed = 0.7f;
 
 
 #pragma region

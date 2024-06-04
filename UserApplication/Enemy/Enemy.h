@@ -65,6 +65,8 @@ private:
 	//デスフラグ
 	bool isDead_ = false;
 
+	float enemySpeed = 0.3f;
+
 #pragma region
 
 	bool isHit_ = false;

@@ -49,5 +49,9 @@ void Enemy::Draw(const ViewProjection& LightViewProjection_)
 
 void Enemy::Move()
 {
+	Vector3 enemyMovement = player_->GetPosition() - worldTransform_.translation_;
+	enemyMovement.normalize();
+	worldTransform_.translation_ += (enemyMovement*enemySpeed);
+
 }
 
