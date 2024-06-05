@@ -700,6 +700,8 @@
     <ClInclude Include="UserApplication\GameCam\GameCamera.h">
       <Filter>UserFile\UserHeaderFile</Filter>
     </ClInclude>
+    <ClInclude Include="UserApplication\Player\PlayerEnum.h">
+      <Filter>UserFile\UserHeaderFile\Player</Filter>
     <ClInclude Include="Banner.h">
       <Filter>UserFile\UserHeaderFile</Filter>
     </ClInclude>

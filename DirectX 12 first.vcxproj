@@ -878,6 +878,7 @@
     <ClInclude Include="UserApplication\Enemy\EnemyManager.h" />
     <ClInclude Include="UserApplication\GameCam\GameCamera.h" />
     <ClInclude Include="UserApplication\Player\Player.h" />
+    <ClInclude Include="UserApplication\Player\PlayerEnum.h" />
     <ClInclude Include="UserApplication\RandomMap.h" />
     <ClInclude Include="UserApplication\Tile.h" />
     <ClInclude Include="UserApplication\Scene\DebugScene.h" />
