@@ -58,7 +58,9 @@ public://setter
 
 	void SetLookDownDistans( const float& distans = 100.0f) { lookDownCamDistans_ = distans; }
 	void SetLookDownPos( const Vector3& position = {0,0,0}) { lookDownCamPos_ = position; }
+	void SetForcalLengs(const float& frocalLengs = 50.0f) { Fov = FieldOfViewY(frocalLengs); };
 private:
+	float FieldOfViewY(const float& focalLengs = 50.0f, const float& sensor = 35.0f);
 
 private:
 	ViewProjection* viewProjection_;
@@ -77,6 +79,8 @@ private://プレイヤークラス変数
 	bool cameraUp = false;
 	bool FreeCamera = false;
 	bool debugMode = false;
+	bool paramsUpdate = false;
+	bool fovYUpdate = false;
 
 	uint32_t cameraType = 0;
 	uint32_t winWidth = 0;

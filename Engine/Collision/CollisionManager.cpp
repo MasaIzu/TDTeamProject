@@ -102,6 +102,17 @@ void CollisionManager::CheckAllCollisions()
 							//isAttackHit = true;
 						}
 					}
+					else if (colA->attribute == COLLISION_ATTR_ENEMYS && colB->attribute == COLLISION_ATTR_ALLIES ||
+						colA->attribute == COLLISION_ATTR_ALLIES && colB->attribute == COLLISION_ATTR_ENEMYS)
+					{
+						if (Collision::CheckSphere2Sphere(*SphereA, *SphereB, &inter))
+						{
+							HitWorldPos = colB->GetWorldPos();
+							colA->isHitPlayerAttack = true;
+							colB->isHitPlayerAttack = true;
+							//isAttackHit = true;
+						}
+					}
 					else if ( colA->attribute == COLLISION_ATTR_ALLIES && colB->attribute == COLLISION_ATTR_ENEMY_ULT ||
 						colA->attribute == COLLISION_ATTR_ENEMY_ULT && colB->attribute == COLLISION_ATTR_ALLIES )
 					{

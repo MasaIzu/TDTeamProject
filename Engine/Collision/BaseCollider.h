@@ -31,7 +31,7 @@ public:
 	inline CollisionShapeType GetShapeType() { return shapeType; }
 	//当たり判定属性ゲット
 	inline unsigned short GetAttribute() { return attribute; }
-	//プレイヤーの攻撃が当たった
+	//攻撃が当たった
 	inline bool GetHit() { return isHitPlayerAttack; }
 	//プレイヤーの近接攻撃が当たった
 	inline bool GetMeleeHit() { return isHitPlayerMeleeAttack; }

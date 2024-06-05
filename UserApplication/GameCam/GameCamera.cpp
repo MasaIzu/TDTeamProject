@@ -58,7 +58,7 @@ void GameCamera::Initialize(ViewProjection* viewProjection, const float& cameraA
 	InitializeCameraPosition(cameraAngle);
 	debugCam_ = std::make_unique<DebugCamera>();
 	debugCam_->Initialize(viewProjection_);
-	FreeCamera = true;
+	FreeCamera = false;
 
 	// コリジョンマネージャに追加
 	CameraCollider = new SphereCollider(Vector4(0, CameraCollisionRadius, 0, 0), CameraCollisionRadius);
@@ -98,6 +98,10 @@ void GameCamera::InitializeCameraPosition(const float& cameraAngle)
 	//target = pos;
 	eye = target + (forward * cameraDistance_);
 
+	if (fovYUpdate == true) {
+		fovYUpdate = false;
+		viewProjection_->fovAngleY = Fov;
+	}
 	viewProjection_->target = target;
 	viewProjection_->eye = eye;
 	viewProjection_->UpdateMatrix();
@@ -114,37 +118,6 @@ void GameCamera::Update() {
 		}
 	}
 
-	if (FreeCamera == false) {
-		if (cameraMode == false) {
-
-			if (Input::GetInstance()->PushKey(DIK_UP)) {
-				mouseMoved.x += 0.001f;
-			}
-			if (Input::GetInstance()->PushKey(DIK_DOWN)) {
-				mouseMoved.x -= 0.001f;
-			}
-			PlaySceneCamera();
-		}
-		else {
-			SceneCamera();
-		}
-		//オブジェクトが挟まったらオブジェクトの前にカメラを持ってくる
-		CheckBetweenToCameraCollider();
-		CameraCollider->Update(MyMath::Translation(eye));
-
-		if (CameraCollider->GetSphereMeshHit()) {
-			CameraCollider->SphereMeshHitReset();
-		}
-	}
-	else {
-
-
-		target = SetTargetVec;
-		eye = SetEyeVec;
-
-		LookDownCamUpdate();
-	}
-
 	if (Input::GetInstance()->TriggerKey(DIK_F2)) {
 		if (debugMode == false) {
 			debugMode = true;
@@ -152,6 +125,43 @@ void GameCamera::Update() {
 		else {
 			debugMode = false;
 		}
+	}
+
+	if (FreeCamera == false) {
+		{
+			//if (cameraMode == false) {
+			//	if (Input::GetInstance()->PushKey(DIK_UP)) {
+			//		mouseMoved.x += 0.001f;
+			//	}
+			//	if (Input::GetInstance()->PushKey(DIK_DOWN)) {
+			//		mouseMoved.x -= 0.001f;
+			//	}
+			//	PlaySceneCamera();
+			//}
+			//else {
+			//	SceneCamera();
+			//}
+			////オブジェクトが挟まったらオブジェクトの前にカメラを持ってくる
+			//CheckBetweenToCameraCollider();
+			//CameraCollider->Update(MyMath::Translation(eye));
+			//if (CameraCollider->GetSphereMeshHit()) {
+			//	CameraCollider->SphereMeshHitReset();
+			//}
+		}
+
+		LookDownCamUpdate();
+
+	}
+	else {
+
+		target = SetTargetVec;
+		eye = SetEyeVec;
+
+	}
+
+	if (fovYUpdate == true) {
+		fovYUpdate = false;
+		viewProjection_->fovAngleY = Fov;
 	}
 	viewProjection_->target = target;
 	viewProjection_->eye = eye;
@@ -406,11 +416,23 @@ bool GameCamera::CheckBetweenToCameraCollider()
 void GameCamera::LookDownCamUpdate()
 {
 	Vector3 birdCam;
-	birdCam = lookDownCamPos_;
-	birdCam.y = lookDownCamPos_.y + lookDownCamDistans_;
-	birdCam.z -= 1;
 	target = lookDownCamPos_;
-	eye = birdCam;
+
+	Vector3 rotation = Vector3( MyMath::GetAngle(45), 0, 0);
+	Matrix4 cameraRot;
+	cameraRot = MyMath::Rotation(rotation, 6);
+
+	rot = rotation;
+	CameraRot = cameraRot;
+	target = MyMath::lerp(target, lookDownCamPos_, 0.005f);
+
+	//ワールド前方ベクトル
+	Vector3 forward(0, 0, -1);
+	forward = MyMath::MatVector(CameraRot, forward);//レールカメラの回転を反映
+	forward.normalize();
+
+	//target = pos;
+	eye = target + (forward * lookDownCamDistans_);
 
 }
 
@@ -482,6 +504,12 @@ void GameCamera::SetCameraTargetAndPos(const Vector3& Target, const Vector3& Eye
 {
 	SetTargetVec = Target;
 	SetEyeVec = Eye;
+}
+
+float GameCamera::FieldOfViewY(const float& focalLengs, const float& sensor)
+{
+	fovYUpdate = true;
+	return float(2 * atan(sensor / (2 * focalLengs)));
 }
 
 
