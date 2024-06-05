@@ -37,7 +37,6 @@ void Player::Initialize(const unsigned short Attribute,ViewProjection* viewProje
 
 	speed = 1.0f;
 
-
 	// コリジョンマネージャに追加
 	float sphereF = 0;
 	playerCollider = new SphereCollider(Vector4(sphereF, playerRadius, sphereF, sphereF), playerRadius);
@@ -46,6 +45,16 @@ void Player::Initialize(const unsigned short Attribute,ViewProjection* viewProje
 	playerCollider->SetAttribute(Attribute_);
 
 	playerCollider->Update(animation->GetBonePos(0) * worldTransform_.matWorld_);
+
+	for (uint32_t i = 0; i < AttackColSphereCount; i++)
+	{
+		BladeColWorldTrans[i].scale_ = Vector3(PlayerBladeRadius, PlayerBladeRadius, PlayerBladeRadius);
+		BladeColWorldTrans[i].Initialize();
+		PlayerBladeAttackCollider[i] = new SphereCollider(Vector4(sphereF, PlayerBladeRadius, sphereF, sphereF), PlayerBladeRadius);
+		CollisionManager::GetInstance()->AddCollider(PlayerBladeAttackCollider[i]);
+		PlayerBladeAttackCollider[i]->SetAttribute(COLLISION_ATTR_NOTATTACK);
+		PlayerBladeAttackCollider[i]->Update(worldTransform_.matWorld_);
+	}
 
 }
 
@@ -72,6 +81,21 @@ void Player::Update(Input* input)
 	worldTransform_.TransferMatrix();
 	CheckHitCollision();
 	HpUpdate();
+
+	ParticleStartPos = MyMath::Vec3ToVec4(MyMath::GetWorldTransform(animation->GetBonePos(RightBoneNum) * worldTransform_.matWorld_));
+	ParticleEndPos = MyMath::Vec3ToVec4(MyMath::GetWorldTransform(animation->GetBonePos(BladeAttackEndPos) * worldTransform_.matWorld_));
+
+	BladeColRatio = MyMath::Vec4ToVec3(ParticleEndPos) - MyMath::Vec4ToVec3(ParticleStartPos);
+	ParticleMilEndPos = ParticleStartPos + MyMath::Vec3ToVec4(BladeColRatio.norm() * MaxBladeColDetection);
+	BladeColRatio = (BladeColRatio.norm() * MaxBladeColDetection) / AttackColSphereCount;
+
+	for (uint32_t i = 0; i < AttackColSphereCount; i++)
+	{
+		BladeColWorldTrans[i].translation_ = MyMath::Vec4ToVec3(ParticleStartPos) + (BladeColRatio * static_cast<float>(i));
+		BladeColWorldTrans[i].TransferMatrix();
+		PlayerBladeAttackCollider[i]->Update(BladeColWorldTrans[i].matWorld_);
+	}
+
 }
 
 void Player::Draw(const ViewProjection& LightViewProjection_)
@@ -220,6 +244,7 @@ void Player::AttackUpdate()
 			{
 				isPreparation = true;
 				animation2->SetAnimation(static_cast<uint32_t>(PlayerAnimation::HandAttack), static_cast<uint32_t>(Numbers::Ten), playerAnimTime.BladeAttack, false);
+				BladeAttributeSet(COLLISION_ATTR_MELEEATTACK);
 			}
 		}
 		else
@@ -227,8 +252,18 @@ void Player::AttackUpdate()
 			if (animation2->GetAnimAlmostOver(BladeColEndHasten))
 			{
 				isBladeAttacking = false;
+				BladeAttributeSet(COLLISION_ATTR_MELEEATTACK);
 				CollisionManager::GetInstance()->ResetMeleeAttack();
 			}
 		}
 	}
 }
+
+void Player::BladeAttributeSet(const unsigned short Attribute_)
+{
+	for (auto&& col : PlayerBladeAttackCollider)
+	{
+		col->SetAttribute(Attribute_);
+	}
+}
+

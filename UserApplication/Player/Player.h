@@ -68,6 +68,8 @@ public:
 
 	//アタックアップデート
 	void AttackUpdate();
+	//剣の当たり判定属性更新
+	void BladeAttributeSet(const unsigned short Attribute_);
 
 	int GetLevel() const { return level; }
 	int GetExperience() const { return experience; }
@@ -90,6 +92,9 @@ private:
 	bool isAlive_ = true;
 	bool isHit_ = false;
 
+	uint32_t RightBoneNum = 34;
+	uint32_t BladeAttackEndPos = 39;
+
 	float hitCooltime_ = 5.0f;
 
 #pragma region
@@ -104,6 +109,23 @@ private:
 	uint32_t BladeMaxAttackTime = 40;
 
 	float BladeColEndHasten = 15.0f;
+#pragma endregion
+
+#pragma region
+	static const uint32_t AttackColSphereCount = 4;
+	const float MaxBladeColDetection = 100.0f;
+
+	std::array<WorldTransform, AttackColSphereCount> BladeColWorldTrans;
+	std::array<BaseCollider*, AttackColSphereCount> PlayerBladeAttackCollider;
+
+	float PlayerBladeRadius = 1.0f;
+
+	Vector3 BladeColRatio;
+
+	Vector4 ParticleStartPos;
+	Vector4 ParticleEndPos;
+	Vector4 ParticleMilEndPos;
+
 #pragma endregion
 
 #pragma region
