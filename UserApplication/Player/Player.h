@@ -83,7 +83,7 @@ private:
 	std::unique_ptr<Animation> animation;
 	std::unique_ptr<Animation> animation2;
 	Vector3 velocity_;
-	float speed = 0.1f;
+	float speed = 0.7f;
 
 
 	int hp_ = 100;

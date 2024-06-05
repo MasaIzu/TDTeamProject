@@ -17,6 +17,7 @@ void EnemyManager::Initialize(ViewProjection* viewProjection,Player* player, con
 
 void EnemyManager::Update()
 {
+	popTime--;
 	enemy_.remove_if([](std::unique_ptr<Enemy>& enemy)
 		{
 			return enemy->IsDead();
@@ -26,9 +27,9 @@ void EnemyManager::Update()
 	{
 		enemy->Update();
 	}
-	if (Input::GetInstance()->PushKey(DIK_P)) {
+	if (popTime<=0) {
 		EnemyPopComandReset();
-		//LoadEnemyPopData();
+		popTime = popResTime;
 	}
 	UpdateEnemyPopCommands();
 }

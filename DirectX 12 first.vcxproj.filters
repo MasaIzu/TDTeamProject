@@ -694,8 +694,17 @@
     <ClInclude Include="UserApplication\Enemy\EnemyManager.h">
       <Filter>UserFile\UserHeaderFile\Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\3D\Animation.h">
+      <Filter>UserFile\UserHeaderFile</Filter>
+    </ClInclude>
     <ClInclude Include="UserApplication\GameCam\GameCamera.h">
       <Filter>UserFile\UserHeaderFile</Filter>
+    </ClInclude>
+    <ClInclude Include="UserApplication\Enemy\EnemyBullet.h">
+      <Filter>UserFile\UserHeaderFile\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="UserApplication\Enemy\EnemyNormalBulletAttack.h">
+      <Filter>UserFile\UserHeaderFile\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="Banner.h">
       <Filter>UserFile\UserHeaderFile</Filter>
@@ -906,8 +915,17 @@
     <ClCompile Include="UserApplication\Enemy\EnemyManager.cpp">
       <Filter>UserFile\UserSourceFile\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\3D\Animation.cpp">
+      <Filter>UserFile\UserSourceFile</Filter>
+    </ClCompile>
     <ClCompile Include="UserApplication\GameCam\GameCamera.cpp">
       <Filter>UserFile\UserSourceFile</Filter>
+    </ClCompile>
+    <ClCompile Include="UserApplication\Enemy\EnemyBullet.cpp">
+      <Filter>UserFile\UserSourceFile\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="UserApplication\Enemy\EnemyNormalBulletAttack.cpp">
+      <Filter>UserFile\UserSourceFile\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="Banner.cpp">
       <Filter>UserFile\UserSourceFile</Filter>
