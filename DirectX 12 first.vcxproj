@@ -849,6 +849,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Banner.h" />
     <ClInclude Include="Engine\2D\ShadowMap.h" />
     <ClInclude Include="Engine\2D\Trail.h" />
     <ClInclude Include="Engine\3D\AddShield.h" />
@@ -936,6 +937,7 @@
     <ClInclude Include="UserApplication\Scene\TitleScene.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Banner.cpp" />
     <ClCompile Include="Engine\2D\ShadowMap.cpp" />
     <ClCompile Include="Engine\2D\Trail.cpp" />
     <ClCompile Include="Engine\3D\AddShield.cpp" />

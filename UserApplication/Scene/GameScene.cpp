@@ -41,9 +41,11 @@ void GameScene::Initialize() {
 	LightViewProjection->UpdateMatrix();
 
 	worldTransform_.Initialize();
-	worldTransform_.translation_ = { 50,0,0 };
-	worldTransform_.scale_ = { 10.0f,3.0f,4.0f };
+	worldTransform_.translation_ = { 0,0,0 };
+	worldTransform_.scale_ = { 1000.0f,1000.0f,1000.0f };
 	worldTransform_.TransferMatrix();
+
+	skydome.reset(Model::CreateFromOBJ("skydome",true));
 
 
 
@@ -60,6 +62,9 @@ void GameScene::Initialize() {
 	gameCameraPosition_ = player_->GetPosition();
 	gameCamera->SetLookDownPos(gameCameraPosition_);
 	gameCamera->SetLookDownDistans(gamecameraDistans_);
+
+	startBanner = std::make_unique<Banner>();
+	startBanner->Initialize();
 
 	tile.Initialize();
 
@@ -99,6 +104,7 @@ void GameScene::Update() {
 	gameCamera->SetLookDownPos(player_->GetPosition());
 	gameCamera->SetLookDownDistans(gamecameraDistans_);
 	gameCamera->Update();
+	worldTransform_.TransferMatrix();
 	player_->Update(input_);
 	enemyManager->Update();
 
@@ -108,6 +114,8 @@ void GameScene::Update() {
 	tile.Update();
 
 	randomMap->Update();
+
+	startBanner->Update();
 }
 
 void GameScene::PostEffectDraw()
@@ -161,7 +169,6 @@ void GameScene::Draw() {
 	//tile.Draw();
 
 	randomMap->Draw();
-	sprite_->Draw({ 100,100 }, { 1,1,1,1 }, 1);
 
 #pragma endregion
 
@@ -169,6 +176,7 @@ void GameScene::Draw() {
 
 	//// 3Dオブジェクト描画前処理
 	Model::PreDraw(commandList);
+	skydome->Draw(worldTransform_, *viewProjection_, *LightViewProjection.get());
 	enemyManager->Draw(*LightViewProjection.get());
 	player_->Draw(*LightViewProjection.get());
 	//3Dオブジェクト描画後処理
@@ -180,7 +188,8 @@ void GameScene::Draw() {
 
 #pragma region 前景スプライト描画
 
-
+	startBanner->Draw();
+	sprite_->Draw({ 100,100 }, { 1,1,1,1 }, 1);
 
 #pragma endregion
 }

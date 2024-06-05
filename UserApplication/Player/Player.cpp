@@ -70,6 +70,8 @@ void Player::Update(Input* input)
 	}
 	animation2->Update();
 	worldTransform_.TransferMatrix();
+	CheckHitCollision();
+	HpUpdate();
 }
 
 void Player::Draw(const ViewProjection& LightViewProjection_)
@@ -124,6 +126,50 @@ void Player::FbxDraw(const ViewProjection& lightViewProjection_)
 void Player::FbxShadowDraw(const ViewProjection& lightViewProjection_)
 {
 	animation->FbxShadowDraw(worldTransform_, lightViewProjection_);
+}
+
+void Player::CheckHitCollision()
+{
+	if (playerCollider->GetHit())
+	{
+		isHit_ = true;
+		playerCollider->Reset();//当たった判定をリセット
+	}
+
+
+}
+
+void Player::HpUpdate()
+{
+	//多段攻撃を防ぐための処理
+	if (hitCooltime_ <= 0)
+	{
+		isHit_ = false;
+		hitCooltime_ = 5.0f;
+	}
+
+	if (isHit_ == true)
+	{
+		//ヒットのクールタイムが初期値だったら
+		if (hitCooltime_ >= 5.0f)
+		{
+			hp_ -= 1;
+		}
+
+		hitCooltime_--;
+	}
+
+
+	if (hp_ > FloatNumber(fNumbers::fZero))
+	{
+
+	}
+	else
+	{
+		hp_ = FloatNumber(fNumbers::fZero);//0固定
+		isAlive_ = false;
+		playerCollider->SetAttribute(COLLISION_ATTR_INVINCIBLE);
+	}
 }
 
 void Player::AddExperience(int amount)
