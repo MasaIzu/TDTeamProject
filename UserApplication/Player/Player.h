@@ -13,6 +13,7 @@
 #include<memory>
 #include<vector>
 #include <Animation.h>
+#include "Numbers.h"
 
 class Enemy;
 
@@ -40,6 +41,12 @@ public:
 	//描画
 	void FbxShadowDraw(const ViewProjection& lightViewProjection_);
 
+	void CheckHitCollision();
+
+	void HpUpdate();
+	
+	int GetHp() { return hp_; }
+
 	//経験値の増加関数
 	void AddExperience(int amount);
 
@@ -65,6 +72,12 @@ private:
 	float speed = 0.1f;
 
 
+	int hp_ = 100;
+	bool isAlive_ = true;
+	bool isHit_ = false;
+
+	float hitCooltime_ = 5.0f;
+
 #pragma region
 	int level = 1;//レベル
 	int experience = 0;//経験値
@@ -74,7 +87,6 @@ private:
 #pragma endregion
 
 #pragma region
-	bool isHit_ = false;
 	unsigned short Attribute_;
 	//当たり判定
 	BaseCollider* playerCollider;
