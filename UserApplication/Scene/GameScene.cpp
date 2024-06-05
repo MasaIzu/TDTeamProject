@@ -138,6 +138,8 @@ void GameScene::PostEffectDraw()
 
 	player_->FbxDraw(*LightViewProjection.get());
 
+	player_->ParticleDraw();
+
 	PostEffect::PostDrawScene();
 }
 
@@ -147,7 +149,7 @@ void GameScene::BackgroundDraw()
 
 void GameScene::CSUpdate()
 {
-
+	player_->CSUpdate(DirectXCore::GetInstance()->GetCommandList());
 
 }
 
