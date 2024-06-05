@@ -14,6 +14,7 @@
 #include<vector>
 #include <Animation.h>
 #include "Numbers.h"
+#include <ParticleEditor.h>
 
 class Enemy;
 
@@ -28,24 +29,28 @@ class Player
 {
 public:
 
-	//ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ÆƒfƒXƒgƒ‰ƒNƒ^
+	//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã¨ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	Player();
 	~Player();
 
-	//‰Šú‰»
+	//åˆæœŸåŒ–
 	void Initialize(const unsigned short Attribute,ViewProjection* viewProjection_);
-	//XV
+	//æ›´æ–°
 	void Update(Input* input);
-	//•`‰æ
+	//æç”»
 	void Draw(const ViewProjection& LightViewProjection_);
 
 	void Move(Input* input);
 
 	Vector3 GetPosition() { return worldTransform_.translation_; }
 
-	//•`‰æ
+	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã‚’å‡ºã™ç”¨
+	void CSUpdate(ID3D12GraphicsCommandList* cmdList);
+	void ParticleDraw();
+
+	//æç”»
 	void FbxDraw(const ViewProjection& lightViewProjection_);
-	//•`‰æ
+	//æç”»
 	void FbxShadowDraw(const ViewProjection& lightViewProjection_);
 
 	void CheckHitCollision();
@@ -54,21 +59,21 @@ public:
 	
 	int GetHp() { return hp_; }
 
-	//ŒoŒ±’l‚Ì‘‰ÁŠÖ”
+	//çµŒé¨“å€¤ã®å¢—åŠ é–¢æ•°
 	void AddExperience(int amount);
 
-	//ƒŒƒxƒ‹ƒAƒbƒvŠÖ”
+	//ãƒ¬ãƒ™ãƒ«ã‚¢ãƒƒãƒ—é–¢æ•°
 	void LevelUp();
 
-	//Ÿ‚ÌƒŒƒxƒ‹ƒAƒbƒv‚É•K—v‚ÈŒoŒ±’l‚ğŒvZ(“™”ä”—ñ‚ÅŒvZ)
+	//æ¬¡ã®ãƒ¬ãƒ™ãƒ«ã‚¢ãƒƒãƒ—ã«å¿…è¦ãªçµŒé¨“å€¤ã‚’è¨ˆç®—(ç­‰æ¯”æ•°åˆ—ã§è¨ˆç®—)
 	int CalculateNextLevelExperience() const;
 
-	//ƒvƒŒ[ƒ„[‚ÌUŒ‚
+	//ãƒ—ãƒ¬ãƒ¼ãƒ¤ãƒ¼ã®æ”»æ’ƒ
 	void PlayerBladeAttack();
 
-	//ƒAƒ^ƒbƒNƒAƒbƒvƒf[ƒg
+	//ã‚¢ã‚¿ãƒƒã‚¯ã‚¢ãƒƒãƒ—ãƒ‡ãƒ¼ãƒˆ
 	void AttackUpdate();
-	//Œ•‚Ì“–‚½‚è”»’è‘®«XV
+	//å‰£ã®å½“ãŸã‚Šåˆ¤å®šå±æ€§æ›´æ–°
 	void BladeAttributeSet(const unsigned short Attribute_);
 
 	int GetLevel() const { return level; }
@@ -79,9 +84,9 @@ private:
 	Input* input_ = nullptr;
 	WorldTransform worldTransform_;
 	ViewProjection* viewProjection_;
-	std::unique_ptr<Model> model_;// 3Dƒ‚ƒfƒ‹
+	std::unique_ptr<Model> model_;// 3Dãƒ¢ãƒ‡ãƒ«
 	std::unique_ptr<FBXObject3d> playerFbx_;
-	//ƒAƒjƒ[ƒVƒ‡ƒ“ƒNƒ‰ƒX
+	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚¯ãƒ©ã‚¹
 	std::unique_ptr<Animation> animation;
 	std::unique_ptr<Animation> animation2;
 	Vector3 velocity_;
@@ -98,7 +103,7 @@ private:
 	float hitCooltime_ = 5.0f;
 
 #pragma region
-	//ƒAƒjƒ[ƒVƒ‡ƒ“ƒ^ƒCƒ€
+	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚¿ã‚¤ãƒ 
 	PlayerAnimTime playerAnimTime;
 
 	bool isBladeAttack = false;
@@ -117,6 +122,7 @@ private:
 
 	std::array<WorldTransform, AttackColSphereCount> BladeColWorldTrans;
 	std::array<BaseCollider*, AttackColSphereCount> PlayerBladeAttackCollider;
+	std::unique_ptr<ParticleEditor> particleEditor;
 
 	float PlayerBladeRadius = 1.0f;
 
@@ -129,16 +135,16 @@ private:
 #pragma endregion
 
 #pragma region
-	int level = 1;//ƒŒƒxƒ‹
-	int experience = 0;//ŒoŒ±’l
-	int experienceToNextLevel;//Ÿ‚ÌƒŒƒxƒ‹‚É•K—v‚ÈŒoŒ±’l
+	int level = 1;//ãƒ¬ãƒ™ãƒ«
+	int experience = 0;//çµŒé¨“å€¤
+	int experienceToNextLevel;//æ¬¡ã®ãƒ¬ãƒ™ãƒ«ã«å¿…è¦ãªçµŒé¨“å€¤
 	const int baseExperience = 50;
 	const double ratio = 1.2;
 #pragma endregion
 
 #pragma region
 	unsigned short Attribute_;
-	//“–‚½‚è”»’è
+	//å½“ãŸã‚Šåˆ¤å®š
 	BaseCollider* playerCollider;
 	CollisionManager* collisionManager = nullptr;
 	float playerRadius = 0.5f;
