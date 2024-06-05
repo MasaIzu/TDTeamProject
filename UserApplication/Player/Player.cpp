@@ -17,7 +17,7 @@ Player::~Player()
 void Player::Initialize(const unsigned short Attribute,ViewProjection* viewProjection)
 {
 	input_ = Input::GetInstance();
-	model_.reset(Model::CreateFromOBJ("cube", true));
+	model_.reset(Model::CreateFromOBJ("sphere", true));
 	playerFbx_;
 
 	worldTransform_.Initialize();
@@ -105,6 +105,11 @@ void Player::Update(Input* input)
 void Player::Draw(const ViewProjection& LightViewProjection_)
 {
 	//model_->Draw(worldTransform_, *viewProjection_, LightViewProjection_);
+
+	for ( uint32_t i = 0; i < AttackColSphereCount; i++ )
+	{
+		model_->Draw(BladeColWorldTrans[ i ],*viewProjection_,LightViewProjection_);
+	}
 }
 
 void Player::Move(Input* input)

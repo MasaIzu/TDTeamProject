@@ -118,7 +118,7 @@ private:
 
 #pragma region
 	static const uint32_t AttackColSphereCount = 4;
-	const float MaxBladeColDetection = 100.0f;
+	const float MaxBladeColDetection = 15.0f;
 
 	std::array<WorldTransform, AttackColSphereCount> BladeColWorldTrans;
 	std::array<BaseCollider*, AttackColSphereCount> PlayerBladeAttackCollider;
