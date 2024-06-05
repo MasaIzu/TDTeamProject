@@ -16,6 +16,13 @@
 
 class Enemy;
 
+struct PlayerAnimTime
+{
+	const uint32_t Step = 30;
+	const uint32_t DieMotion = 120;
+	const uint32_t BladeAttack = 60;
+};
+
 class Player
 {
 public:
@@ -49,21 +56,42 @@ public:
 	//次のレベルアップに必要な経験値を計算(等比数列で計算)
 	int CalculateNextLevelExperience() const;
 
+	//プレーヤーの攻撃
+	void PlayerBladeAttack();
+
+	//アタックアップデート
+	void AttackUpdate();
+
 	int GetLevel() const { return level; }
 	int GetExperience() const { return experience; }
 	int GetExperienceToNextLevel() const { return experienceToNextLevel; }
 
 private:
-
+	Input* input_ = nullptr;
 	WorldTransform worldTransform_;
 	ViewProjection* viewProjection_;
 	std::unique_ptr<Model> model_;// 3Dモデル
 	std::unique_ptr<FBXObject3d> playerFbx_;
 	//アニメーションクラス
 	std::unique_ptr<Animation> animation;
+	std::unique_ptr<Animation> animation2;
 	Vector3 velocity_;
 	float speed = 0.1f;
 
+
+#pragma region
+	//アニメーションタイム
+	PlayerAnimTime playerAnimTime;
+
+	bool isBladeAttack = false;
+	bool isBladeAttacking = false;
+	bool isPreparation = false;
+
+	uint32_t BladeAttackTime = 30;
+	uint32_t BladeMaxAttackTime = 40;
+
+	float BladeColEndHasten = 15.0f;
+#pragma endregion
 
 #pragma region
 	int level = 1;//レベル
