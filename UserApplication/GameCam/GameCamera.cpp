@@ -159,6 +159,10 @@ void GameCamera::Update() {
 
 	}
 
+	if (fovYUpdate == true) {
+		fovYUpdate = false;
+		viewProjection_->fovAngleY = Fov;
+	}
 	viewProjection_->target = target;
 	viewProjection_->eye = eye;
 	viewProjection_->UpdateMatrix();
@@ -412,11 +416,23 @@ bool GameCamera::CheckBetweenToCameraCollider()
 void GameCamera::LookDownCamUpdate()
 {
 	Vector3 birdCam;
-	birdCam = lookDownCamPos_;
-	birdCam.y = lookDownCamPos_.y + lookDownCamDistans_;
-	birdCam.z -= 1;
 	target = lookDownCamPos_;
-	eye = birdCam;
+
+	Vector3 rotation = Vector3( MyMath::GetAngle(45), 0, 0);
+	Matrix4 cameraRot;
+	cameraRot = MyMath::Rotation(rotation, 6);
+
+	rot = rotation;
+	CameraRot = cameraRot;
+	target = MyMath::lerp(target, lookDownCamPos_, 0.005f);
+
+	//ワールド前方ベクトル
+	Vector3 forward(0, 0, -1);
+	forward = MyMath::MatVector(CameraRot, forward);//レールカメラの回転を反映
+	forward.normalize();
+
+	//target = pos;
+	eye = target + (forward * lookDownCamDistans_);
 
 }
 

@@ -27,6 +27,8 @@
 #include "CSVLoader.h"
 #include "EnemyManager.h"
 
+#include "Banner.h"
+
 /// <summary>
 /// ゲームシーン
 /// </summary>
@@ -99,4 +101,8 @@ private: // メンバ変数
 	std::unique_ptr<GameCamera> gameCamera;
 	Vector3 gameCameraPosition_;
 	float gamecameraDistans_;
+
+	std::unique_ptr<Model> skydome;
+
+	std::unique_ptr<Banner> startBanner;
 };
