@@ -28,11 +28,11 @@ void Enemy::Initialize(ViewProjection* viewProjection,Vector3 enemyPos,int actio
 	enemyNormalBullet = std::make_unique<EnemyNormalBulletAttack>();
 	enemyNormalBullet->Initialize(model_.get());
 
-	// コリジョンマネージャに追加
+	// 繧ｳ繝ｪ繧ｸ繝ｧ繝ｳ繝槭ロ繝ｼ繧ｸ繝｣縺ｫ霑ｽ蜉
 	float sphereF = 0;
 	enemyCollider = new SphereCollider(Vector4(sphereF, enemyRadius, sphereF, sphereF), enemyRadius);
 	CollisionManager::GetInstance()->AddCollider(enemyCollider);
-	enemyCollider->SetAttribute(COLLISION_ATTR_ALLIES);
+	enemyCollider->SetAttribute(COLLISION_ATTR_ENEMYS);
 	Attribute_ = Attribute;
 	enemyCollider->Update(worldTransform_.matWorld_);
 	//enemyCollider->Update(animation->GetBonePos(0) * worldTransform_.matWorld_);
@@ -40,6 +40,11 @@ void Enemy::Initialize(ViewProjection* viewProjection,Vector3 enemyPos,int actio
 
 void Enemy::Update()
 {
+	if ( enemyCollider->GetMeleeHit() )
+	{
+		enemyCollider->ResetMeleeHit();
+	}
+
 	Move();
 	//enemyNormalBullet->Update(this);
 	worldTransform_.TransferMatrix();
