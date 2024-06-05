@@ -876,6 +876,7 @@
     <ClInclude Include="UserApplication\Enemy\Enemy.h" />
     <ClInclude Include="UserApplication\Enemy\EnemyBullet.h" />
     <ClInclude Include="UserApplication\Enemy\EnemyManager.h" />
+    <ClInclude Include="UserApplication\Enemy\EnemyNormalBulletAttack.h" />
     <ClInclude Include="UserApplication\GameCam\GameCamera.h" />
     <ClInclude Include="UserApplication\Player\Player.h" />
     <ClInclude Include="UserApplication\RandomMap.h" />
@@ -955,6 +956,7 @@
     <ClCompile Include="Engine\3D\FBXObject3d.cpp" />
     <ClCompile Include="Engine\3D\Sprite3D.cpp" />
     <ClCompile Include="UserApplication\Enemy\EnemyBullet.cpp" />
+    <ClCompile Include="UserApplication\Enemy\EnemyNormalBulletAttack.cpp" />
     <ClCompile Include="UserApplication\RandomMap.cpp" />
     <ClCompile Include="UserApplication\Tile.cpp" />
     <ClCompile Include="UserApplication\Enemy\Enemy.cpp" />

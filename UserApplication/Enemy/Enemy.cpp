@@ -25,6 +25,9 @@ void Enemy::Initialize(ViewProjection* viewProjection,Vector3 enemyPos,int actio
 
 	player_ = player;
 
+	enemyNormalBullet = std::make_unique<EnemyNormalBulletAttack>();
+	enemyNormalBullet->Initialize(model_.get());
+
 	// コリジョンマネージャに追加
 	float sphereF = 0;
 	enemyCollider = new SphereCollider(Vector4(sphereF, enemyRadius, sphereF, sphereF), enemyRadius);
@@ -38,6 +41,7 @@ void Enemy::Initialize(ViewProjection* viewProjection,Vector3 enemyPos,int actio
 void Enemy::Update()
 {
 	Move();
+	//enemyNormalBullet->Update(this);
 	worldTransform_.TransferMatrix();
 	enemyCollider->Update(worldTransform_.matWorld_);
 }
@@ -45,6 +49,7 @@ void Enemy::Update()
 void Enemy::Draw(const ViewProjection& LightViewProjection_)
 {
 	model_->Draw(worldTransform_, *viewProjection_, LightViewProjection_);
+	//enemyNormalBullet->Draw(LightViewProjection_);
 }
 
 void Enemy::Move()
@@ -53,5 +58,17 @@ void Enemy::Move()
 	enemyMovement.normalize();
 	worldTransform_.translation_ += (enemyMovement*enemySpeed);
 
+	
+
+}
+
+void Enemy::BulletAttck()
+{
+	//enemyNormalBullet->Attck(viewProjection_);
+}
+
+Vector3 Enemy::GetPosition()
+{
+	return worldTransform_.translation_;
 }
 

@@ -703,6 +703,9 @@
     <ClInclude Include="UserApplication\Enemy\EnemyBullet.h">
       <Filter>UserFile\UserHeaderFile\Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="UserApplication\Enemy\EnemyNormalBulletAttack.h">
+      <Filter>UserFile\UserHeaderFile\Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -910,6 +913,9 @@
       <Filter>UserFile\UserSourceFile</Filter>
     </ClCompile>
     <ClCompile Include="UserApplication\Enemy\EnemyBullet.cpp">
+      <Filter>UserFile\UserSourceFile\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="UserApplication\Enemy\EnemyNormalBulletAttack.cpp">
       <Filter>UserFile\UserSourceFile\Enemy</Filter>
     </ClCompile>
   </ItemGroup>

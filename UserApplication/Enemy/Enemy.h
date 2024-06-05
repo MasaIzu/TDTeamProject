@@ -15,6 +15,9 @@
 
 #include "Vector4.h"
 
+#include "EnemyBullet.h"
+#include "EnemyNormalBulletAttack.h"
+
 #include<memory>
 #include<vector>
 #include <Animation.h>
@@ -48,7 +51,9 @@ public:
 	Player* GetPlayer() { return player_; }
 	void SetPlayer(Player* player) { player_ = player_; }
 
-	
+	void BulletAttck();
+
+	Vector3 GetPosition();
 
 private:
 
@@ -57,6 +62,8 @@ private:
 	std::unique_ptr<Model> model_;// 3Dƒ‚ƒfƒ‹
 	Player* player_;
 
+	std::list<std::unique_ptr<EnemyBullet>> EnemyBullets_;
+	std::unique_ptr<EnemyNormalBulletAttack> enemyNormalBullet;
 
 	Vector3 velocity_;
 	float speed = 0.1f;

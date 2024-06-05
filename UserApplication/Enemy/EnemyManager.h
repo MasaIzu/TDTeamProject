@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "Vector3.h"
 #include "Enemy.h"
 
@@ -9,7 +9,7 @@
 
 class Player;
 ///<summary>
-///G‹›“G‚Æƒ{ƒX‚Ì¶¬‚Ì‚Ü‚Æ‚ß
+///é›‘é­šæ•µã¨ãƒœã‚¹ã®ç”Ÿæˆã®ã¾ã¨ã‚
 ///</summary>
 class EnemyManager {
 public:
@@ -19,40 +19,40 @@ public:
 	void Initialize(ViewProjection* viewProjection,Player* player, const unsigned short Attribute);
 
 	///<summary>
-	////XV
+	////æ›´æ–°
 	///</summary>
 	void Update();
 	///<summary>
-	////•`‰æ
+	////æç”»
 	///</summary>
 	void Draw(const ViewProjection& LightViewProjection_);
 
 	///<summary>
-	////ƒvƒŒƒCƒ„[‚ÌƒZƒbƒg
+	////ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ã‚»ãƒƒãƒˆ
 	///</summary>
 	void SetPlayer(Player* player) { player_ = player; };
 
 
 	/// <summary>
-	/// “G‚ÌCSV‚Ì“Ç‚İ‚İ
+	/// æ•µã®CSVã®èª­ã¿è¾¼ã¿
 	/// </summary>
 	void LoadEnemyPopData();
 
-	//CSVƒŠƒZƒbƒg
+	//CSVãƒªã‚»ãƒƒãƒˆ
 	void EnemyPopComandReset();
 
 	/// <summary>
-	/// “G‚ÌCSV‚Ì‰ğÍ
+	/// æ•µã®CSVã®è§£æ
 	/// </summary>
 	void UpdateEnemyPopCommands();
 
-	//“G‚Ì“o˜^
+	//æ•µã®ç™»éŒ²
 	void ExistenceEnemy(const Vector3& EnemyPos);
 
-	//ƒtƒHƒ‹ƒ_ˆÈ‰º‚Ìƒtƒ@ƒCƒ‹ˆê——‚ğæ“¾‚·‚éŠÖ”
-	//folderPath  ƒtƒHƒ‹ƒ_ƒpƒX
-	//file_names  ƒtƒ@ƒCƒ‹–¼ˆê——
-	//return        true:¬Œ÷,false : ¸”s
+	//ãƒ•ã‚©ãƒ«ãƒ€ä»¥ä¸‹ã®ãƒ•ã‚¡ã‚¤ãƒ«ä¸€è¦§ã‚’å–å¾—ã™ã‚‹é–¢æ•°
+	//folderPath  ãƒ•ã‚©ãƒ«ãƒ€ãƒ‘ã‚¹
+	//file_names  ãƒ•ã‚¡ã‚¤ãƒ«åä¸€è¦§
+	//return        true:æˆåŠŸ,false : å¤±æ•—
 	bool getFileNames(std::string folderPath, std::vector<std::string>& file_names);
 private:
 
@@ -61,9 +61,12 @@ private:
 	bool waitflag = false;
 	int waitTimer = 0;
 
+	int popTime = 0;
+	int popResTime = 120;
+
 	std::list<std::unique_ptr<Enemy>> enemy_;
 
-	//“G”­¶ƒRƒ}ƒ“ƒh
+	//æ•µç™ºç”Ÿã‚³ãƒãƒ³ãƒ‰
 	std::stringstream enemyPopCommands;
 
 	ViewProjection* view;
