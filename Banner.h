@@ -9,6 +9,8 @@ public:
 	void Initialize();
 	void Update();
 	void Draw();
+
+	bool GetAnimEnd() { return isAnimEnd; };
 private:
 	std::unique_ptr<Sprite> start_;
 	Vector2 startPos_;
