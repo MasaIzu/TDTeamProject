@@ -37,7 +37,7 @@ void Player::Initialize(const unsigned short Attribute,ViewProjection* viewProje
 
 	speed = 1.0f;
 
-	// ƒRƒŠƒWƒ‡ƒ“ƒ}ƒl[ƒWƒƒ‚É’Ç‰Á
+	// ã‚³ãƒªã‚¸ãƒ§ãƒ³ãƒãƒãƒ¼ã‚¸ãƒ£ã«è¿½åŠ 
 	float sphereF = 0;
 	playerCollider = new SphereCollider(Vector4(sphereF, playerRadius, sphereF, sphereF), playerRadius);
 	CollisionManager::GetInstance()->AddCollider(playerCollider);
@@ -56,6 +56,10 @@ void Player::Initialize(const unsigned short Attribute,ViewProjection* viewProje
 		PlayerBladeAttackCollider[i]->Update(worldTransform_.matWorld_);
 	}
 
+	int MaxParticleCountB = 20000;
+	particleEditor = std::make_unique<ParticleEditor>();
+	particleEditor->Initialize(MaxParticleCountB,true,"HonooBlade");
+	particleEditor->SetTextureHandle(TextureManager::Load("sprite/effect4.png"));
 }
 
 void Player::Update(Input* input)
@@ -141,6 +145,16 @@ void Player::Move(Input* input)
 	ImGui::End();
 }
 
+void Player::CSUpdate(ID3D12GraphicsCommandList* cmdList)
+{
+	particleEditor->CSUpdate(cmdList,ParticleStartPos,ParticleEndPos,static_cast< uint32_t >( isBladeAttacking ));
+}
+
+void Player::ParticleDraw()
+{
+	particleEditor->Draw(*viewProjection_);
+}
+
 void Player::FbxDraw(const ViewProjection& lightViewProjection_)
 {
 	//animation->FbxDraw(worldTransform_, *viewProjection_, lightViewProjection_);
@@ -157,7 +171,7 @@ void Player::CheckHitCollision()
 	if (playerCollider->GetHit())
 	{
 		isHit_ = true;
-		playerCollider->Reset();//“–‚½‚Á‚½”»’è‚ğƒŠƒZƒbƒg
+		playerCollider->Reset();//å½“ãŸã£ãŸåˆ¤å®šã‚’ãƒªã‚»ãƒƒãƒˆ
 	}
 
 
@@ -165,7 +179,7 @@ void Player::CheckHitCollision()
 
 void Player::HpUpdate()
 {
-	//‘½’iUŒ‚‚ğ–h‚®‚½‚ß‚Ìˆ—
+	//å¤šæ®µæ”»æ’ƒã‚’é˜²ããŸã‚ã®å‡¦ç†
 	if (hitCooltime_ <= 0)
 	{
 		isHit_ = false;
@@ -174,7 +188,7 @@ void Player::HpUpdate()
 
 	if (isHit_ == true)
 	{
-		//ƒqƒbƒg‚ÌƒN[ƒ‹ƒ^ƒCƒ€‚ª‰Šú’l‚¾‚Á‚½‚ç
+		//ãƒ’ãƒƒãƒˆã®ã‚¯ãƒ¼ãƒ«ã‚¿ã‚¤ãƒ ãŒåˆæœŸå€¤ã ã£ãŸã‚‰
 		if (hitCooltime_ >= 5.0f)
 		{
 			hp_ -= 1;
@@ -190,7 +204,7 @@ void Player::HpUpdate()
 	}
 	else
 	{
-		hp_ = FloatNumber(fNumbers::fZero);//0ŒÅ’è
+		hp_ = FloatNumber(fNumbers::fZero);//0å›ºå®š
 		isAlive_ = false;
 		playerCollider->SetAttribute(COLLISION_ATTR_INVINCIBLE);
 	}
@@ -213,7 +227,7 @@ void Player::LevelUp()
 
 int Player::CalculateNextLevelExperience() const
 {
-	return static_cast<int>(baseExperience * pow(ratio, level - 1));//‚±‚Ìê‡‚Í1¨2‚Í100ŒoŒ±’lA‚»‚êˆÈ~‚Í‘O‚ÌƒŒƒxƒ‹ƒAƒbƒv‚Å•K—v‚É‚È‚Á‚½ŒoŒ±’l‚Ì1.5”{•K—v‚É‚È‚é‘z’è
+	return static_cast<int>(baseExperience * pow(ratio, level - 1));//ã“ã®å ´åˆã¯1â†’2ã¯100çµŒé¨“å€¤ã€ãã‚Œä»¥é™ã¯å‰ã®ãƒ¬ãƒ™ãƒ«ã‚¢ãƒƒãƒ—ã§å¿…è¦ã«ãªã£ãŸçµŒé¨“å€¤ã®1.5å€å¿…è¦ã«ãªã‚‹æƒ³å®š
 }
 
 void Player::PlayerBladeAttack()
