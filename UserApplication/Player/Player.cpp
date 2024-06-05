@@ -86,8 +86,8 @@ void Player::Update(Input* input)
 	CheckHitCollision();
 	HpUpdate();
 
-	ParticleStartPos = MyMath::Vec3ToVec4(MyMath::GetWorldTransform(animation2->GetBonePos(RightBoneNum) * worldTransform_.matWorld_));
-	ParticleEndPos = MyMath::Vec3ToVec4(MyMath::GetWorldTransform(animation2->GetBonePos(BladeAttackEndPos) * worldTransform_.matWorld_));
+	ParticleStartPos = MyMath::Vec3ToVec4(MyMath::GetWorldTransform(animation->GetBonePos(RightBoneNum) * worldTransform_.matWorld_));
+	ParticleEndPos = MyMath::Vec3ToVec4(MyMath::GetWorldTransform(animation->GetBonePos(BladeAttackEndPos) * worldTransform_.matWorld_));
 
 	BladeColRatio = MyMath::Vec4ToVec3(ParticleEndPos) - MyMath::Vec4ToVec3(ParticleStartPos);
 	ParticleMilEndPos = ParticleStartPos + MyMath::Vec3ToVec4(BladeColRatio.norm() * MaxBladeColDetection);
