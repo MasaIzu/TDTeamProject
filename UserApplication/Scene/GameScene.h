@@ -104,5 +104,6 @@ private: // メンバ変数
 
 	std::unique_ptr<Model> skydome;
 
+	std::unique_ptr<Sprite> mouseSprite_ = nullptr;
 	std::unique_ptr<Banner> startBanner;
 };

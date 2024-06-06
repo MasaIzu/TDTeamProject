@@ -55,6 +55,7 @@ public:
 
 	Vector3 GetPosition();
 
+
 private:
 
 	WorldTransform worldTransform_;
@@ -73,6 +74,7 @@ private:
 	bool isDead_ = false;
 
 	float enemySpeed = 0.3f;
+	int livingTimer_ = 300;
 
 #pragma region
 
@@ -81,7 +83,10 @@ private:
 	//当たり判定
 	BaseCollider* enemyCollider;
 	CollisionManager* collisionManager = nullptr;
-	float enemyRadius = 3.0f;
+	float enemyRadius = 10.0f;
+
+	WorldTransform debugTransform;
+	std::unique_ptr<Model> debugModel_;
 
 #pragma endregion
 };

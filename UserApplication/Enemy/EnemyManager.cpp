@@ -32,22 +32,24 @@ void EnemyManager::Update()
 		popTime = popResTime;
 	}
 	UpdateEnemyPopCommands();
+
+
 }
 
 void EnemyManager::Draw(const ViewProjection& LightViewProjection_)
 {
 	for (std::unique_ptr<Enemy>& enemy : enemy_)
 	{
-		//“GƒLƒƒƒ‰‚Ì•`‰æ
+		//æ•µã‚­ãƒ£ãƒ©ã®æç”»
 		enemy->Draw(LightViewProjection_);
 	}
 }
 
 void EnemyManager::LoadEnemyPopData()
 {
-	//ƒtƒ@ƒCƒ‹‚ğŠJ‚­
+	//ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ã
 	std::ifstream file;
-	//“G‚ÌoŒ»CSV‚Ì–¼‘O
+	//æ•µã®å‡ºç¾CSVã®åå‰
 	std::vector<std::string> CSVFileNames;
 	getFileNames("Resources/EnemyCSVFile", CSVFileNames);
 	int fileNmb = 0;
@@ -61,10 +63,10 @@ void EnemyManager::LoadEnemyPopData()
 
 	assert(file.is_open());
 
-	//ƒtƒ@ƒCƒ‹‚ğ“à—e‚ğ•¶š—ñƒXƒgƒŠ[ƒ€‚ÉƒRƒs[
+	//ãƒ•ã‚¡ã‚¤ãƒ«ã‚’å†…å®¹ã‚’æ–‡å­—åˆ—ã‚¹ãƒˆãƒªãƒ¼ãƒ ã«ã‚³ãƒ”ãƒ¼
 	enemyPopCommands << file.rdbuf();
 
-	//ƒtƒ@ƒCƒ‹‚ğ•Â‚¶‚é
+	//ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‰ã˜ã‚‹
 	file.close();
 }
 
@@ -82,60 +84,60 @@ void EnemyManager::UpdateEnemyPopCommands()
 		waitTimer--;
 		if (waitTimer <= 0)
 		{
-			//‘Ò‹@Š®—¹
+			//å¾…æ©Ÿå®Œäº†
 			waitflag = false;
 		}
 		return;
 	}
 
-	//1s•ª‚Ì•¶š—ñ‚ğ“ü‚ê‚é•Ï”
+	//1è¡Œåˆ†ã®æ–‡å­—åˆ—ã‚’å…¥ã‚Œã‚‹å¤‰æ•°
 	std::string line;
 
-	//ƒRƒ}ƒ“ƒhÀsƒ‹[ƒv
+	//ã‚³ãƒãƒ³ãƒ‰å®Ÿè¡Œãƒ«ãƒ¼ãƒ—
 	while (getline(enemyPopCommands, line))
 	{
-		//1s•ª‚Ì•¶š—ñ‚ğƒXƒgƒŠ[ƒ€‚É•ÏŠ·‚µ‚Ä‰ğÍ‚µ‚â‚·‚­‚·‚é
+		//1è¡Œåˆ†ã®æ–‡å­—åˆ—ã‚’ã‚¹ãƒˆãƒªãƒ¼ãƒ ã«å¤‰æ›ã—ã¦è§£æã—ã‚„ã™ãã™ã‚‹
 		std::istringstream line_stream(line);
 
 		std::string word;
-		//,‹æØ‚è‚Ås‚Ìæ“ª•¶š—ñ‚ğæ“¾
+		//,åŒºåˆ‡ã‚Šã§è¡Œã®å…ˆé ­æ–‡å­—åˆ—ã‚’å–å¾—
 		getline(line_stream, word, ',');
 
-		//"//"‚©‚çn‚Ü‚és‚ÍƒRƒƒ“ƒg
+		//"//"ã‹ã‚‰å§‹ã¾ã‚‹è¡Œã¯ã‚³ãƒ¡ãƒ³ãƒˆ
 		if (word.find("//") == 0)
 		{
-			//ƒRƒƒ“ƒgs‚Í”ò‚Î‚·
+			//ã‚³ãƒ¡ãƒ³ãƒˆè¡Œã¯é£›ã°ã™
 			continue;
 		}
-		//POPƒRƒ}ƒ“ƒh
+		//POPã‚³ãƒãƒ³ãƒ‰
 		if (word.find("POP") == 0)
 		{
-			//xÀ•W
+			//xåº§æ¨™
 			getline(line_stream, word, ',');
 			float x = (float)std::atof(word.c_str());
-			//yÀ•W
+			//yåº§æ¨™
 			getline(line_stream, word, ',');
 			float y = (float)std::atof(word.c_str());
-			//zÀ•W
+			//zåº§æ¨™
 			getline(line_stream, word, ',');
 			float z = (float)std::atof(word.c_str());
-			//“G‚ğ”­¶‚³‚¹‚é
+			//æ•µã‚’ç™ºç”Ÿã•ã›ã‚‹
 			ExistenceEnemy(Vector3(x, y, z));
 		}
 
-		//WAITƒRƒ}ƒ“ƒh
+		//WAITã‚³ãƒãƒ³ãƒ‰
 		else if (word.find("WAIT") == 0)
 		{
 			getline(line_stream, word, ',');
 
-			//‘Ò‚¿ŠÔ
+			//å¾…ã¡æ™‚é–“
 			int32_t waitTime = atoi(word.c_str());
 
-			//‘Ò‹@ŠJn
+			//å¾…æ©Ÿé–‹å§‹
 			waitflag = true;
 			waitTimer = waitTime;
 
-			//ƒRƒ}ƒ“ƒhƒ‹[ƒv‚ğ”²‚¯‚é
+			//ã‚³ãƒãƒ³ãƒ‰ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹
 			break;
 		}
 
@@ -144,11 +146,11 @@ void EnemyManager::UpdateEnemyPopCommands()
 
 void EnemyManager::ExistenceEnemy(const Vector3& EnemyPos)
 {
-	//“GƒLƒƒƒ‰‚Ì¶¬
+	//æ•µã‚­ãƒ£ãƒ©ã®ç”Ÿæˆ
 	std::unique_ptr<Enemy> newEnemy = std::make_unique<Enemy>();
 	newEnemy->Initialize(view,EnemyPos,0,player_, Attribute_);
 
-	//ƒŠƒXƒg‚É“o˜^‚·‚é
+	//ãƒªã‚¹ãƒˆã«ç™»éŒ²ã™ã‚‹
 	enemy_.push_back(std::move(newEnemy));
 }
 
@@ -166,7 +168,7 @@ bool EnemyManager::getFileNames(std::string folderPath, std::vector<std::string>
 		printf("%s\n", file_names.back().c_str());
 	}
 
-	/* ƒGƒ‰[ˆ— */
+	/* ã‚¨ãƒ©ãƒ¼å‡¦ç† */
 	if (err)
 	{
 		std::cout << err.value() << std::endl;

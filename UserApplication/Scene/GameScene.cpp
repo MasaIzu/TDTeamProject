@@ -29,6 +29,8 @@ void GameScene::Initialize() {
 	sceneManager_ = SceneManager::GetInstance();
 
 	sprite_ = Sprite::Create(TextureManager::Load("sprite/2.png"));
+	mouseSprite_ = Sprite::Create(TextureManager::Load("sprite/M_RIGHT.png"));
+	mouseSprite_->SetSize({ 100.0f,100.0f });
 
 	viewProjection_ = std::make_unique<ViewProjection>();
 	viewProjection_->Initialize();
@@ -51,13 +53,13 @@ void GameScene::Initialize() {
 
 	collisionManager = CollisionManager::GetInstance();
 	player_ = std::make_unique<Player>();
-	player_->Initialize( COLLISION_ATTR_ALLIES,viewProjection_.get());
+	player_->Initialize(COLLISION_ATTR_ALLIES,viewProjection_.get());
 
 	enemyManager = std::make_unique<EnemyManager>();
-	enemyManager->Initialize(viewProjection_.get(),player_.get(), COLLISION_ATTR_ENEMYS);
+	enemyManager->Initialize(viewProjection_.get(),player_.get(),COLLISION_ATTR_ENEMYS);
 
 	gameCamera = std::make_unique<GameCamera>();
-	gameCamera->Initialize(viewProjection_.get(), 0.0f, { 0,0,0 });
+	gameCamera->Initialize(viewProjection_.get(),0.0f,{ 0,0,0 });
 	gamecameraDistans_ = 100.0f;
 	gameCameraPosition_ = player_->GetPosition();
 	gameCamera->SetLookDownPos(gameCameraPosition_);
@@ -101,17 +103,20 @@ void GameScene::Initialize() {
 }
 
 void GameScene::Update() {
-
-	if (input_->TriggerKey(DIK_SPACE))
+	if(startBanner->GetAnimEnd() == true)
 	{
-		sceneManager_->ChangeScene("TITLE");
+		//if ( input_->TriggerKey(DIK_SPACE) )
+		//{
+		//	sceneManager_->ChangeScene("TITLE");
+		//}
+
+		player_->Update(input_);
+		enemyManager->Update();
 	}
 	gameCamera->SetLookDownPos(player_->GetPosition());
 	gameCamera->SetLookDownDistans(gamecameraDistans_);
 	gameCamera->Update();
 	worldTransform_.TransferMatrix();
-	player_->Update(input_);
-	enemyManager->Update();
 
 //	Vector2 tPos = { 320.0f,180.0f };
 	//tile.SetSpritePos(tPos);
@@ -180,6 +185,11 @@ void GameScene::Draw() {
 
 	sprite_->Draw({ 100,100 }, { 1,1,1,1 }, 1);
 	randomMap->Draw();
+	if ( startBanner->GetAnimEnd() == true )
+	{
+		mouseSprite_->Draw({ 1000,600 },{ 1,1,1,1 },1);
+	}
+
 
 #pragma endregion
 

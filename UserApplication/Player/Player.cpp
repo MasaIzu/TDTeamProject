@@ -46,7 +46,7 @@ void Player::Initialize(const unsigned short Attribute, ViewProjection* viewProj
 	Attribute_ = Attribute;
 	playerCollider->SetAttribute(Attribute_);
 
-	playerCollider->Update(animation->GetBonePos(0) * worldTransform_.matWorld_);
+	playerCollider->Update(animation2->GetBonePos(0) * worldTransform_.matWorld_);
 
 	for (uint32_t i = 0; i < AttackColSphereCount; i++)
 	{
@@ -151,15 +151,20 @@ void Player::Move(Input* input)
 	//}
 
 
+	if (playerCollider->GetHit())
+	{
+		score_ -= addscore_;
+	}
 
-	playerCollider->Update(animation->GetBonePos(0) * worldTransform_.matWorld_);
+	playerCollider->Update(animation2->GetBonePos(0) * worldTransform_.matWorld_);
 
 	ImGui::Begin("experience");
 	ImGui::SetWindowPos({ 200 , 200 });
 	ImGui::SetWindowSize({ 500,100 });
-	ImGui::InputInt("expeience", &experience);
-	ImGui::InputInt("Nextexpeience", &experienceToNextLevel);
-	ImGui::InputInt("level", &level);
+	//ImGui::InputInt("expeience", &experience);
+	//ImGui::InputInt("Nextexpeience", &experienceToNextLevel);
+	//ImGui::InputInt("level", &level);
+	ImGui::InputInt("score_",&score_);
 	ImGui::End();
 }
 
