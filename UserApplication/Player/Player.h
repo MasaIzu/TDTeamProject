@@ -138,7 +138,7 @@ private:
 	std::array<BaseCollider*, AttackColSphereCount> PlayerBladeAttackCollider;
 	std::unique_ptr<ParticleEditor> particleEditor;
 
-	float PlayerBladeRadius = 1.0f;
+	float PlayerBladeRadius = 5.0f;
 
 	Vector3 BladeColRatio;
 

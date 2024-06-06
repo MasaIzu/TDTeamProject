@@ -121,6 +121,9 @@ void GameScene::Update() {
 	randomMap->Update();
 
 	startBanner->Update();
+
+	//全ての衝突をチェック
+	collisionManager->CheckAllCollisions();
 }
 
 void GameScene::PostEffectDraw()
