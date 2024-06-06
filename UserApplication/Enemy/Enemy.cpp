@@ -14,8 +14,8 @@ Enemy::~Enemy()
 void Enemy::Initialize(ViewProjection* viewProjection,Vector3 enemyPos,int actionNmb, Player* player, const unsigned short Attribute)
 {
 
-	model_.reset(Model::CreateFromOBJ("cube", true));
-	debugModel_.reset(Model::CreateFromOBJ("sphere",true));
+	model_.reset(Model::CreateFromOBJ("Sakaban", true));
+	//debugModel_.reset(Model::CreateFromOBJ("sphere",true));
 
 	worldTransform_.Initialize();
 	worldTransform_.translation_ = enemyPos;
@@ -50,8 +50,8 @@ void Enemy::Update()
 	//enemyNormalBullet->Update(this);
 	worldTransform_.TransferMatrix();
 	enemyCollider->Update(worldTransform_.matWorld_);
-	debugTransform.translation_ = worldTransform_.translation_;
-	debugTransform.TransferMatrix();
+	//debugTransform.translation_ = worldTransform_.translation_;
+	//debugTransform.TransferMatrix();
 
 	if ( enemyCollider->GetMeleeHit() )
 	{
@@ -84,9 +84,9 @@ void Enemy::Update()
 
 void Enemy::Draw(const ViewProjection& LightViewProjection_)
 {
-	//model_->Draw(worldTransform_, *viewProjection_, LightViewProjection_);
+	model_->Draw(worldTransform_, *viewProjection_, LightViewProjection_);
 	//enemyNormalBullet->Draw(LightViewProjection_);
-	debugModel_->Draw(debugTransform,*viewProjection_,LightViewProjection_);
+	//debugModel_->Draw(debugTransform,*viewProjection_,LightViewProjection_);
 }
 
 void Enemy::Move()
@@ -96,7 +96,9 @@ void Enemy::Move()
 	worldTransform_.translation_ += (enemyMovement*enemySpeed);
 
 	
+	Angle = MyMath::Get2VecAngle(worldTransform_.translation_ + worldTransform_.LookVelocity.look,player_->GetPosition());
 
+	worldTransform_.SetRot(Vector3(FloatNumber(fNumbers::fZero),MyMath::GetAngle(Angle),FloatNumber(fNumbers::fZero)));
 }
 
 void Enemy::BulletAttck()

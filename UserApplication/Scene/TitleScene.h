@@ -20,7 +20,7 @@
 class TitleScene : public BaseScene
 {
 public: // メンバ関数
-	TitleScene();
+	TitleScene(int score);
 	~TitleScene();
 
 	/// <summary>
@@ -75,6 +75,8 @@ private: // メンバ変数
 	std::unique_ptr<Sprite> titleSprite_ = nullptr;
 	std::unique_ptr<Sprite> loadSprite_ = nullptr;
 	std::unique_ptr<Sprite> mouseMprite_ = nullptr;
+
+	int score_;
 
 };
 

@@ -5,25 +5,28 @@
 #include "DebugScene.h"
 
 
-BaseScene* SceneFactory::CreateScene(const std::string& sceneName)
+BaseScene* SceneFactory::CreateScene(const std::string& sceneName,int score)
 {
-    // 次のシーンを生成
-    BaseScene* newScene = nullptr;
+	// 次のシーンを生成
+	BaseScene* newScene = nullptr;
 
-    if (sceneName == "TITLE") {
-        newScene = new TitleScene();
-    }
-    else if (sceneName == "SELECT")
-    {
-        newScene = new SelectScene();
-    }
-    else if (sceneName == "GAMEPLAY") {
-        newScene = new GameScene();
-    }
-    else if (sceneName == "Debug") {
-        newScene = new DebugScene();
-    }
+	if ( sceneName == "TITLE" )
+	{
+		newScene = new TitleScene(score);
+	}
+	else if ( sceneName == "SELECT" )
+	{
+		newScene = new SelectScene(score);
+	}
+	else if ( sceneName == "GAMEPLAY" )
+	{
+		newScene = new GameScene();
+	}
+	else if ( sceneName == "Debug" )
+	{
+		newScene = new DebugScene();
+	}
 
 
-    return newScene;
+	return newScene;
 }

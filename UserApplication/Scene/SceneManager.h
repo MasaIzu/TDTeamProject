@@ -50,7 +50,7 @@ public: // メンバ関数
 	// 次のシーン予約
 	void SetSceneFactory(AbstractSceneFactory* sceneFactory);
 	//シーンを変更
-	void ChangeScene(const std::string& sceneName);
+	void ChangeScene(const std::string& sceneName,int score);
 
 	static SceneManager* GetInstance();
 

@@ -7,10 +7,10 @@ SceneManager* SceneManager::SceneManager_ = nullptr;
 void SceneManager::Update()
 {
 	// 次のシーンの予約があるなら
-	if (nextScene_)
+	if ( nextScene_ )
 	{
 		// 旧シーンの終了
-		if (scene_)
+		if ( scene_ )
 		{
 			scene_->Finalize();
 			delete scene_;
@@ -68,7 +68,7 @@ void SceneManager::SetSceneFactory(AbstractSceneFactory* sceneFactory)
 	sceneFactory_ = sceneFactory;
 }
 
-void SceneManager::ChangeScene(const std::string& sceneName)
+void SceneManager::ChangeScene(const std::string& sceneName,int score)
 {
 	this->nextScene_ = nextScene_;
 
@@ -76,12 +76,12 @@ void SceneManager::ChangeScene(const std::string& sceneName)
 	assert(nextScene_ == nullptr);
 
 	// 次シーンを生成
-	nextScene_ = sceneFactory_->CreateScene(sceneName);
+	nextScene_ = sceneFactory_->CreateScene(sceneName,score);
 }
 
 SceneManager* SceneManager::GetInstance()
 {
-	if (SceneManager_ == nullptr)
+	if ( SceneManager_ == nullptr )
 	{
 		SceneManager_ = new SceneManager();
 	}

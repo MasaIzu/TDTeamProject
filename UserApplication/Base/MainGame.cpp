@@ -11,9 +11,9 @@ void MainGame::Initialize()
 #ifdef _Editor
 	SceneManager::GetInstance()->ChangeScene("Debug");
 #elif _DEBUG
-	SceneManager::GetInstance()->ChangeScene("TITLE");
+	SceneManager::GetInstance()->ChangeScene("TITLE",0);
 #else
-	SceneManager::GetInstance()->ChangeScene("TITLE");
+	SceneManager::GetInstance()->ChangeScene("TITLE",0);
 #endif
 
 }

@@ -19,57 +19,63 @@
 #include "BaseScene.h"
 class SelectScene : public BaseScene
 {
-public: // ƒƒ“ƒoŠÖ”
+public: // ãƒ¡ãƒ³ãƒé–¢æ•°
 
-	SelectScene();
+	SelectScene(int score);
 	~SelectScene();
 
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	void Initialize() override;
 	/// <summary>
-	/// –ˆƒtƒŒ[ƒ€ˆ—
+	/// æ¯ãƒ•ãƒ¬ãƒ¼ãƒ å‡¦ç†
 	/// </summary>
 	void Update() override;
 	/// <summary>
-	/// •`‰æ
+	/// æç”»
 	/// </summary>
 	void Draw() override;
-	// I—¹ˆ—
+	// çµ‚äº†å‡¦ç†
 	void Finalize() override;
 
-	//ƒ|ƒXƒgƒGƒtƒFƒNƒg‚ğŠ|‚¯‚é‚â‚Â
+	//ãƒã‚¹ãƒˆã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚’æ›ã‘ã‚‹ã‚„ã¤
 	void PostEffectDraw() override;
-	//”wŒi•`‰æ
+	//èƒŒæ™¯æç”»
 	void BackgroundDraw() override;
-	//CSƒAƒbƒvƒf[ƒg
+	//CSã‚¢ãƒƒãƒ—ãƒ‡ãƒ¼ãƒˆ
 	void CSUpdate() override;
-	//ƒuƒŒƒCƒN‚·‚é‚©
+	//ãƒ–ãƒ¬ã‚¤ã‚¯ã™ã‚‹ã‹
 	bool IsBreak() override;
 
 
-	//ƒXƒƒE
+	//ã‚¹ãƒ­ã‚¦
 	bool IsSlow() override;
 
-private: // ƒƒ“ƒo•Ï”
+private: // ãƒ¡ãƒ³ãƒå¤‰æ•°
 	WinApp* winApp_ = nullptr;
 	DirectXCore* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
 
 	std::unique_ptr<Sprite> sprite_ = nullptr;
-	std::unique_ptr<ViewProjection> viewProjection_;//ƒrƒ…[ƒvƒƒWƒFƒNƒVƒ‡ƒ“
-	std::unique_ptr<ViewProjection> LightViewProjection;//ƒ‰ƒCƒgƒrƒ…[ƒvƒƒWƒFƒNƒVƒ‡ƒ“
-	std::unique_ptr<Model> model_;// 3Dƒ‚ƒfƒ‹
-	WorldTransform worldTransform_;//ƒ[ƒ‹ƒh•ÏŠ·ƒf[ƒ^
-	CollisionManager* collisionManager = nullptr;//“–‚½‚è”»’è
-	SceneManager* sceneManager_ = nullptr;//ƒV[ƒ“ƒ}ƒl[ƒWƒƒ[
+	std::unique_ptr<ViewProjection> viewProjection_;//ãƒ“ãƒ¥ãƒ¼ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³
+	std::unique_ptr<ViewProjection> LightViewProjection;//ãƒ©ã‚¤ãƒˆãƒ“ãƒ¥ãƒ¼ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³
+	std::unique_ptr<Model> model_;// 3Dãƒ¢ãƒ‡ãƒ«
+	WorldTransform worldTransform_;//ãƒ¯ãƒ¼ãƒ«ãƒ‰å¤‰æ›ãƒ‡ãƒ¼ã‚¿
+	CollisionManager* collisionManager = nullptr;//å½“ãŸã‚Šåˆ¤å®š
+	SceneManager* sceneManager_ = nullptr;//ã‚·ãƒ¼ãƒ³ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼
 	std::unique_ptr<LoadLevelEditor> levelData;
 	std::unique_ptr<TouchableObject> touchableObject;
 
 	bool isFinishGame = false;
 
-	uint32_t textureHandle_ = 0;//ƒeƒNƒXƒ`ƒƒƒnƒ“ƒhƒ‹
+	uint32_t textureHandle_ = 0;//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒ³ãƒ‰ãƒ«
+	std::unique_ptr<Sprite> mouseSprite_ = nullptr;
+	std::unique_ptr<Sprite> scoreSprite_ = nullptr;
 
+	std::unique_ptr<Sprite> rankBSprite_ = nullptr;
+	std::unique_ptr<Sprite> rankASprite_ = nullptr;
+	std::unique_ptr<Sprite> rankSSprite_ = nullptr;
+	int score_;
 };
 

@@ -106,4 +106,10 @@ private: // メンバ変数
 
 	std::unique_ptr<Sprite> mouseSprite_ = nullptr;
 	std::unique_ptr<Banner> startBanner;
+
+
+
+	std::unique_ptr<Sprite> timeSprite_ = nullptr;
+	int score_;
+	int timeGauge = 1200;
 };

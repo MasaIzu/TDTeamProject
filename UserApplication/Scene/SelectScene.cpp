@@ -10,7 +10,9 @@
 #include"WinApp.h"
 
 
-SelectScene::SelectScene() {}
+SelectScene::SelectScene(int score) {
+	score_ = score;
+}
 SelectScene::~SelectScene() {
 	collisionManager->AllClearCollider();
 }
@@ -28,6 +30,13 @@ void SelectScene::Initialize() {
 	sceneManager_ = SceneManager::GetInstance();
 
 	sprite_ = Sprite::Create(TextureManager::Load("sprite/1.png"));
+	mouseSprite_ = Sprite::Create(TextureManager::Load("sprite/M_LEFT.png"));
+
+	scoreSprite_ = Sprite::Create(TextureManager::Load("sprite/SCORE.png"));
+
+	rankBSprite_ = Sprite::Create(TextureManager::Load("sprite/b_rank_text.png"));
+	rankASprite_ = Sprite::Create(TextureManager::Load("sprite/a_rank_text.png"));
+	rankSSprite_ = Sprite::Create(TextureManager::Load("sprite/s_rank_text.png"));
 
 	viewProjection_ = std::make_unique<ViewProjection>();
 	viewProjection_->Initialize();
@@ -52,9 +61,9 @@ void SelectScene::Initialize() {
 void SelectScene::Update() {
 
 	int a = 0;
-	if ( input_->MouseInputTrigger(static_cast< int >( 0)))
+	if ( input_->MouseInputTrigger(static_cast< int >( 0 )) )
 	{
-		sceneManager_->ChangeScene("GAMEPLAY");
+		sceneManager_->ChangeScene("TITLE",0);
 	}
 }
 
@@ -105,7 +114,21 @@ void SelectScene::Draw() {
 
 	// 深度バッファクリア
 	dxCommon_->ClearDepthBuffer();
-	sprite_->Draw({ 100,100 }, { 1,1,1,1 }, 1);
+	mouseSprite_->Draw({ 625, 600 },{ 1,1,1,1 },1);
+
+	if ( score_ <= 10 )
+	{
+		rankBSprite_->Draw({ 1000,150 },{ 1,1,1,1 },1);
+	}
+	else if ( score_ > 10 && score_ <= 20 )
+	{
+		rankASprite_->Draw({ 1000,150 },{ 1,1,1,1 },1);
+	}
+	else if ( score_ > 20 )
+	{
+		rankSSprite_->Draw({ 1000,150 },{ 1,1,1,1 },1);
+	}
+	scoreSprite_->Draw({500,100},{ 1,1,1,1 },1);
 
 #pragma endregion
 

@@ -29,6 +29,9 @@ void GameScene::Initialize() {
 	sceneManager_ = SceneManager::GetInstance();
 
 	sprite_ = Sprite::Create(TextureManager::Load("sprite/2.png"));
+
+	timeSprite_ = Sprite::Create(TextureManager::Load("sprite/Green30.png"));
+
 	mouseSprite_ = Sprite::Create(TextureManager::Load("sprite/M_RIGHT.png"));
 	mouseSprite_->SetSize({ 100.0f,100.0f });
 
@@ -100,15 +103,22 @@ void GameScene::Initialize() {
 	randomMap->LoadNewTile(std::move(greenTile));
 	randomMap->LoadNewTile(std::move(yellowTile));
 
+	timeGauge = 1200;
 }
 
 void GameScene::Update() {
-	if(startBanner->GetAnimEnd() == true)
+	if ( startBanner->GetAnimEnd() == true )
 	{
-		//if ( input_->TriggerKey(DIK_SPACE) )
-		//{
-		//	sceneManager_->ChangeScene("TITLE");
-		//}
+		timeGauge--;
+
+		score_ = player_->GetScore();
+		if ( timeGauge <= 0 )
+		{
+
+
+			sceneManager_->ChangeScene("SELECT",score_);
+
+		}
 
 		player_->Update(input_);
 		enemyManager->Update();
@@ -118,6 +128,8 @@ void GameScene::Update() {
 	gameCamera->Update();
 	worldTransform_.TransferMatrix();
 
+
+	timeSprite_->SetSize({ (float)timeGauge,50.0f });
 //	Vector2 tPos = { 320.0f,180.0f };
 	//tile.SetSpritePos(tPos);
 
@@ -183,13 +195,12 @@ void GameScene::Draw() {
 
 	//tile.Draw();
 
-	sprite_->Draw({ 100,100 }, { 1,1,1,1 }, 1);
 	randomMap->Draw();
 	if ( startBanner->GetAnimEnd() == true )
 	{
 		mouseSprite_->Draw({ 1000,600 },{ 1,1,1,1 },1);
 	}
-
+	timeSprite_->Draw({ 600,100 },{ 1,1,1,1 },1);
 
 #pragma endregion
 
@@ -197,7 +208,7 @@ void GameScene::Draw() {
 
 	//// 3Dオブジェクト描画前処理
 	Model::PreDraw(commandList);
-	skydome->Draw(worldTransform_, *viewProjection_, *LightViewProjection.get());
+	skydome->Draw(worldTransform_,*viewProjection_,*LightViewProjection.get());
 	enemyManager->Draw(*LightViewProjection.get());
 	player_->Draw(*LightViewProjection.get());
 
@@ -216,7 +227,7 @@ void GameScene::Draw() {
 #pragma region 前景スプライト描画
 
 	startBanner->Draw();
-	sprite_->Draw({ 100,100 }, { 1,1,1,1 }, 1);
+	//sprite_->Draw({ 100,100 },{ 1,1,1,1 },1);
 
 #pragma endregion
 }

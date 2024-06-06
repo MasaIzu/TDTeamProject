@@ -10,7 +10,9 @@
 #include"WinApp.h"
 
 
-TitleScene::TitleScene() {}
+TitleScene::TitleScene(int score) {
+	score_ = score;
+}
 
 TitleScene::~TitleScene() {
 	collisionManager->AllClearCollider();
@@ -57,10 +59,10 @@ void TitleScene::Initialize() {
 void TitleScene::Update() {
 
 	int a = 0;
-	if ( input_->MouseInputTrigger(static_cast< int >(0)))
+	if ( input_->MouseInputTrigger(static_cast< int >( 0 )) )
 	{
 		isLoad_ = true;
-		sceneManager_->ChangeScene("GAMEPLAY");
+		sceneManager_->ChangeScene("GAMEPLAY",0);
 	}
 }
 
@@ -119,7 +121,7 @@ void TitleScene::Draw() {
 	}
 	else
 	{
-		sprite_->Draw({ 100,100 },{ 1,1,1,1 },1);
+		//sprite_->Draw({ 100,100 },{ 1,1,1,1 },1);
 		titleSprite_->Draw({ 625, 325 },{ 1,1,1,1 },1);
 		mouseMprite_->Draw({ 625, 600 },{ 1,1,1,1 },1);
 	}

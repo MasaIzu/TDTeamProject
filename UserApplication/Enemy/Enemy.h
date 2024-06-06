@@ -83,12 +83,13 @@ private:
 	//当たり判定
 	BaseCollider* enemyCollider;
 	CollisionManager* collisionManager = nullptr;
-	float enemyRadius = 10.0f;
+	float enemyRadius = 7.0f;
 
 	WorldTransform debugTransform;
 	std::unique_ptr<Model> debugModel_;
 
 #pragma endregion
+	float Angle;
 };
 
 
