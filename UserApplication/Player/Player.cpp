@@ -75,6 +75,7 @@ void Player::Update(Input* input)
 		playerCollider->ResetSphere();
 	}
 
+
 	Move(input);
 
 
@@ -124,10 +125,10 @@ void Player::Draw(const ViewProjection& LightViewProjection_)
 {
 	//model_->Draw(worldTransform_, *viewProjection_, LightViewProjection_);
 
-	for (uint32_t i = 0; i < AttackColSphereCount; i++)
-	{
-		model_->Draw(BladeColWorldTrans[i], *viewProjection_, LightViewProjection_);
-	}
+	//for (uint32_t i = 0; i < AttackColSphereCount; i++)
+	//{
+	//	model_->Draw(BladeColWorldTrans[i], *viewProjection_, LightViewProjection_);
+	//}
 }
 
 void Player::Move(Input* input)
@@ -165,14 +166,14 @@ void Player::Move(Input* input)
 
 	playerCollider->Update(animation2->GetBonePos(0) * worldTransform_.matWorld_);
 
-	ImGui::Begin("experience");
-	ImGui::SetWindowPos({ 200 , 200 });
-	ImGui::SetWindowSize({ 500,100 });
-	//ImGui::InputInt("expeience", &experience);
-	//ImGui::InputInt("Nextexpeience", &experienceToNextLevel);
-	//ImGui::InputInt("level", &level);
-	ImGui::InputInt("score_",&score_);
-	ImGui::End();
+	//ImGui::Begin("experience");
+	//ImGui::SetWindowPos({ 200 , 200 });
+	//ImGui::SetWindowSize({ 500,100 });
+	////ImGui::InputInt("expeience", &experience);
+	////ImGui::InputInt("Nextexpeience", &experienceToNextLevel);
+	////ImGui::InputInt("level", &level);
+	//ImGui::InputInt("score_",&score_);
+	//ImGui::End();
 }
 
 void Player::CSUpdate(ID3D12GraphicsCommandList* cmdList)
@@ -296,7 +297,7 @@ void Player::AttackUpdate()
 			if (animation2->GetAnimAlmostOver(BladeColEndHasten))
 			{
 				isBladeAttacking = false;
-				BladeAttributeSet(COLLISION_ATTR_MELEEATTACK);
+				BladeAttributeSet(COLLISION_ATTR_NOTATTACK);
 				CollisionManager::GetInstance()->ResetMeleeAttack();
 			}
 		}
