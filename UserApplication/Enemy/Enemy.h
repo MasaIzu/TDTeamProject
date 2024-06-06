@@ -28,24 +28,24 @@ class Enemy
 {
 public:
 
-	//ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ÆƒfƒXƒgƒ‰ƒNƒ^
+	//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã¨ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	Enemy();
 	~Enemy();
 
-	//‰Šú‰»
+	//åˆæœŸåŒ–
 	void Initialize(ViewProjection* viewProjection_, Vector3 enemyPos, int actionNmb,Player* player,const unsigned short Attribute);
-	//XV
+	//æ›´æ–°
 	void Update();
-	//•`‰æ
+	//æç”»
 	void Draw(const ViewProjection& LightViewProjection_);
-	//ˆÚ“®
+	//ç§»å‹•
 	void Move();
 
-	//ŒoŒ±’l‚ÌƒZƒbƒ^[
+	//çµŒé¨“å€¤ã®ã‚»ãƒƒã‚¿ãƒ¼
 	void SetExp(int experience) { experience_ = experience; }
 
 
-	//€–S”»’è
+	//æ­»äº¡åˆ¤å®š
 	bool IsDead()const { return isDead_; }
 
 	Player* GetPlayer() { return player_; }
@@ -59,7 +59,7 @@ private:
 
 	WorldTransform worldTransform_;
 	ViewProjection* viewProjection_;
-	std::unique_ptr<Model> model_;// 3Dƒ‚ƒfƒ‹
+	std::unique_ptr<Model> model_;// 3Dãƒ¢ãƒ‡ãƒ«
 	Player* player_;
 
 	std::list<std::unique_ptr<EnemyBullet>> EnemyBullets_;
@@ -67,9 +67,9 @@ private:
 
 	Vector3 velocity_;
 	float speed = 0.1f;
-	int experience_;//ŒoŒ±’l
+	int experience_;//çµŒé¨“å€¤
 
-	//ƒfƒXƒtƒ‰ƒO
+	//ãƒ‡ã‚¹ãƒ•ãƒ©ã‚°
 	bool isDead_ = false;
 
 	float enemySpeed = 0.3f;
@@ -78,10 +78,10 @@ private:
 
 	bool isHit_ = false;
 	unsigned short Attribute_;
-	//“–‚½‚è”»’è
+	//å½“ãŸã‚Šåˆ¤å®š
 	BaseCollider* enemyCollider;
 	CollisionManager* collisionManager = nullptr;
-	float enemyRadius = 0.5f;
+	float enemyRadius = 3.0f;
 
 #pragma endregion
 };
