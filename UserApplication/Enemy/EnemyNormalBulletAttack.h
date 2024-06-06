@@ -10,32 +10,32 @@ class Player;
 class EnemyNormalBulletAttack
 {
 public:
-	//EnemyBulletAttack();
-	//~EnemyBulletAttack();
+	EnemyNormalBulletAttack();
+	~EnemyNormalBulletAttack();
 
 
 /// <summary>
-/// ‰Šú‰»
+/// åˆæœŸåŒ–
 /// </summary>
 	void Initialize(Model* bulletModel);
 
 
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
-	void Update(Enemy* enemy);
+	void Update(Enemy* enemy,Player* player);
 
 
 
 	/// <summary>
-	/// •`‰æ
+	/// æç”»
 	/// </summary>
 	void Draw(const ViewProjection& LightViewProjection_);
 
 	void Attck(ViewProjection* viewProjection);
 
 private:
-	//“G‚Ì’eƒ‚ƒfƒ‹
+	//æ•µã®å¼¾ãƒ¢ãƒ‡ãƒ«
 	std::unique_ptr<Model> enemyBulletModel_ = nullptr;
 
 	Enemy* enemy_ = nullptr;
@@ -47,6 +47,7 @@ private:
 	float move = 0.1f;
 
 	std::list<std::unique_ptr<EnemyBullet>> EnemyBullets_;
+
 
 
 	Vector3 velocity_;

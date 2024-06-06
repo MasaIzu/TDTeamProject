@@ -5,6 +5,7 @@ void MainGame::Initialize()
 {
 	// 基底クラスの初期化処理
 	Framework::Initialize();
+	ModelLoad();
 
 	sceneFactory_ = std::make_unique<SceneFactory>();
 	SceneManager::GetInstance()->SetSceneFactory(sceneFactory_.get());
@@ -20,6 +21,7 @@ void MainGame::Initialize()
 
 void MainGame::Finalize()
 {
+	ModelManager::GetInstance()->Finalize();
 	// 基底クラスの終了処理
 	Framework::Finalize();
 }
@@ -55,4 +57,10 @@ bool MainGame::IsBreak()
 bool MainGame::IsSlow()
 {
 	return sceneManager_->IsSlow();
+}
+
+void MainGame::ModelLoad()
+{
+	ModelManager::GetInstance()->LoadModel("cube");
+	ModelManager::GetInstance()->LoadModel("bullet");
 }

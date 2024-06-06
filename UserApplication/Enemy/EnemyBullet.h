@@ -3,6 +3,7 @@
 #include "Model.h"
 #include "WorldTransform.h"
 #include "ViewProjection.h"
+#include "ModelManager.h"
 
 class EnemyBullet
 {
@@ -10,63 +11,63 @@ public:
 	EnemyBullet();
 	~EnemyBullet();
 	///<summary>
-	///‰Šú‰»
+	///åˆæœŸåŒ–
 	///</summary>
 
-	void Initialize(const Vector3& position, const Vector3& velocity, Model* bulletModel, ViewProjection* viewProjection_);
+	void Initialize(const Vector3& position, const Vector3& velocity, Model* bulletModel, ViewProjection* viewProjection);
 
 
 
 	///<summary>
-	///XV
+	///æ›´æ–°
 	///</summary>
 
 	void Update();
 
 	///<summary>
-	///•`‰æ
+	///æç”»
 	///</summary>
 
 	void Draw(const ViewProjection& LightViewProjection_);
 
 	///<summary>
-	////’eÁ–Å
+	////å¼¾æ¶ˆæ»…
 	///</summary>
 	bool IsDead()const { return isDead_; }
 
-	//Õ“Ë‚ğŒŸo‚µ‚½‚çŒÄ‚Ño‚³‚ê‚éƒR[ƒ‹ƒoƒbƒNŠÖ”
+	//è¡çªã‚’æ¤œå‡ºã—ãŸã‚‰å‘¼ã³å‡ºã•ã‚Œã‚‹ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°
 	void OnCollision();
 
 	///<summary>
-	////“G‚ÌÀ•W
+	////æ•µã®åº§æ¨™
 	///</summary>
 	Vector3 GetWorldPosition();
 
 	///<summary>
-	////’e‚ÌƒTƒCƒY‚ğ•Ï‚¦‚é
+	////å¼¾ã®ã‚µã‚¤ã‚ºã‚’å¤‰ãˆã‚‹
 	///</summary>
 	void SetSize(Vector3 Size) { worldTransform_.scale_ = Size; }
 
 	///<summary>
-	////’e‚Ìis•ûŒü‚É’e‚ÉŒü‚«‚ğ•Ï‚¦‚é
+	////å¼¾ã®é€²è¡Œæ–¹å‘ã«å¼¾ã«å‘ãã‚’å¤‰ãˆã‚‹
 	///</summary>
 	void VecRot();
 
 private:
 	WorldTransform worldTransform_;
 	ViewProjection* viewProjection_;
-	std::unique_ptr<Model> model_;// 3Dƒ‚ƒfƒ‹
+	std::unique_ptr<Model> model_;// 3Dãƒ¢ãƒ‡ãƒ«
 
-	//‘¬“x
+	//é€Ÿåº¦
 	Vector3 velocity_;
 
-	//õ–½<fim>
-	static const int32_t kLifeTime = 60 * 30;
+	//å¯¿å‘½<fim>
+	static const int32_t kLifeTime = 60 * 1;
 
-	//ƒfƒXƒ^ƒCƒ}[
+	//ãƒ‡ã‚¹ã‚¿ã‚¤ãƒãƒ¼
 	int32_t deathTimer_ = kLifeTime;
 	int32_t deathTimerEnd_ = 0;
-	//ƒfƒXƒtƒ‰ƒO
+	//ãƒ‡ã‚¹ãƒ•ãƒ©ã‚°
 	bool isDead_ = false;
 
 private:

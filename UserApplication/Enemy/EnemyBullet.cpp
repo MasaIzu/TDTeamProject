@@ -8,26 +8,28 @@ EnemyBullet::~EnemyBullet()
 {
 }
 
-void EnemyBullet::Initialize(const Vector3& position, const Vector3& velocity, Model* bulletModel, ViewProjection* viewProjection_)
+void EnemyBullet::Initialize(const Vector3& position, const Vector3& velocity, Model* bulletModel, ViewProjection* viewProjection)
 {
-	model_ .reset(bulletModel) ;
+	model_ .reset(ModelManager::FindObjModel("bullet")) ;
 
-
-	//ˆø”‚Åó‚¯æ‚Á‚½‰ŠúÀ•W‚ğƒZƒbƒg
+	viewProjection_ = viewProjection;
+	//å¼•æ•°ã§å—ã‘å–ã£ãŸåˆæœŸåº§æ¨™ã‚’ã‚»ãƒƒãƒˆ
+	worldTransform_.Initialize();
 	worldTransform_.translation_ = position;
-	//ˆø”‚Åó‚¯æ‚Á‚½‘¬“x‚ğƒƒ“ƒoŠÖ”‚É‘ã“ü
+	//å¼•æ•°ã§å—ã‘å–ã£ãŸé€Ÿåº¦ã‚’ãƒ¡ãƒ³ãƒé–¢æ•°ã«ä»£å…¥
 	velocity_ = velocity;
 }
 
 void EnemyBullet::Update()
 {
+	deathTimer_--;
 	Vector3 pos = velocity_;
-	//À•W‚ğˆÚ“®‚³‚¹‚é(1ƒtƒŒ[ƒ€•¶‚ÌˆÚ“®—Ê‚ğ‘«‚µ‚±‚Ş)
+	//åº§æ¨™ã‚’ç§»å‹•ã•ã›ã‚‹(1ãƒ•ãƒ¬ãƒ¼ãƒ æ–‡ã®ç§»å‹•é‡ã‚’è¶³ã—ã“ã‚€)
 
 	worldTransform_.translation_ += velocity_;
 	worldTransform_.TransferMatrix();
-	deathTimer_--;
-	//ŠÔŒo‰ß‚ÅƒfƒX
+
+	//æ™‚é–“çµŒéã§ãƒ‡ã‚¹
 	if (deathTimer_ <= deathTimerEnd_) {
 		isDead_ = true;
 	}

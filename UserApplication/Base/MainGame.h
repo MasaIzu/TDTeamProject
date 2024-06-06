@@ -1,5 +1,6 @@
 #pragma once
 #include "Framework.h"
+#include "ModelManager.h"
 
 
 // ゲーム全体
@@ -31,9 +32,14 @@ public: // メンバ関数
 	//ブレイクするかどうか
 	bool IsSlow() override;
 
+	//モデル読み込み
+	void ModelLoad();
+
 private:
 	// ゲーム終了フラグ
 	bool endRequest_ = false;
 
 	bool isSlow = false;
+
+
 };

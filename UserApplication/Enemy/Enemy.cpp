@@ -13,8 +13,8 @@ Enemy::~Enemy()
 void Enemy::Initialize(ViewProjection* viewProjection,Vector3 enemyPos,int actionNmb, Player* player, const unsigned short Attribute)
 {
 
-	model_.reset(Model::CreateFromOBJ("cube", true));
-
+	model_.reset(ModelManager::FindObjModel("cube"));
+	modelBullet_.reset(ModelManager::FindObjModel("bullet"));
 
 	worldTransform_.Initialize();
 	worldTransform_.translation_ = enemyPos;
@@ -25,10 +25,12 @@ void Enemy::Initialize(ViewProjection* viewProjection,Vector3 enemyPos,int actio
 
 	player_ = player;
 
-	enemyNormalBullet = std::make_unique<EnemyNormalBulletAttack>();
-	enemyNormalBullet->Initialize(model_.get());
+	action = actionNmb;
 
-	// コリジョンマネージャに追加
+	//enemyNormalBullet = std::make_unique<EnemyNormalBulletAttack>();
+	//enemyNormalBullet->Initialize(model_.get());
+
+	// 繧ｳ繝ｪ繧ｸ繝ｧ繝ｳ繝槭ロ繝ｼ繧ｸ繝｣縺ｫ霑ｽ蜉
 	float sphereF = 0;
 	enemyCollider = new SphereCollider(Vector4(sphereF, enemyRadius, sphereF, sphereF), enemyRadius);
 	CollisionManager::GetInstance()->AddCollider(enemyCollider);
@@ -40,8 +42,14 @@ void Enemy::Initialize(ViewProjection* viewProjection,Vector3 enemyPos,int actio
 
 void Enemy::Update()
 {
+	if ( attackWaitTime <= 0 )
+	{
+		BulletAttck();
+		attackWaitTime = attackWaitTimeReset;
+	}
+	//enemyNormalBullet->Update(this,player_);
+
 	Move();
-	//enemyNormalBullet->Update(this);
 	worldTransform_.TransferMatrix();
 	enemyCollider->Update(worldTransform_.matWorld_);
 }
@@ -56,15 +64,22 @@ void Enemy::Move()
 {
 	Vector3 enemyMovement = player_->GetPosition() - worldTransform_.translation_;
 	enemyMovement.normalize();
-	worldTransform_.translation_ += (enemyMovement*enemySpeed);
-
+	if ( action == 0 )
+	{
+		worldTransform_.translation_ += ( enemyMovement * enemySpeed );
+	}
+	else if ( action == 1 )
+	{
+		worldTransform_.translation_ -= ( enemyMovement * enemySpeed );
+		attackWaitTime--;
+	}
 	
-
 }
 
 void Enemy::BulletAttck()
 {
 	//enemyNormalBullet->Attck(viewProjection_);
+
 }
 
 Vector3 Enemy::GetPosition()
