@@ -83,6 +83,17 @@ public:
 	int GetExperience() const { return experience; }
 	int GetExperienceToNextLevel() const { return experienceToNextLevel; }
 
+
+	int GetScore() {
+		return score_;
+	}
+	int SetScore(int score = 0) {
+		score_ = score;
+	}
+	void addScore() {
+		score_ += addscore_;
+	}
+
 private:
 	Input* input_ = nullptr;
 	WorldTransform worldTransform_;
@@ -101,6 +112,10 @@ private:
 	int hp_ = 100;
 	bool isAlive_ = true;
 	bool isHit_ = false;
+
+	int score_ = 0;
+	const int addscore_ = 1;
+
 
 	uint32_t RightBoneNum = 34;
 	uint32_t BladeAttackEndPos = 39;
@@ -138,7 +153,7 @@ private:
 	std::array<BaseCollider*, AttackColSphereCount> PlayerBladeAttackCollider;
 	std::unique_ptr<ParticleEditor> particleEditor;
 
-	float PlayerBladeRadius = 5.0f;
+	const float PlayerBladeRadius = 7.0f;
 
 	Vector3 BladeColRatio;
 

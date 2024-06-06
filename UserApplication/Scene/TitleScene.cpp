@@ -14,6 +14,7 @@ TitleScene::TitleScene() {}
 
 TitleScene::~TitleScene() {
 	collisionManager->AllClearCollider();
+	isLoad_ = false;
 }
 
 void TitleScene::Initialize() {
@@ -22,14 +23,16 @@ void TitleScene::Initialize() {
 	winApp_ = WinApp::GetInstance();
 	input_ = Input::GetInstance();
 
-	//“–‚½‚è”»’è
+	//å½“ãŸã‚Šåˆ¤å®š
 	collisionManager = CollisionManager::GetInstance();
 
 
 	sceneManager_ = SceneManager::GetInstance();
 
 	sprite_ = Sprite::Create(TextureManager::Load("sprite/0.png"));
-	titleSprite_ = Sprite::Create(TextureManager::Load("sprite/title_.png")); ;
+	titleSprite_ = Sprite::Create(TextureManager::Load("sprite/title_.png"));
+	loadSprite_ = Sprite::Create(TextureManager::Load("sprite/LORDING.png"));
+	mouseMprite_ = Sprite::Create(TextureManager::Load("sprite/M_LEFT.png"));
 
 	viewProjection_ = std::make_unique<ViewProjection>();
 	viewProjection_->Initialize();
@@ -54,9 +57,10 @@ void TitleScene::Initialize() {
 void TitleScene::Update() {
 
 	int a = 0;
-	if (input_->TriggerKey(DIK_SPACE))
+	if ( input_->MouseInputTrigger(static_cast< int >(0)))
 	{
-		sceneManager_->ChangeScene("SELECT");
+		isLoad_ = true;
+		sceneManager_->ChangeScene("GAMEPLAY");
 	}
 }
 
@@ -100,33 +104,41 @@ bool TitleScene::IsBreak()
 
 void TitleScene::Draw() {
 
-	// ƒRƒ}ƒ“ƒhƒŠƒXƒg‚Ìæ“¾
+	// ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆã®å–å¾—
 	ID3D12GraphicsCommandList* commandList = dxCommon_->GetCommandList();
 
-#pragma region /*”wŒiƒXƒvƒ‰ƒCƒg•`‰æ*/
+#pragma region /*èƒŒæ™¯ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæç”»*/
 
-	// [“xƒoƒbƒtƒ@ƒNƒŠƒA
+	// æ·±åº¦ãƒãƒƒãƒ•ã‚¡ã‚¯ãƒªã‚¢
 	dxCommon_->ClearDepthBuffer();
 
-	sprite_->Draw({ 100,100 }, { 1,1,1,1 }, 1);
-	titleSprite_->Draw({625, 325 }, { 1,1,1,1 }, 1);
 
+	if ( isLoad_ == true )
+	{
+		loadSprite_->Draw({ 800, 600 },{ 1,1,1,1 },1);
+	}
+	else
+	{
+		sprite_->Draw({ 100,100 },{ 1,1,1,1 },1);
+		titleSprite_->Draw({ 625, 325 },{ 1,1,1,1 },1);
+		mouseMprite_->Draw({ 625, 600 },{ 1,1,1,1 },1);
+	}
 #pragma endregion
 
-#pragma region/* 3DƒIƒuƒWƒFƒNƒg•`‰æ*/
+#pragma region/* 3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆæç”»*/
 
-	//// 3DƒIƒuƒWƒFƒNƒg•`‰æ‘Oˆ—
+	//// 3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆæç”»å‰å‡¦ç†
 	Model::PreDraw(commandList);
 
 
-	//3DƒIƒuƒWƒFƒNƒg•`‰æŒãˆ—
+	//3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆæç”»å¾Œå‡¦ç†
 	Model::PostDraw();
 
 
 
 #pragma endregion
 
-#pragma region /*‘OŒiƒXƒvƒ‰ƒCƒg•`‰æ*/
+#pragma region /*å‰æ™¯ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæç”»*/
 
 
 

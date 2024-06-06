@@ -21,7 +21,7 @@ void SelectScene::Initialize() {
 	winApp_ = WinApp::GetInstance();
 	input_ = Input::GetInstance();
 
-	//“–‚½‚è”»’è
+	//å½“ãŸã‚Šåˆ¤å®š
 	collisionManager = CollisionManager::GetInstance();
 
 
@@ -52,7 +52,7 @@ void SelectScene::Initialize() {
 void SelectScene::Update() {
 
 	int a = 0;
-	if (input_->TriggerKey(DIK_SPACE))
+	if ( input_->MouseInputTrigger(static_cast< int >( 0)))
 	{
 		sceneManager_->ChangeScene("GAMEPLAY");
 	}
@@ -98,31 +98,31 @@ bool SelectScene::IsBreak()
 
 void SelectScene::Draw() {
 
-	// ƒRƒ}ƒ“ƒhƒŠƒXƒg‚Ìæ“¾
+	// ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆã®å–å¾—
 	ID3D12GraphicsCommandList* commandList = dxCommon_->GetCommandList();
 
-#pragma region /*”wŒiƒXƒvƒ‰ƒCƒg•`‰æ*/
+#pragma region /*èƒŒæ™¯ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæç”»*/
 
-	// [“xƒoƒbƒtƒ@ƒNƒŠƒA
+	// æ·±åº¦ãƒãƒƒãƒ•ã‚¡ã‚¯ãƒªã‚¢
 	dxCommon_->ClearDepthBuffer();
 	sprite_->Draw({ 100,100 }, { 1,1,1,1 }, 1);
 
 #pragma endregion
 
-#pragma region /*3DƒIƒuƒWƒFƒNƒg•`‰æ*/
+#pragma region /*3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆæç”»*/
 
-	//// 3DƒIƒuƒWƒFƒNƒg•`‰æ‘Oˆ—
+	//// 3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆæç”»å‰å‡¦ç†
 	Model::PreDraw(commandList);
 
 
-	//3DƒIƒuƒWƒFƒNƒg•`‰æŒãˆ—
+	//3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆæç”»å¾Œå‡¦ç†
 	Model::PostDraw();
 
 
 
 #pragma endregion
 
-#pragma region /*‘OŒiƒXƒvƒ‰ƒCƒg•`‰æ*/
+#pragma region /*å‰æ™¯ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæç”»*/
 
 
 
