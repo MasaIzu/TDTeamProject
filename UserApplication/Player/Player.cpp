@@ -163,7 +163,7 @@ void Player::Move(Input* input)
 		score_ -= addscore_;
 	}
 
-	playerCollider->Update(animation2->GetBonePos(0) * worldTransform_.matWorld_);
+	playerCollider->Update(animation2->GetBonePos(static_cast< uint32_t >( Numbers::Three )) * worldTransform_.matWorld_);
 
 	ImGui::Begin("experience");
 	ImGui::SetWindowPos({ 200 , 200 });
