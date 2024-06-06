@@ -67,6 +67,13 @@ void Player::Initialize(const unsigned short Attribute, ViewProjection* viewProj
 void Player::Update(Input* input)
 {
 	isBladeAttack = false;
+	isHit_ = false;
+
+	if ( playerCollider->GetHitSphere() )
+	{
+		isHit_ = true;
+		playerCollider->ResetSphere();
+	}
 
 	Move(input);
 
