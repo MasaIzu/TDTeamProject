@@ -14,7 +14,7 @@ Player::~Player()
 {
 }
 
-void Player::Initialize(const unsigned short Attribute,ViewProjection* viewProjection)
+void Player::Initialize(const unsigned short Attribute, ViewProjection* viewProjection)
 {
 	input_ = Input::GetInstance();
 	model_.reset(Model::CreateFromOBJ("sphere", true));
@@ -30,6 +30,8 @@ void Player::Initialize(const unsigned short Attribute,ViewProjection* viewProje
 
 	animation2 = std::make_unique<Animation>();
 	animation2->Initialize("3JamJiki");
+
+	playerMovement = std::make_unique<PlayerMovement>();
 
 	viewProjection_ = viewProjection;
 
@@ -58,7 +60,7 @@ void Player::Initialize(const unsigned short Attribute,ViewProjection* viewProje
 
 	int MaxParticleCountB = 20000;
 	particleEditor = std::make_unique<ParticleEditor>();
-	particleEditor->Initialize(MaxParticleCountB,true,"HonooBlade");
+	particleEditor->Initialize(MaxParticleCountB, true, "HonooBlade");
 	particleEditor->SetTextureHandle(TextureManager::Load("sprite/effect4.png"));
 }
 
@@ -86,8 +88,17 @@ void Player::Update(Input* input)
 	CheckHitCollision();
 	HpUpdate();
 
-	ParticleStartPos = MyMath::Vec3ToVec4(MyMath::GetWorldTransform(animation->GetBonePos(RightBoneNum) * worldTransform_.matWorld_));
-	ParticleEndPos = MyMath::Vec3ToVec4(MyMath::GetWorldTransform(animation->GetBonePos(BladeAttackEndPos) * worldTransform_.matWorld_));
+	PlayerRot();
+
+	playerStateNeedMaterial.worldTransform = worldTransform_;
+	playerStateNeedMaterial.isAlive = true;
+	playerStateNeedMaterial.onGround = true;
+	playerStateNeedMaterial.isBladeAttack = isBladeAttacking;
+
+	worldTransform_.translation_ += playerMovement->Move(playerStateNeedMaterial);
+
+	ParticleStartPos = MyMath::Vec3ToVec4(MyMath::GetWorldTransform(animation2->GetBonePos(RightBoneNum) * worldTransform_.matWorld_));
+	ParticleEndPos = MyMath::Vec3ToVec4(MyMath::GetWorldTransform(animation2->GetBonePos(BladeAttackEndPos) * worldTransform_.matWorld_));
 
 	BladeColRatio = MyMath::Vec4ToVec3(ParticleEndPos) - MyMath::Vec4ToVec3(ParticleStartPos);
 	ParticleMilEndPos = ParticleStartPos + MyMath::Vec3ToVec4(BladeColRatio.norm() * MaxBladeColDetection);
@@ -106,38 +117,40 @@ void Player::Draw(const ViewProjection& LightViewProjection_)
 {
 	//model_->Draw(worldTransform_, *viewProjection_, LightViewProjection_);
 
-	for ( uint32_t i = 0; i < AttackColSphereCount; i++ )
+	for (uint32_t i = 0; i < AttackColSphereCount; i++)
 	{
-		model_->Draw(BladeColWorldTrans[ i ],*viewProjection_,LightViewProjection_);
+		model_->Draw(BladeColWorldTrans[i], *viewProjection_, LightViewProjection_);
 	}
 }
 
 void Player::Move(Input* input)
 {
-	if (input->PushKey(DIK_W))
-	{
-		velocity_ = { 0,0,speed };
-		worldTransform_.translation_ += velocity_ ;
-	}
-	if (input->PushKey(DIK_S))
-	{
-		velocity_ = { 0,0,speed * -1 };
-		worldTransform_.translation_ += velocity_;
-	}
-	if (input->PushKey(DIK_A))
-	{
-		velocity_ = { speed * -1 ,0,0, };
-		worldTransform_.translation_ += velocity_;
-	}
-	if (input->PushKey(DIK_D))
-	{
-		velocity_ = { speed ,0,0, };
-		worldTransform_.translation_ += velocity_;
-	}
-	if (input->PushKey(DIK_RETURN))
-	{
-		AddExperience(1);
-	}
+	//if (input->PushKey(DIK_W))
+	//{
+	//	velocity_ = { 0,0,speed };
+	//	worldTransform_.translation_ += velocity_ ;
+	//}
+	//if (input->PushKey(DIK_S))
+	//{
+	//	velocity_ = { 0,0,speed * -1 };
+	//	worldTransform_.translation_ += velocity_;
+	//}
+	//if (input->PushKey(DIK_A))
+	//{
+	//	velocity_ = { speed * -1 ,0,0, };
+	//	worldTransform_.translation_ += velocity_;
+	//}
+	//if (input->PushKey(DIK_D))
+	//{
+	//	velocity_ = { speed ,0,0, };
+	//	worldTransform_.translation_ += velocity_;
+	//}
+	//if (input->PushKey(DIK_RETURN))
+	//{
+	//	AddExperience(1);
+	//}
+
+
 
 	playerCollider->Update(animation->GetBonePos(0) * worldTransform_.matWorld_);
 
@@ -152,7 +165,7 @@ void Player::Move(Input* input)
 
 void Player::CSUpdate(ID3D12GraphicsCommandList* cmdList)
 {
-	particleEditor->CSUpdate(cmdList,ParticleStartPos,ParticleEndPos,static_cast< uint32_t >( isBladeAttacking ));
+	particleEditor->CSUpdate(cmdList, ParticleStartPos, ParticleEndPos, static_cast<uint32_t>(isBladeAttacking));
 }
 
 void Player::ParticleDraw()
@@ -251,7 +264,7 @@ void Player::AttackUpdate()
 			if (BladeAttackTime < BladeMaxAttackTime)
 			{
 				BladeAttackTime++;
-				
+
 				animation2->SetKeepAnimation(static_cast<uint32_t>(PlayerAnimation::HandAttack), static_cast<uint32_t>(Numbers::Ten), playerAnimTime.BladeAttack);
 				if (input_->MouseInputTrigger(static_cast<int>(Numbers::One)))
 				{
@@ -286,3 +299,21 @@ void Player::BladeAttributeSet(const unsigned short Attribute_)
 	}
 }
 
+void Player::PlayerRot()
+{
+	playerMovement->PlayerAngle();
+	RotKeep = Vec3Number(fNumbers::fZero);
+
+	RotKeep = Vector3(FloatNumber(fNumbers::fZero), MyMath::GetAngle(playerMovement->GetPlayerAngle()), FloatNumber(fNumbers::fZero));
+	playerRotWorldTrans.SetRot(RotKeep);
+	worldTransform_.SetRot(Vector3(FloatNumber(fNumbers::fZero), MyMath::GetAngle(playerMovement->GetPlayerAngle()), FloatNumber(fNumbers::fZero)));
+
+
+	//値更新
+	WorldTransUpdate();
+}
+
+void Player::WorldTransUpdate()
+{
+	worldTransform_.TransferMatrix();
+}

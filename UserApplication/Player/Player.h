@@ -15,6 +15,7 @@
 #include <Animation.h>
 #include "Numbers.h"
 #include <ParticleEditor.h>
+#include <PlayerMovement.h>
 
 class Enemy;
 
@@ -41,7 +42,8 @@ public:
 	void Draw(const ViewProjection& LightViewProjection_);
 
 	void Move(Input* input);
-
+	//プレイヤーの回転
+	void PlayerRot();
 	Vector3 GetPosition() { return worldTransform_.translation_; }
 
 	//パーティクルを出す用
@@ -75,7 +77,8 @@ public:
 	void AttackUpdate();
 	//剣の当たり判定属性更新
 	void BladeAttributeSet(const unsigned short Attribute_);
-
+	//プレーヤーの移動の値更新
+	void WorldTransUpdate();
 	int GetLevel() const { return level; }
 	int GetExperience() const { return experience; }
 	int GetExperienceToNextLevel() const { return experienceToNextLevel; }
@@ -86,6 +89,8 @@ private:
 	ViewProjection* viewProjection_;
 	std::unique_ptr<Model> model_;// 3Dモデル
 	std::unique_ptr<FBXObject3d> playerFbx_;
+	//移動クラス
+	std::unique_ptr<PlayerMovement> playerMovement;
 	//アニメーションクラス
 	std::unique_ptr<Animation> animation;
 	std::unique_ptr<Animation> animation2;
@@ -101,6 +106,15 @@ private:
 	uint32_t BladeAttackEndPos = 39;
 
 	float hitCooltime_ = 5.0f;
+
+#pragma region
+	PlayerStateNeedMaterial playerStateNeedMaterial;
+	WorldTransform playerRotWorldTrans;
+
+	Vector3 RotKeep;
+
+#pragma endregion
+	
 
 #pragma region
 	//アニメーションタイム
