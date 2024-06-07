@@ -54,6 +54,7 @@ cbuffer ShaderDetailParameters : register(b1)
     float PostEffectPow : packoffset(c17);
     uint VerticalDivisionCount : packoffset(c17.y);
     uint SideDivisionCount : packoffset(c17.z);
+    uint pad : packoffset(c17.w);
 };
 
 
@@ -64,6 +65,9 @@ cbuffer ShaderDetailCollision : register(b2)
     float4 ColPos[MaxColCount];
     float4 ColScale[MaxColCount];
     uint ColCount;
+    uint pad_;
+    uint pad2;
+    uint pad3;
 }
 
 // 頂点シェーダーからピクセルシェーダーへのやり取りに使用する構造体
@@ -74,10 +78,9 @@ struct VSOutput
     float4 DownColor : DownColor;
     float4 velocity : Velocity;
     float scale : Scale;
-    int Frame : Frame; // このパーティクルが生まれたフレーム
-    int MaxFrame : MaxFrame; //このパーティクルの寿命
-    uint alive : Alive; // このパーティクルが生きているかどうか
-    float MinusAlpha : MinusAlpha;
+    uint pad : Pad;
+    uint pad2 : Pad2;
+    uint pad3 : Pad3;
     float2 UVPosX : UVPos;
     float2 UVPosY : UVPosY;
 };
@@ -112,6 +115,7 @@ struct GpuParticleElement
     float RightUVPos;
     float TopUVPos;
     float DownUVPos;
+    float Pad;
 };
 
 uint wang_hash(uint seed)

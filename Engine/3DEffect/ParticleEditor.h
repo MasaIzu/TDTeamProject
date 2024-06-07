@@ -46,18 +46,16 @@ public: // サブクラス
 	// 頂点データ構造体
 	struct VertexPos
 	{
-		Vector3 position;
-		float scale = 1;
+		Vector4 position = { 0,0,0,0 };
 		Vector4 color = { 1,1,1,1 };
 		Vector4 DownColor = { 0,0,0,0 };
-		Vector3 velocity;
-		Vector3 FinalVelocity;
-		uint32_t Frame = 0; // このパーティクルが生まれたフレーム
-		uint32_t MaxFrame = 0;//このパーティクルの寿命
-		uint32_t alive = 0; // このパーティクルが生きているかどうか
-		float MinusAlpha = 0.0f;
-		float DownScale = 0;
-		Vector2 UVPos = { 0,0 };
+		Vector4 velocity = { 0,0,0,0 };
+		float scale = 1.0f;
+		uint32_t pad = 0;
+		uint32_t pad2 = 0;
+		uint32_t pad3 = 0;
+		Vector2 UVPosX = { 0,0 };
+		Vector2 UVPosY = { 0,0 };
 	};
 
 	struct GpuParticleElement
@@ -65,19 +63,22 @@ public: // サブクラス
 		Vector4 position;
 		Vector4 color;
 		Vector4 velocity;
-		uint32_t isActive;
+		uint32_t isActive; // 生存フラグ.
 		float lifeTime;
 		float MaxLifeTime;
 		float scale;
 		float Speed;
 		float graceOfTime;
 		float ScaleKeep;
-		float GroupNumber;
+		uint32_t GroupNumber;
 		float GroupTimer;
 		float MaxGroupTimer;
 		float PostEffectPow;
 		float LeftUVPos;
 		float RightUVPos;
+		float TopUVPos;
+		float DownUVPos;
+		float Pad;
 	};
 
 	struct ShaderViewParameters
@@ -135,6 +136,7 @@ public: // サブクラス
 		uint32_t GettingUpDownScale = 0;
 		float PostEffectPow = 0.0f;
 		uint32_t DivisionCount = 1;
+		uint32_t pad = 0;
 	};
 	ShaderDetailPointGenerationParameters shaderDetailParameters;
 
@@ -186,6 +188,7 @@ public: // サブクラス
 		float VelocityAdjustment[ 3 ] = { 1,1,1 };
 		float PostEffectPow = 0.0f;
 		uint32_t DivisionCount = 1;
+		uint32_t pad = 0;
 	};
 	SendPointGenerationParameters sendParameters;
 
@@ -196,6 +199,9 @@ public: // サブクラス
 		Vector4 Pos[ MaxColCount ];
 		Vector4 Scale[ MaxColCount ];
 		uint32_t ColCount = 0;
+		uint32_t pad = 0;
+		uint32_t pad2 = 0;
+		uint32_t pad3 = 0;
 	};
 	static ShaderDetailCollision shaderDetailCollision_;
 
