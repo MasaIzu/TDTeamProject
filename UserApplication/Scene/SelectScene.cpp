@@ -71,7 +71,6 @@ void SelectScene::PostEffectDraw()
 {
 	ID3D12GraphicsCommandList* commandList = dxCommon_->GetCommandList();
 
-	PostEffect::PreDrawScene(commandList);
 	PostEffect::SetShadeNumber(3);
 
 
@@ -85,9 +84,6 @@ void SelectScene::PostEffectDraw()
 
 	Model::PostDraw();
 
-
-
-	PostEffect::PostDrawScene();
 }
 
 void SelectScene::BackgroundDraw()
@@ -112,8 +108,6 @@ void SelectScene::Draw() {
 
 #pragma region /*背景スプライト描画*/
 
-	// 深度バッファクリア
-	dxCommon_->ClearDepthBuffer();
 	mouseSprite_->Draw({ 625, 600 },{ 1,1,1,1 },1);
 
 	if ( score_ <= 10 )

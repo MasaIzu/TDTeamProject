@@ -850,6 +850,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Banner.h" />
+    <ClInclude Include="Engine\2D\PostEffect.h" />
     <ClInclude Include="Engine\2D\ShadowMap.h" />
     <ClInclude Include="Engine\2D\Trail.h" />
     <ClInclude Include="Engine\3D\AddShield.h" />
@@ -921,7 +922,6 @@
     <ClInclude Include="Engine\LevelEditor\LoadLevelEditor.h" />
     <ClInclude Include="Engine\2D\MixPostEffect.h" />
     <ClInclude Include="Engine\Math\SplinePosition.h" />
-    <ClInclude Include="Engine\2D\PostEffect.h" />
     <ClInclude Include="Engine\2D\PostEffectManager.h" />
     <ClInclude Include="Engine\Framework\Framework.h" />
     <ClInclude Include="Engine\GameFunction\Input.h" />
@@ -942,6 +942,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Banner.cpp" />
+    <ClCompile Include="Engine\2D\PostEffect.cpp" />
     <ClCompile Include="Engine\2D\ShadowMap.cpp" />
     <ClCompile Include="Engine\2D\Trail.cpp" />
     <ClCompile Include="Engine\3D\AddShield.cpp" />
@@ -995,7 +996,6 @@
     <ClCompile Include="Engine\LevelEditor\LoadLevelEditor.cpp" />
     <ClCompile Include="Engine\2D\MixPostEffect.cpp" />
     <ClCompile Include="Engine\Math\SplinePosition.cpp" />
-    <ClCompile Include="Engine\2D\PostEffect.cpp" />
     <ClCompile Include="Engine\Framework\Framework.cpp" />
     <ClCompile Include="Engine\GameFunction\Input.cpp" />
     <ClCompile Include="Engine\GameFunction\Mouse.cpp" />
