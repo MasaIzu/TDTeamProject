@@ -196,21 +196,36 @@ void Framework::Run()
 		sceneManager_->BackgroundDraw();
 		shadowMap->DrawSceneRear();
 
-		PostEffectDraw();
-
 		ID3D12GraphicsCommandList* commandList = directXCore_->GetCommandList();
 
-		RadialBlurPostEffect::PreDrawScene(commandList);
-		PostEffect::Draw(directXCore_->GetCommandList());
-		RadialBlurPostEffect::PostDrawScene();
+		PostEffect::PreDrawScene(commandList);
+		Draw();
+		PostEffect::PostDrawScene();
+
+		//RadialBlurPostEffect::PreDrawScene(commandList);
+
+		//RadialBlurPostEffect::PostDrawScene();
+
+		//PostEffectManager::PreDrawScene(directXCore_->GetCommandList());
+
+		//PostEffect::PreDrawScene(directXCore_->GetCommandList(),false);
+		//PostEffect::Draw(directXCore_->GetCommandList());
+		//PostEffect::PostDrawScene();
+
+		PostEffect::PreDrawScene(commandList,false);
+		PostEffect::SetShadeNumber(3);
+		PostEffectDraw();
+		PostEffect::PostDrawScene();
 
 		PostEffectManager::PreDrawScene(directXCore_->GetCommandList());
-
 		Draw();
-		RadialBlurPostEffect::SetShadeNumber(2);
-		RadialBlurPostEffect::Draw(directXCore_->GetCommandList(),0);
-
+		PostEffect::Draw(directXCore_->GetCommandList(),0);
 		PostEffectManager::PostDrawScene();
+
+		//RadialBlurPostEffect::SetShadeNumber(2);
+		//RadialBlurPostEffect::Draw(directXCore_->GetCommandList(),0);
+
+		//PostEffectManager::PostDrawScene();
 
 
 		// 描画開始
