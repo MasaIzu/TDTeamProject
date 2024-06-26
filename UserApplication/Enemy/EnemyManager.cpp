@@ -13,6 +13,7 @@ void EnemyManager::Initialize(ViewProjection* viewProjection,Player* player, con
 	view = viewProjection;
 	player_ = player; 
 	Attribute_ = Attribute;
+	model.reset(Model::CreateFromOBJ("Sakaban",true));
 }
 
 void EnemyManager::Update()
@@ -148,7 +149,7 @@ void EnemyManager::ExistenceEnemy(const Vector3& EnemyPos)
 {
 	//敵キャラの生成
 	std::unique_ptr<Enemy> newEnemy = std::make_unique<Enemy>();
-	newEnemy->Initialize(view,EnemyPos,0,player_, Attribute_);
+	newEnemy->Initialize(model.get(),view,EnemyPos,0,player_,Attribute_);
 
 	//リストに登録する
 	enemy_.push_back(std::move(newEnemy));

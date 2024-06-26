@@ -120,10 +120,10 @@ void GameScene::Update() {
 
 		}
 
+		gameCamera->SetLookDownPos(player_->GetPosition());
 		player_->Update(input_);
 		enemyManager->Update();
 	}
-	gameCamera->SetLookDownPos(player_->GetPosition());
 	gameCamera->SetLookDownDistans(gamecameraDistans_);
 	gameCamera->Update();
 	worldTransform_.TransferMatrix();
