@@ -59,7 +59,7 @@ public:
 
 	void HpUpdate();
 	
-	int GetHp() { return hp_; }
+
 
 	//経験値の増加関数
 	void AddExperience(int amount);
@@ -93,7 +93,22 @@ public:
 	void addScore() {
 		score_ += addscore_;
 	}
+	int GetPower() {
+		return power_;
+	}
+	void SetPower(int power) {
+		power_ = power;
+	}
+	int GetHp() {
+		return hp_;
+	}
+	void SetHp(int hp) {
+		hp_= hp;
+	}
 
+	bool getFileNames(std::string folderPath,std::vector<std::string>& file_names);
+	void LoadPlayerStatusData();
+	void UpdatePlayerStatusData();
 private:
 	Input* input_ = nullptr;
 	WorldTransform worldTransform_;
@@ -115,7 +130,7 @@ private:
 
 	int score_ = 0;
 	const int addscore_ = 1;
-
+	int power_;
 
 	uint32_t RightBoneNum = 34;
 	uint32_t BladeAttackEndPos = 39;
@@ -178,5 +193,10 @@ private:
 	CollisionManager* collisionManager = nullptr;
 	float playerRadius = 0.5f;
 #pragma endregion
+
+
+		//プレイヤーの攻撃、体力のコマンド
+	std::stringstream playerStatusCommands;
+
 };
 

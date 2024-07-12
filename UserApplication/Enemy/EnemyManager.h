@@ -54,6 +54,21 @@ public:
 	//file_names  ファイル名一覧
 	//return        true:成功,false : 失敗
 	bool getFileNames(std::string folderPath, std::vector<std::string>& file_names);
+
+
+	int GetPower() {
+		return power_;
+	}
+	void SetPower(int power) {
+		power_ = power;
+	}
+	void SetHp(int hp) {
+		hp_ = hp;
+	}//体力のセッター
+	int GetHp() {
+		return hp_;
+	}//体力のゲッター
+
 private:
 
 	Player* player_ = nullptr;
@@ -78,4 +93,9 @@ private:
 
 
 #pragma endregion
+
+	int hp_;//体力
+	int power_;//攻撃力
+	int damage_;//被ダメージ量
+
 };

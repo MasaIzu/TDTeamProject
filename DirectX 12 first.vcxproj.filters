@@ -715,6 +715,12 @@
     <ClInclude Include="Engine\3D\Animation.h">
       <Filter>UserFile\UserHeaderFile\Player</Filter>
     </ClInclude>
+    <ClInclude Include="UserApplication\Player\PlayerMovement.h">
+      <Filter>UserFile\UserHeaderFile</Filter>
+    </ClInclude>
+    <ClInclude Include="UserApplication\Player\PlayerStruct.h">
+      <Filter>UserFile\UserHeaderFile</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -932,6 +938,9 @@
     </ClCompile>
     <ClCompile Include="Engine\3D\Animation.cpp">
       <Filter>UserFile\UserSourceFile\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="UserApplication\Player\PlayerMovement.cpp">
+      <Filter>UserFile\UserSourceFile</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
