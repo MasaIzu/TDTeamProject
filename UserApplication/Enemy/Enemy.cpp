@@ -14,7 +14,7 @@ Enemy::~Enemy()
 void Enemy::Initialize(ViewProjection* viewProjection,Vector3 enemyPos,int actionNmb, Player* player, const unsigned short Attribute,int power,int hp)
 {
 
-	model_ = model;
+	model_.reset(Model::CreateFromOBJ("Sakaban",true));
 	//debugModel_.reset(Model::CreateFromOBJ("sphere",true));
 
 	worldTransform_.Initialize();
@@ -29,7 +29,7 @@ void Enemy::Initialize(ViewProjection* viewProjection,Vector3 enemyPos,int actio
 	player_ = player;
 
 	enemyNormalBullet = std::make_unique<EnemyNormalBulletAttack>();
-	enemyNormalBullet->Initialize(model_);
+	enemyNormalBullet->Initialize(model_.get());
 
 	// コリジョンマネージャに追加
 	float sphereF = 0;

@@ -74,7 +74,7 @@ private:
 
 	WorldTransform worldTransform_;
 	ViewProjection* viewProjection_;
-	Model* model_;// 3Dモデル
+	std::unique_ptr<Model> model_;// 3Dモデル
 	Player* player_;
 
 	std::list<std::unique_ptr<EnemyBullet>> EnemyBullets_;
