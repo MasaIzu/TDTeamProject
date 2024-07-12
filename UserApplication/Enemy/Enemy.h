@@ -33,7 +33,7 @@ public:
 	~Enemy();
 
 	//初期化
-	void Initialize(Model* model_,ViewProjection* viewProjection_, Vector3 enemyPos, int actionNmb,Player* player,const unsigned short Attribute);
+	void Initialize(ViewProjection* viewProjection_,Vector3 enemyPos,int actionNmb,Player* player,const unsigned short Attribute,int power,int hp);
 	//更新
 	void Update();
 	//描画
@@ -41,19 +41,33 @@ public:
 	//移動
 	void Move();
 
+	void Damage();
+
 	//経験値のセッター
-	void SetExp(int experience) { experience_ = experience; }
+	void SetExp(int experience) {
+		experience_ = experience;
+	}
 
 
-	//死亡判定
-	bool IsDead()const { return isDead_; }
+//死亡判定
+	bool IsDead()const {
+		return isDead_;
+	}
 
-	Player* GetPlayer() { return player_; }
-	void SetPlayer(Player* player) { player_ = player_; }
+	Player* GetPlayer() {
+		return player_;
+	}
+	void SetPlayer(Player* player) {
+		player_ = player_;
+	}
 
 	void BulletAttck();
 
 	Vector3 GetPosition();
+
+	void SetHp(int hp) {hp_ = hp;}//体力のセッター
+	int GetHp(){return hp_;}//体力のゲッター
+
 
 
 private:
@@ -74,8 +88,11 @@ private:
 	bool isDead_ = false;
 
 	float enemySpeed = 0.3f;
-	int livingTimer_ = 300;
+	int livingTimer_ = 300;//生存時間
 
+	int hp_;//体力
+	int power_;//攻撃力
+	int damage_;//被ダメージ量
 #pragma region
 
 	bool isHit_ = false;

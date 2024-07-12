@@ -11,7 +11,7 @@ Enemy::~Enemy()
 {
 }
 
-void Enemy::Initialize(Model* model,ViewProjection* viewProjection,Vector3 enemyPos,int actionNmb, Player* player, const unsigned short Attribute)
+void Enemy::Initialize(ViewProjection* viewProjection,Vector3 enemyPos,int actionNmb, Player* player, const unsigned short Attribute,int power,int hp)
 {
 
 	model_ = model;
@@ -39,6 +39,10 @@ void Enemy::Initialize(Model* model,ViewProjection* viewProjection,Vector3 enemy
 	Attribute_ = Attribute;
 	enemyCollider->Update(worldTransform_.matWorld_);
 	//enemyCollider->Update(animation->GetBonePos(0) * worldTransform_.matWorld_);
+
+	power_ = power;
+	hp_ = hp;
+
 }
 
 void Enemy::Update()
@@ -55,7 +59,8 @@ void Enemy::Update()
 
 	if ( enemyCollider->GetMeleeHit() )
 	{
-		livingTimer_ = 0;
+		//livingTimer_ = 0;
+		Damage();
 		player_->addScore();
 		enemyCollider->ResetMeleeHit();
 		CollisionManager::GetInstance()->RemoveCollider(enemyCollider);
@@ -99,6 +104,19 @@ void Enemy::Move()
 	Angle = MyMath::Get2VecAngle(worldTransform_.translation_ + worldTransform_.LookVelocity.look,player_->GetPosition());
 
 	worldTransform_.SetRot(Vector3(FloatNumber(fNumbers::fZero),MyMath::GetAngle(Angle),FloatNumber(fNumbers::fZero)));
+}
+
+void Enemy::Damage()
+{
+	damage_ = player_->GetPower();
+	hp_ -= damage_;
+
+	if ( hp_ <= 0 )
+	{
+		hp_ = 0;
+		livingTimer_ = 0;
+	}
+
 }
 
 void Enemy::BulletAttck()

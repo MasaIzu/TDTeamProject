@@ -60,7 +60,7 @@ void EnemyManager::LoadEnemyPopData()
 	}
 	int randCSV = rand() % fileNmb;
 
-	file.open(CSVFileNames[randCSV]);
+	file.open(CSVFileNames[0]);
 
 	assert(file.is_open());
 
@@ -110,6 +110,23 @@ void EnemyManager::UpdateEnemyPopCommands()
 			//コメント行は飛ばす
 			continue;
 		}
+				//POPコマンド
+		if ( word.find("POWER") == 0 )
+		{
+			//x座標
+			getline(line_stream,word,',');
+			int power = ( int ) std::atoi(word.c_str());
+			SetPower(power);
+		}
+
+		//HPコマンド
+		else if ( word.find("HP") == 0 )
+		{
+			//x座標
+			getline(line_stream,word,',');
+			int hp = ( int ) std::atoi(word.c_str());
+			SetHp(hp);
+		}
 		//POPコマンド
 		if (word.find("POP") == 0)
 		{
@@ -125,6 +142,7 @@ void EnemyManager::UpdateEnemyPopCommands()
 			//敵を発生させる
 			ExistenceEnemy(Vector3(x, y, z));
 		}
+
 
 		//WAITコマンド
 		else if (word.find("WAIT") == 0)
@@ -149,7 +167,7 @@ void EnemyManager::ExistenceEnemy(const Vector3& EnemyPos)
 {
 	//敵キャラの生成
 	std::unique_ptr<Enemy> newEnemy = std::make_unique<Enemy>();
-	newEnemy->Initialize(model.get(),view,EnemyPos,0,player_,Attribute_);
+	newEnemy->Initialize(view,EnemyPos,0,player_, Attribute_,power_,hp_);
 
 	//リストに登録する
 	enemy_.push_back(std::move(newEnemy));

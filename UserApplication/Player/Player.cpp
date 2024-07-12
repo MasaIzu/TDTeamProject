@@ -62,6 +62,9 @@ void Player::Initialize(const unsigned short Attribute, ViewProjection* viewProj
 	particleEditor = std::make_unique<ParticleEditor>();
 	particleEditor->Initialize(MaxParticleCountB, true, "HonooBlade");
 	particleEditor->SetTextureHandle(TextureManager::Load("sprite/effect4.png"));
+
+	LoadPlayerStatusData();
+	UpdatePlayerStatusData();
 }
 
 void Player::Update(Input* input)
@@ -329,4 +332,90 @@ void Player::PlayerRot()
 void Player::WorldTransUpdate()
 {
 	worldTransform_.TransferMatrix();
+}
+
+bool Player::getFileNames(std::string folderPath,std::vector<std::string>& file_names)
+{
+	using namespace std::filesystem;
+	directory_iterator iter(folderPath),end;
+	std::error_code err;
+
+	for ( ; iter != end && !err; iter.increment(err) )
+	{
+		const directory_entry entry = *iter;
+
+		file_names.push_back(entry.path().string());
+		printf("%s\n",file_names.back().c_str());
+	}
+
+	/* エラー処理 */
+	if ( err )
+	{
+		std::cout << err.value() << std::endl;
+		std::cout << err.message() << std::endl;
+		return false;
+	}
+	return true;
+}
+
+void Player::LoadPlayerStatusData()
+{
+	//ファイルを開く
+	std::ifstream file;
+	////敵の出現CSVの名前
+	//std::vector<std::string> CSVFileNames;
+	//getFileNames("Resources/CsvFile/PlayerData/playerStatus.csv",CSVFileNames);
+
+	file.open("Resources/CsvFile/PlayerData/playerStatus.csv");
+
+	assert(file.is_open());
+
+	//ファイルを内容を文字列ストリームにコピー
+	playerStatusCommands << file.rdbuf();
+
+	//ファイルを閉じる
+	file.close();
+}
+
+void Player::UpdatePlayerStatusData()
+{
+	//1行分の文字列を入れる変数
+	std::string line;
+
+	//コマンド実行ループ
+	while (getline(playerStatusCommands,line) )
+	{
+		//1行分の文字列をストリームに変換して解析しやすくする
+		std::istringstream line_stream(line);
+
+		std::string word;
+		//,区切りで行の先頭文字列を取得
+		getline(line_stream,word,',');
+
+		//"//"から始まる行はコメント
+		if ( word.find("//") == 0 )
+		{
+			//コメント行は飛ばす
+			continue;
+		}
+		//POPコマンド
+		if ( word.find("POWER") == 0 )
+		{
+			//x座標
+			getline(line_stream,word,',');
+			int power = ( int ) std::atoi(word.c_str());
+			SetPower(power);
+		}
+
+		//HPコマンド
+		else if ( word.find("HP") == 0 )
+		{
+			//x座標
+			getline(line_stream,word,',');
+			int hp = ( int ) std::atoi(word.c_str());
+			SetHp(hp);
+			break;
+		}
+
+	}
 }
