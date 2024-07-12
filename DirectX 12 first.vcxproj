@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
@@ -939,6 +939,7 @@
     <ClInclude Include="Engine\Sound\AudioManager.h" />
     <ClInclude Include="UserApplication\Scene\SelectScene.h" />
     <ClInclude Include="UserApplication\Scene\TitleScene.h" />
+    <ClInclude Include="UserApplication\UI.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Banner.cpp" />
@@ -1013,6 +1014,7 @@
     <ClCompile Include="Engine\Sound\AudioManager.cpp" />
     <ClCompile Include="UserApplication\Scene\SelectScene.cpp" />
     <ClCompile Include="UserApplication\Scene\TitleScene.cpp" />
+    <ClCompile Include="UserApplication\UI.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

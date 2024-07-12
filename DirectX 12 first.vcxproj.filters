@@ -721,6 +721,9 @@
     <ClInclude Include="Engine\2D\PostEffect.h">
       <Filter>Engine\HeaderFile\2D</Filter>
     </ClInclude>
+    <ClInclude Include="UserApplication\UI.h">
+      <Filter>UserFile\UserHeaderFile</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -900,9 +903,6 @@
     <ClCompile Include="UserApplication\RandomMap.cpp">
       <Filter>UserFile\UserSourceFile</Filter>
     </ClCompile>
-    <ClCompile Include="UserApplication\Scene\TitleScene.cpp">
-      <Filter>UserFile\UserSourceFile\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="UserApplication\Scene\SelectScene.cpp">
       <Filter>UserFile\UserSourceFile\Scene</Filter>
     </ClCompile>
@@ -941,6 +941,12 @@
     </ClCompile>
     <ClCompile Include="Engine\2D\PostEffect.cpp">
       <Filter>Engine\SourceFile\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="UserApplication\UI.cpp">
+      <Filter>UserFile\UserSourceFile</Filter>
+    </ClCompile>
+    <ClCompile Include="UserApplication\Scene\TitleScene.cpp">
+      <Filter>UserFile\UserSourceFile</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
