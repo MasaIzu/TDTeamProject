@@ -67,7 +67,7 @@ public:
     /// シーン描画前処理
     /// </summary>
     /// <param name="cmdList">コマンドリスト</param>
-    static void PreDrawScene(ID3D12GraphicsCommandList* cmdList);
+    static void PreDrawScene(ID3D12GraphicsCommandList* cmdList,const bool& clear = true);
 
 	/// <summary>
 	/// 描画
@@ -130,6 +130,9 @@ private://静的メンバ変数
 
 	static std::array<Microsoft::WRL::ComPtr<ID3D12PipelineState>,2>PipelineStates_;
     static Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature;
+
+	static D3D12_CPU_DESCRIPTOR_HANDLE keepDepth;
+
 private:
     // 定数バッファ
     static Microsoft::WRL::ComPtr<ID3D12Resource> constDataBuff_;

@@ -571,9 +571,6 @@
     <ClInclude Include="Engine\Math\Easing.h">
       <Filter>Engine\HeaderFile\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\2D\PostEffect.h">
-      <Filter>Engine\HeaderFile\2D</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\2D\PostEffectManager.h">
       <Filter>Engine\HeaderFile\2D</Filter>
     </ClInclude>
@@ -721,6 +718,9 @@
     <ClInclude Include="UserApplication\Player\PlayerStruct.h">
       <Filter>UserFile\UserHeaderFile</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\2D\PostEffect.h">
+      <Filter>Engine\HeaderFile\2D</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -818,9 +818,6 @@
     </ClCompile>
     <ClCompile Include="Engine\Math\Easing.cpp">
       <Filter>Engine\SourceFile\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\2D\PostEffect.cpp">
-      <Filter>Engine\SourceFile\2D</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Math\Uint32Vec2.cpp">
       <Filter>Engine\SourceFile\Math</Filter>
@@ -941,6 +938,9 @@
     </ClCompile>
     <ClCompile Include="UserApplication\Player\PlayerMovement.cpp">
       <Filter>UserFile\UserSourceFile</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\2D\PostEffect.cpp">
+      <Filter>Engine\SourceFile\2D</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

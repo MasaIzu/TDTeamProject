@@ -416,7 +416,7 @@ bool GameCamera::CheckBetweenToCameraCollider()
 void GameCamera::LookDownCamUpdate()
 {
 	Vector3 birdCam;
-	target = lookDownCamPos_;
+	//target = lookDownCamPos_;
 
 	Vector3 rotation = Vector3( MyMath::GetAngle(45), 0, 0);
 	Matrix4 cameraRot;
@@ -424,7 +424,7 @@ void GameCamera::LookDownCamUpdate()
 
 	rot = rotation;
 	CameraRot = cameraRot;
-	target = MyMath::lerp(target, lookDownCamPos_, 0.005f);
+	target = MyMath::lerp(target, lookDownCamPos_, 0.09f);
 
 	//ワールド前方ベクトル
 	Vector3 forward(0, 0, -1);

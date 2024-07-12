@@ -86,6 +86,8 @@ private:
 
 	ViewProjection* view;
 
+	std::unique_ptr<Model> model;
+
 	int enemySpornCount = 2;
 
 #pragma region

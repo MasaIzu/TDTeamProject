@@ -13,6 +13,7 @@ void EnemyManager::Initialize(ViewProjection* viewProjection,Player* player, con
 	view = viewProjection;
 	player_ = player; 
 	Attribute_ = Attribute;
+	model.reset(Model::CreateFromOBJ("Sakaban",true));
 }
 
 void EnemyManager::Update()

@@ -120,10 +120,10 @@ void GameScene::Update() {
 
 		}
 
+		gameCamera->SetLookDownPos(player_->GetPosition());
 		player_->Update(input_);
 		enemyManager->Update();
 	}
-	gameCamera->SetLookDownPos(player_->GetPosition());
 	gameCamera->SetLookDownDistans(gamecameraDistans_);
 	gameCamera->Update();
 	worldTransform_.TransferMatrix();
@@ -147,7 +147,6 @@ void GameScene::PostEffectDraw()
 {
 	ID3D12GraphicsCommandList* commandList = dxCommon_->GetCommandList();
 
-	PostEffect::PreDrawScene(commandList);
 	PostEffect::SetShadeNumber(3);
 
 
@@ -165,7 +164,6 @@ void GameScene::PostEffectDraw()
 
 	player_->ParticleDraw();
 
-	PostEffect::PostDrawScene();
 }
 
 void GameScene::BackgroundDraw()
@@ -189,9 +187,6 @@ void GameScene::Draw() {
 	ID3D12GraphicsCommandList* commandList = dxCommon_->GetCommandList();
 
 #pragma region 背景スプライト描画
-
-	// 深度バッファクリア
-	dxCommon_->ClearDepthBuffer();
 
 	//tile.Draw();
 
