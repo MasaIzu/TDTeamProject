@@ -164,6 +164,8 @@ void GameScene::PostEffectDraw()
 
 	player_->ParticleDraw();
 
+	player_->TarilDraw();
+
 }
 
 void GameScene::BackgroundDraw()
