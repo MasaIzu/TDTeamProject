@@ -63,6 +63,15 @@ void Player::Initialize(const unsigned short Attribute, ViewProjection* viewProj
 	particleEditor->Initialize(MaxParticleCountB, true, "HonooBlade");
 	particleEditor->SetTextureHandle(TextureManager::Load("sprite/effect4.png"));
 
+	trail3D_ = std::make_unique<Trail3D>(50);
+	trail3D_->SetTexture(TextureManager::Load("sprite/gomi.png"));
+
+	SunderRail.push_back(Vector3(0,80,0));
+	SunderRail.push_back(Vector3(0,60,0));
+	SunderRail.push_back(Vector3(0,40,0));
+	SunderRail.push_back(Vector3(0,20,0));
+	SunderRail.push_back(Vector3(0,0,0));
+
 	LoadPlayerStatusData();
 	UpdatePlayerStatusData();
 }
@@ -89,6 +98,17 @@ void Player::Update(Input* input)
 			isBladeAttack = true;
 		}
 	}
+
+	isLeftAttack = false;
+
+	if ( isLeftAttacking == false )
+	{
+		if ( input_->MouseInputTrigger(static_cast< int >( 0 )) || input_->ButtonInput(RT) )
+		{
+			isLeftAttack = true;
+		}
+	}
+
 	AttackUpdate();
 	if (isBladeAttack == true)
 	{
@@ -132,6 +152,11 @@ void Player::Draw(const ViewProjection& LightViewProjection_)
 	//{
 	//	model_->Draw(BladeColWorldTrans[i], *viewProjection_, LightViewProjection_);
 	//}
+}
+
+void Player::TarilDraw()
+{
+	trail3D_->Draw(*viewProjection_);
 }
 
 void Player::Move(Input* input)
@@ -293,6 +318,9 @@ void Player::AttackUpdate()
 				isPreparation = true;
 				animation2->SetAnimation(static_cast<uint32_t>(PlayerAnimation::HandAttack), static_cast<uint32_t>(Numbers::Ten), playerAnimTime.BladeAttack, false);
 				BladeAttributeSet(COLLISION_ATTR_MELEEATTACK);
+
+				//BladeAttributeSet(COLLISION_ATTR_PLAYER_METEORITE);
+
 			}
 		}
 		else
@@ -302,9 +330,30 @@ void Player::AttackUpdate()
 				isBladeAttacking = false;
 				BladeAttributeSet(COLLISION_ATTR_NOTATTACK);
 				CollisionManager::GetInstance()->ResetMeleeAttack();
+				//CollisionManager::GetInstance()->ResetPlayerSkillAttack();
 			}
 		}
 	}
+	Vector3 SetPos;
+	//trail3D_->SetPos(SetPos);
+	trail3D_->Update();
+
+	if ( isLeftAttack )
+	{
+		SunderTopPos = EnemyPos + UpPos;
+		SunderBottomPos = EnemyPos;
+		trail3D_->ResetTrail(SunderRail[0]);
+
+		for ( int i = 0; i < 5; i++ )
+		{
+			SetPos = SunderRail[ i ];
+			trail3D_->SetPos(SetPos);
+			trail3D_->SetIsVisible(true);
+			trail3D_->Update();
+		}
+
+	}
+
 }
 
 void Player::BladeAttributeSet(const unsigned short Attribute_)
@@ -332,6 +381,11 @@ void Player::PlayerRot()
 void Player::WorldTransUpdate()
 {
 	worldTransform_.TransferMatrix();
+}
+
+void Player::GetEnemyPos(const Vector3& enemyPos)
+{
+	EnemyPos = enemyPos;
 }
 
 bool Player::getFileNames(std::string folderPath,std::vector<std::string>& file_names)

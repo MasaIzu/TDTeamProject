@@ -166,6 +166,40 @@ void CollisionManager::CheckAllCollisions()
 						//	}
 						//}
 					}
+					else if ( colA->attribute == COLLISION_ATTR_PLAYER_METEORITE && colB->attribute == COLLISION_ATTR_ENEMYS ||
+						colA->attribute == COLLISION_ATTR_ENEMYS && colB->attribute == COLLISION_ATTR_PLAYER_METEORITE )
+						{
+							if ( isPlayerSkilAttackHit == false )
+							{
+								if ( Collision::CheckSphere2Sphere(*SphereA,*SphereB,&inter) )
+								{
+									//isMeleeAttackHit = true;
+									HitWorldPos = colB->GetWorldPos();
+									if ( colB->attribute == COLLISION_ATTR_PLAYER_METEORITE )
+									{
+										colA->isHitPlayerSkillAttack = true;
+										//colB->attribute = COLLISION_ATTR_NOTATTACK;
+									}
+									else if ( colA->attribute == COLLISION_ATTR_PLAYER_METEORITE )
+									{
+										//colA->attribute = COLLISION_ATTR_NOTATTACK;
+										colB->isHitPlayerSkillAttack = true;
+									}
+								}
+							}
+							//else
+							//{
+							//	if ( colB->attribute == COLLISION_ATTR_MELEEATTACK )
+							//	{
+							//		colB->attribute = COLLISION_ATTR_NOTATTACK;
+							//	}
+							//	else if ( colA->attribute == COLLISION_ATTR_MELEEATTACK )
+							//	{
+							//		colA->attribute = COLLISION_ATTR_NOTATTACK;
+							//	}
+							//}
+							}
+
 					if ( Collision::CheckSphere2Sphere(*SphereA,*SphereB,&inter) )
 					{
 						//isEnemyHit = true;

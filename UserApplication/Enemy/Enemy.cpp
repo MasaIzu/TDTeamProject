@@ -66,6 +66,18 @@ void Enemy::Update()
 		CollisionManager::GetInstance()->RemoveCollider(enemyCollider);
 
 	}
+
+	//プレイヤーのスキル攻撃と当たったときの処理
+	if ( enemyCollider->GetIsPlayerSkillAttackHit() )
+	{
+		//livingTimer_ = 0;
+		Damage();
+		player_->addScore();
+		enemyCollider ->PlayerSkillAttackHitReset();
+		CollisionManager::GetInstance()->RemoveCollider(enemyCollider);
+
+	}
+
 	if ( enemyCollider->GetHit() )
 	{
 		player_->addScore();

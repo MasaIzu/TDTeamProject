@@ -16,6 +16,7 @@
 #include "Numbers.h"
 #include <ParticleEditor.h>
 #include <PlayerMovement.h>
+#include <Trail3D.h>
 
 class Enemy;
 
@@ -40,6 +41,9 @@ public:
 	void Update(Input* input);
 	//描画
 	void Draw(const ViewProjection& LightViewProjection_);
+
+	//トレイル描画
+	void TarilDraw();
 
 	void Move(Input* input);
 	//プレイヤーの回転
@@ -82,7 +86,7 @@ public:
 	int GetLevel() const { return level; }
 	int GetExperience() const { return experience; }
 	int GetExperienceToNextLevel() const { return experienceToNextLevel; }
-
+	void GetEnemyPos(const Vector3& enemyPos);
 
 	int GetScore() {
 		return score_;
@@ -197,6 +201,25 @@ private:
 
 		//プレイヤーの攻撃、体力のコマンド
 	std::stringstream playerStatusCommands;
+
+
+#pragma region
+
+	bool isLeftAttack = false;
+	bool isLeftAttacking = false;
+
+	Vector3 UpPos = { 0,20.0f,0 };
+	Vector3 EnemyPos;
+
+	Vector3 SunderTopPos;
+	Vector3 SunderBottomPos;
+
+	std::unique_ptr<Trail3D> trail3D_;
+
+	std::vector<Vector3> SunderRail;
+
+#pragma endregion
+
 
 };
 
