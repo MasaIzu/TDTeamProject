@@ -57,12 +57,22 @@ void Enemy::Update()
 	//debugTransform.translation_ = worldTransform_.translation_;
 	//debugTransform.TransferMatrix();
 
-	if ( enemyCollider->GetMeleeHit() )
+	//if ( enemyCollider->GetMeleeHit() )
+	//{
+	//	//livingTimer_ = 0;
+	//	Damage();
+	//	player_->addScore();
+	//	enemyCollider->ResetMeleeHit();
+	//	CollisionManager::GetInstance()->RemoveCollider(enemyCollider);
+
+	//}
+
+	if ( enemyCollider->GetIsPlayerSkillAttackHit() )
 	{
 		//livingTimer_ = 0;
 		Damage();
 		player_->addScore();
-		enemyCollider->ResetMeleeHit();
+		enemyCollider ->PlayerSkillAttackHitReset();
 		CollisionManager::GetInstance()->RemoveCollider(enemyCollider);
 
 	}
