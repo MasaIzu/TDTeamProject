@@ -28,6 +28,7 @@
 #include "EnemyManager.h"
 
 #include "Banner.h"
+#include "UI.h"
 
 /// <summary>
 /// ゲームシーン
@@ -107,7 +108,7 @@ private: // メンバ変数
 	std::unique_ptr<Sprite> mouseSprite_ = nullptr;
 	std::unique_ptr<Banner> startBanner;
 
-
+	std::unique_ptr<UI> ui_;
 
 	std::unique_ptr<Sprite> timeSprite_ = nullptr;
 	int score_;
