@@ -91,6 +91,7 @@ void Player::Initialize(const unsigned short Attribute, ViewProjection* viewProj
 void Player::Update(Input* input)
 {
 	isBladeAttack = false;
+	isLeftAttack = false;
 	isHit_ = false;
 
 	if ( playerCollider->GetHitSphere() )
@@ -103,6 +104,7 @@ void Player::Update(Input* input)
 	Move(input);
 
 
+	//近接攻撃
 	if (isBladeAttacking == false)
 	{
 		if (input_->MouseInputTrigger(static_cast<int>(1)) || input_->ButtonInput(RT))
@@ -111,8 +113,9 @@ void Player::Update(Input* input)
 		}
 	}
 
-	isLeftAttack = false;
 
+
+	//落雷攻撃
 	if ( isLeftAttacking == false )
 	{
 		if ( input_->MouseInputTrigger(static_cast< int >( 0 )) || input_->ButtonInput(RT) )
@@ -365,21 +368,36 @@ void Player::AttackUpdate()
 		SunderBottomPos = EnemyPos;
 		trail3D_->ResetTrail(SunderRail[0]);
 
+		SunderAttributeSet(COLLISION_ATTR_PLAYER_METEORITE);
+
+
 		for ( int i = 0; i < 5; i++ )
 		{
-			SetPos = SunderRail[ i ];
+			SetPos = SunderRail[i];
 			trail3D_->SetPos(SetPos);
 			trail3D_->SetIsVisible(true);
 			trail3D_->Update();
 		}
 
 	}
-
+	else
+	{
+		SunderAttributeSet(COLLISION_ATTR_NOTATTACK);
+		CollisionManager::GetInstance() ->ResetPlayerSkillAttack();
+	}
 }
 
 void Player::BladeAttributeSet(const unsigned short Attribute_)
 {
 	for (auto&& col : PlayerBladeAttackCollider)
+	{
+		col->SetAttribute(Attribute_);
+	}
+}
+
+void Player::SunderAttributeSet(const unsigned short Attribute_)
+{
+	for ( auto&& col : PlayerSunderAttackCollider )
 	{
 		col->SetAttribute(Attribute_);
 	}

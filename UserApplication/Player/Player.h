@@ -81,6 +81,10 @@ public:
 	void AttackUpdate();
 	//剣の当たり判定属性更新
 	void BladeAttributeSet(const unsigned short Attribute_);
+
+	//落雷の当たり判定属性更新
+	void SunderAttributeSet(const unsigned short Attribute_);
+
 	//プレーヤーの移動の値更新
 	void WorldTransUpdate();
 	int GetLevel() const { return level; }
