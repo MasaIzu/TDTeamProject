@@ -30,7 +30,7 @@ void GameScene::Initialize() {
 
 	sprite_ = Sprite::Create(TextureManager::Load("sprite/2.png"));
 
-	timeSprite_ = Sprite::Create(TextureManager::Load("sprite/Green30.png"));
+	//timeSprite_ = Sprite::Create(TextureManager::Load("sprite/Green30.png"));
 
 	mouseSprite_ = Sprite::Create(TextureManager::Load("sprite/M_RIGHT.png"));
 	mouseSprite_->SetSize({ 100.0f,100.0f });
@@ -71,6 +71,10 @@ void GameScene::Initialize() {
 	startBanner = std::make_unique<Banner>();
 	startBanner->Initialize();
 
+	ui_ = std::make_unique<UI>();
+	ui_->Initialize();
+	ui_->SetPlayerHP(player_->GetHp());
+
 //	tile.Initialize();
 
 	randomMap = std::make_unique<RandomMap>();
@@ -104,9 +108,13 @@ void GameScene::Initialize() {
 	randomMap->LoadNewTile(std::move(yellowTile));
 
 	timeGauge = 1200;
+	ui_->SetTimeGauge(timeGauge);
+	ui_->SetPlayerStartHP(player_->GetHp());
 }
 
 void GameScene::Update() {
+	ui_->SetPlayerHP(player_->GetHp());
+	ui_->SetTimeGauge(timeGauge);
 	if ( startBanner->GetAnimEnd() == true )
 	{
 		timeGauge--;
@@ -129,7 +137,7 @@ void GameScene::Update() {
 	worldTransform_.TransferMatrix();
 
 
-	timeSprite_->SetSize({ (float)timeGauge,50.0f });
+	//timeSprite_->SetSize({ (float)timeGauge,50.0f });
 //	Vector2 tPos = { 320.0f,180.0f };
 	//tile.SetSpritePos(tPos);
 
@@ -138,6 +146,8 @@ void GameScene::Update() {
 	randomMap->Update();
 
 	startBanner->Update();
+	
+	ui_->Update();
 
 	//全ての衝突をチェック
 	collisionManager->CheckAllCollisions();
@@ -196,7 +206,7 @@ void GameScene::Draw() {
 	{
 		mouseSprite_->Draw({ 1000,600 },{ 1,1,1,1 },1);
 	}
-	timeSprite_->Draw({ 600,100 },{ 1,1,1,1 },1);
+//	timeSprite_->Draw({ 600,100 },{ 1,1,1,1 },1);
 
 #pragma endregion
 
@@ -223,6 +233,7 @@ void GameScene::Draw() {
 #pragma region 前景スプライト描画
 
 	startBanner->Draw();
+	ui_->Draw();
 	//sprite_->Draw({ 100,100 },{ 1,1,1,1 },1);
 
 #pragma endregion
