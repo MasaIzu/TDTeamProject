@@ -58,6 +58,13 @@ public://メンバ関数
 	bool GetIsAttackHit() { return isAttackHit; }
 	//雑魚敵の攻撃が当たった
 	bool GetIsWakeEnemyAttackHit() { return isWakeEnemyAttackHit; }
+
+	//雑魚敵の攻撃が当たった
+	bool GetIsPlayerSkillAttackHit() {
+		return isPlayerSkilAttackHit;
+		;
+	}
+
 	//当たったナンバーを表示
 	int GetHitNumber() { return hitNumber; }
 	//敵のポジションをゲット
@@ -67,6 +74,10 @@ public://メンバ関数
 
 	void ResetMeleeAttack() {
 		isMeleeAttackHit = false;
+	}
+
+	void ResetPlayerSkillAttack() {
+		isPlayerSkilAttackHit = false;
 	}
 
 private:
@@ -83,6 +94,9 @@ private:
 	bool isMeleeAttackHit = false;
 	int hitNumber = 0;
 	bool isWakeEnemyAttackHit = false;
+
+	bool isPlayerSkilAttackHit = false;
+
 	Matrix4 EnemyWorldPos;
 	Matrix4 HitWorldPos;
 };
