@@ -218,6 +218,23 @@ private:
 
 	std::vector<Vector3> SunderRail;
 
+
+	static const uint32_t SunderAttackColSphereCount = 4;//当たり判定の数
+	const float MaxSunderColDetection = 15.0f;
+
+	std::array<WorldTransform,SunderAttackColSphereCount> SunderColWorldTrans;//落雷攻撃のWorldTransform
+	std::array<BaseCollider*,SunderAttackColSphereCount> PlayerSunderAttackCollider;//落雷攻撃のコライダー
+	//std::unique_ptr<ParticleEditor> particleEditor;
+
+	const float PlayerSunderRadius = 2.0f;
+
+	Vector3 SunderColRatio;
+
+	Vector4 ParticleSunderStartPos;
+	Vector4 ParticleSunderEndPos;
+	Vector4 ParticleSunderMilEndPos;
+
+
 #pragma endregion
 
 

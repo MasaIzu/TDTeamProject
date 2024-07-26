@@ -72,6 +72,18 @@ void Player::Initialize(const unsigned short Attribute, ViewProjection* viewProj
 	SunderRail.push_back(Vector3(0,20,0));
 	SunderRail.push_back(Vector3(0,0,0));
 
+
+	//落雷攻撃のコライダーの設定
+	for ( uint32_t i = 0; i < SunderAttackColSphereCount; i++ )
+	{
+		SunderColWorldTrans[ i ].scale_ = Vector3(PlayerSunderRadius,PlayerSunderRadius,PlayerSunderRadius);
+		SunderColWorldTrans[ i ].Initialize();
+		PlayerSunderAttackCollider[ i ] = new SphereCollider(Vector4(sphereF,PlayerSunderRadius,sphereF,sphereF),PlayerSunderRadius);
+		CollisionManager::GetInstance()->AddCollider(PlayerSunderAttackCollider[ i ]);
+		PlayerSunderAttackCollider[ i ]->SetAttribute(COLLISION_ATTR_NOTATTACK);
+		PlayerSunderAttackCollider[ i ]->Update(worldTransform_.matWorld_);
+	}
+
 	LoadPlayerStatusData();
 	UpdatePlayerStatusData();
 }
@@ -135,11 +147,20 @@ void Player::Update(Input* input)
 	ParticleMilEndPos = ParticleStartPos + MyMath::Vec3ToVec4(BladeColRatio.norm() * MaxBladeColDetection);
 	BladeColRatio = (BladeColRatio.norm() * MaxBladeColDetection) / AttackColSphereCount;
 
+	//剣攻撃のコライダー
 	for (uint32_t i = 0; i < AttackColSphereCount; i++)
 	{
 		BladeColWorldTrans[i].translation_ = MyMath::Vec4ToVec3(ParticleStartPos) + (BladeColRatio * static_cast<float>(i));
 		BladeColWorldTrans[i].TransferMatrix();
 		PlayerBladeAttackCollider[i]->Update(BladeColWorldTrans[i].matWorld_);
+	}
+
+	//落雷攻撃のコライダー
+	for ( uint32_t i = 0; i < SunderAttackColSphereCount; i++ )
+	{
+		SunderColWorldTrans[ i ].translation_ = MyMath::Vec4ToVec3(ParticleStartPos) + ( BladeColRatio * static_cast< float >( i ) );
+		SunderColWorldTrans[ i ].TransferMatrix();
+		PlayerSunderAttackCollider[ i ]->Update(SunderColWorldTrans[ i ].matWorld_);
 	}
 
 }

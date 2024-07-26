@@ -192,7 +192,6 @@ void GameScene::Draw() {
 
 	//tile.Draw();
 
-	randomMap->Draw();
 	if ( startBanner->GetAnimEnd() == true )
 	{
 		mouseSprite_->Draw({ 1000,600 },{ 1,1,1,1 },1);
