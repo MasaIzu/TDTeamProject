@@ -28,12 +28,6 @@ void Banner::Update()
 	//if (Input::GetInstance()->PushKey(DIK_K)) {
 	//	move.y = 1;
 	//}
-	if (Input::GetInstance()->TriggerKey(DIK_R)) {
-		startPos_ = { -100,720 / 2 };
-		bannerTime = 0;
-		isBannerEaseOut = false;
-		isAnimEnd = false;
-	}
 	if (isAnimEnd == false) {
 		bannerTime++;
 	}
