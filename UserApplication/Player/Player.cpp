@@ -317,9 +317,9 @@ void Player::AttackUpdate()
 			{
 				isPreparation = true;
 				animation2->SetAnimation(static_cast<uint32_t>(PlayerAnimation::HandAttack), static_cast<uint32_t>(Numbers::Ten), playerAnimTime.BladeAttack, false);
-				//BladeAttributeSet(COLLISION_ATTR_MELEEATTACK);
+				BladeAttributeSet(COLLISION_ATTR_MELEEATTACK);
 
-				BladeAttributeSet(COLLISION_ATTR_PLAYER_METEORITE);
+				//BladeAttributeSet(COLLISION_ATTR_PLAYER_METEORITE);
 
 			}
 		}
@@ -330,7 +330,7 @@ void Player::AttackUpdate()
 				isBladeAttacking = false;
 				BladeAttributeSet(COLLISION_ATTR_NOTATTACK);
 				CollisionManager::GetInstance()->ResetMeleeAttack();
-				CollisionManager::GetInstance()->ResetPlayerSkillAttack();
+				//CollisionManager::GetInstance()->ResetPlayerSkillAttack();
 			}
 		}
 	}

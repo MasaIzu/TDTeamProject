@@ -57,16 +57,17 @@ void Enemy::Update()
 	//debugTransform.translation_ = worldTransform_.translation_;
 	//debugTransform.TransferMatrix();
 
-	//if ( enemyCollider->GetMeleeHit() )
-	//{
-	//	//livingTimer_ = 0;
-	//	Damage();
-	//	player_->addScore();
-	//	enemyCollider->ResetMeleeHit();
-	//	CollisionManager::GetInstance()->RemoveCollider(enemyCollider);
+	if ( enemyCollider->GetMeleeHit() )
+	{
+		//livingTimer_ = 0;
+		Damage();
+		player_->addScore();
+		enemyCollider->ResetMeleeHit();
+		CollisionManager::GetInstance()->RemoveCollider(enemyCollider);
 
-	//}
+	}
 
+	//プレイヤーのスキル攻撃と当たったときの処理
 	if ( enemyCollider->GetIsPlayerSkillAttackHit() )
 	{
 		//livingTimer_ = 0;
@@ -76,6 +77,7 @@ void Enemy::Update()
 		CollisionManager::GetInstance()->RemoveCollider(enemyCollider);
 
 	}
+
 	if ( enemyCollider->GetHit() )
 	{
 		player_->addScore();
