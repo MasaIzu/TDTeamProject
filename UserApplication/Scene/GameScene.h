@@ -68,6 +68,9 @@ public: // メンバ関数
 	//スロウ
 	bool IsSlow() override;
 
+private:
+	void Phase(int32_t gametime);
+
 private: // メンバ変数
 	WinApp* winApp_ = nullptr;
 	DirectXCore* dxCommon_ = nullptr;
@@ -113,4 +116,6 @@ private: // メンバ変数
 	std::unique_ptr<Sprite> timeSprite_ = nullptr;
 	int score_;
 	int timeGauge = 1200;
+
+	int32_t nowPhase;
 };
