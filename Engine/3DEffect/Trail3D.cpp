@@ -357,6 +357,13 @@ void Trail3D::SetEndColor(const Vector3& color)
 	EndColor_ = color;
 }
 
+void Trail3D::SetSizeWeightPoint(const bool& first,const bool& center,const bool& end)
+{
+	isFirstPointSize = first;
+	isSenterPointSize = center;
+	isEndPointSize = end;
+}
+
 void Trail3D::TransferBuff()
 {
 	HRESULT result;
@@ -368,6 +375,7 @@ void Trail3D::TransferBuff()
 	float amount = 1.0f / ( posArray_.size() );
 	float v = 0;
 	float Size = ( MaxSize - MinSize ) / posArray_.size();
+	float AddSize = 0;
 
 	vertex_.clear();
 	vertex_.resize(posArray_.size() * 2 - 2);
@@ -390,8 +398,32 @@ void Trail3D::TransferBuff()
 		vertex_[ i ].uv = Vector2(v,1.0f);
 		vertex_[ i + 1 ].uv = Vector2(v + amount,1.0f);
 
-		vertex_[ i ].Size = MaxSize - Size;
-		vertex_[ i + 1 ].Size = MaxSize - Size;
+		if ( isFirstPointSize )
+		{
+			vertex_[ i ].Size = MaxSize - (Size * i);
+			vertex_[ i + 1 ].Size = MaxSize - ( Size * i + Size);
+		}
+		else if ( isSenterPointSize )
+		{
+			size_t half = vertex_.size() / 2;
+			float haflV = (MaxSize - MinSize) / half;
+
+			if ( half > i )
+			{
+				vertex_[ i ].Size = haflV * i + MinSize;
+				vertex_[ i + 1 ].Size = haflV * (i + 1) + MinSize;
+			}
+			else
+			{
+				vertex_[ i ].Size = haflV * half - haflV * (i - half) + MinSize;
+				vertex_[ i + 1 ].Size = haflV * half - haflV * ( i - half + 1) + MinSize;
+			}
+		}
+		else if ( isEndPointSize )
+		{
+			vertex_[ i ].Size = Size * i + MinSize;
+			vertex_[ i + 1 ].Size = Size * i + Size + MinSize;
+		}
 
 		if ( !isStartColor )
 		{
@@ -407,6 +439,7 @@ void Trail3D::TransferBuff()
 		}
 
 		v += amount;
+		AddSize += Size;
 	}
 	for ( size_t i = 0; i < vertex_.size(); i++ )
 	{

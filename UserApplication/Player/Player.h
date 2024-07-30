@@ -198,8 +198,11 @@ private:
 	unsigned short Attribute_;
 	//当たり判定
 	BaseCollider* playerCollider;
+	BaseCollider* playerCloseCollider;
 	CollisionManager* collisionManager = nullptr;
 	float playerRadius = 0.5f;
+	float playerColseRadius = 10.0f;
+
 #pragma endregion
 
 
@@ -212,7 +215,8 @@ private:
 	bool isLeftAttack = false;
 	bool isLeftAttacking = false;
 
-	Vector3 UpPos = { 0,20.0f,0 };
+	Vector3 DownPos = { 0,20.0f,0 };
+	Vector3 SunderStartPos = { 0,80.0f,0 };
 	Vector3 EnemyPos;
 
 	Vector3 SunderTopPos;

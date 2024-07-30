@@ -19,17 +19,19 @@ void CollisionManager::CheckAllCollisions()
 	hitNumber = 0;
 	isWakeEnemyAttackHit = false;
 
-	
+	float Length = 0.0f;
 
 	std::forward_list<BaseCollider*>::iterator itA;
 	std::forward_list<BaseCollider*>::iterator itB;
 
 	// 全ての組み合わせについて総当りチェック
 	itA = colliders.begin();
-	for (; itA != colliders.end(); ++itA) {
+	for ( ; itA != colliders.end(); ++itA )
+	{
 		itB = itA;
 		++itB;
-		for (; itB != colliders.end(); ++itB) {
+		for ( ; itB != colliders.end(); ++itB )
+		{
 			BaseCollider* colA = *itA;
 			BaseCollider* colB = *itB;
 
@@ -48,7 +50,7 @@ void CollisionManager::CheckAllCollisions()
 						colA->attribute == COLLISION_ATTR_ALLIES && colB->attribute == COLLISION_ATTR_ENEMYS )
 					{
 
-						if ( Collision::CheckSphere2Sphere(*SphereA,*SphereB,&inter ,&reject) )
+						if ( Collision::CheckSphere2Sphere(*SphereA,*SphereB,&inter,&reject) )
 						{
 							EnemyWorldPos = colA->GetWorldPos();
 							if ( colB->attribute == COLLISION_ATTR_ALLIES )
@@ -102,10 +104,10 @@ void CollisionManager::CheckAllCollisions()
 							//isAttackHit = true;
 						}
 					}
-					else if (colA->attribute == COLLISION_ATTR_ENEMYS && colB->attribute == COLLISION_ATTR_ALLIES ||
-						colA->attribute == COLLISION_ATTR_ALLIES && colB->attribute == COLLISION_ATTR_ENEMYS)
+					else if ( colA->attribute == COLLISION_ATTR_ENEMYS && colB->attribute == COLLISION_ATTR_ALLIES ||
+						colA->attribute == COLLISION_ATTR_ALLIES && colB->attribute == COLLISION_ATTR_ENEMYS )
 					{
-						if (Collision::CheckSphere2Sphere(*SphereA, *SphereB, &inter))
+						if ( Collision::CheckSphere2Sphere(*SphereA,*SphereB,&inter) )
 						{
 							HitWorldPos = colB->GetWorldPos();
 							colA->isHitPlayerAttack = true;
@@ -168,38 +170,61 @@ void CollisionManager::CheckAllCollisions()
 					}
 					else if ( colA->attribute == COLLISION_ATTR_PLAYER_METEORITE && colB->attribute == COLLISION_ATTR_ENEMYS ||
 						colA->attribute == COLLISION_ATTR_ENEMYS && colB->attribute == COLLISION_ATTR_PLAYER_METEORITE )
+					{
+						if ( isPlayerSkilAttackHit == false )
 						{
-							if ( isPlayerSkilAttackHit == false )
+							if ( Collision::CheckSphere2Sphere(*SphereA,*SphereB,&inter) )
 							{
-								if ( Collision::CheckSphere2Sphere(*SphereA,*SphereB,&inter) )
+								//isMeleeAttackHit = true;
+								HitWorldPos = colB->GetWorldPos();
+								if ( colB->attribute == COLLISION_ATTR_PLAYER_METEORITE )
 								{
-									//isMeleeAttackHit = true;
-									HitWorldPos = colB->GetWorldPos();
-									if ( colB->attribute == COLLISION_ATTR_PLAYER_METEORITE )
+									colA->isHitPlayerSkillAttack = true;
+									//colB->attribute = COLLISION_ATTR_NOTATTACK;
+								}
+								else if ( colA->attribute == COLLISION_ATTR_PLAYER_METEORITE )
+								{
+									//colA->attribute = COLLISION_ATTR_NOTATTACK;
+									colB->isHitPlayerSkillAttack = true;
+								}
+							}
+						}
+						//else
+						//{
+						//	if ( colB->attribute == COLLISION_ATTR_MELEEATTACK )
+						//	{
+						//		colB->attribute = COLLISION_ATTR_NOTATTACK;
+						//	}
+						//	else if ( colA->attribute == COLLISION_ATTR_MELEEATTACK )
+						//	{
+						//		colA->attribute = COLLISION_ATTR_NOTATTACK;
+						//	}
+						//}
+					}
+					else if ( colA->attribute == COLLISION_ATTR_PLAYER_CLOSE && colB->attribute == COLLISION_ATTR_ENEMYS ||
+						colA->attribute == COLLISION_ATTR_ENEMYS && colB->attribute == COLLISION_ATTR_PLAYER_CLOSE )
+						{
+							if ( Collision::CheckSphere2Sphere(*SphereA,*SphereB,&inter) )
+							{
+								float Len = inter.length();
+
+								if ( Len > Length )
+								{
+									Length = inter.length();
+
+									if ( colB->attribute == COLLISION_ATTR_PLAYER_CLOSE )
 									{
-										colA->isHitPlayerSkillAttack = true;
-										//colB->attribute = COLLISION_ATTR_NOTATTACK;
+										colB->HitPos = MyMath::GetWorldTransform(colA->GetWorldPos());
+										colB->isHitPlayerColse = true;
 									}
-									else if ( colA->attribute == COLLISION_ATTR_PLAYER_METEORITE )
+									else if ( colA->attribute == COLLISION_ATTR_PLAYER_CLOSE )
 									{
-										//colA->attribute = COLLISION_ATTR_NOTATTACK;
-										colB->isHitPlayerSkillAttack = true;
+										colA->HitPos = MyMath::GetWorldTransform(colB->GetWorldPos());
+										colA->isHitPlayerColse = true;
 									}
 								}
 							}
-							//else
-							//{
-							//	if ( colB->attribute == COLLISION_ATTR_MELEEATTACK )
-							//	{
-							//		colB->attribute = COLLISION_ATTR_NOTATTACK;
-							//	}
-							//	else if ( colA->attribute == COLLISION_ATTR_MELEEATTACK )
-							//	{
-							//		colA->attribute = COLLISION_ATTR_NOTATTACK;
-							//	}
-							//}
-							}
-
+						}
 					if ( Collision::CheckSphere2Sphere(*SphereA,*SphereB,&inter) )
 					{
 						//isEnemyHit = true;
@@ -306,12 +331,12 @@ void CollisionManager::CheckAllCollisions()
 	}
 }
 
-bool CollisionManager::Raycast(const Ray& ray, RaycastHit* hitInfo, float maxDistance)
+bool CollisionManager::Raycast(const Ray& ray,RaycastHit* hitInfo,float maxDistance)
 {
-	return Raycast(ray, 0xffff, hitInfo, maxDistance);
+	return Raycast(ray,0xffff,hitInfo,maxDistance);
 }
 
-bool CollisionManager::Raycast(const Ray& ray, unsigned short attribute, RaycastHit* hitInfo,const float& maxDistance)
+bool CollisionManager::Raycast(const Ray& ray,unsigned short attribute,RaycastHit* hitInfo,const float& maxDistance)
 {
 	bool result = false;
 	std::forward_list<BaseCollider*>::iterator it;
@@ -321,35 +346,39 @@ bool CollisionManager::Raycast(const Ray& ray, unsigned short attribute, Raycast
 
 	// 全てのコライダーと総当りチェック
 	it = colliders.begin();
-	for (; it != colliders.end(); ++it) {
+	for ( ; it != colliders.end(); ++it )
+	{
 		BaseCollider* colA = *it;
 
 		// 属性が合わなければスキップ
-		if (colA->attribute != attribute) {
+		if ( colA->attribute != attribute )
+		{
 			continue;
 		}
 
-		if (colA->GetShapeType() == COLLISIONSHAPE_SPHERE) {
-			Sphere* sphere = dynamic_cast<Sphere*>(colA);
+		if ( colA->GetShapeType() == COLLISIONSHAPE_SPHERE )
+		{
+			Sphere* sphere = dynamic_cast< Sphere* >( colA );
 
 			float tempDistance;
 			Vector4 tempInter;
 
-			if (!Collision::CheckRay2Sphere(ray, *sphere, &tempDistance, &tempInter)) continue;
-			if (tempDistance >= distance) continue;
+			if ( !Collision::CheckRay2Sphere(ray,*sphere,&tempDistance,&tempInter) ) continue;
+			if ( tempDistance >= distance ) continue;
 
 			result = true;
 			distance = tempDistance;
 			inter = tempInter;
 			it_hit = it;
 		}
-		else if (colA->GetShapeType() == COLLISIONSHAPE_MESH) {
-			MeshCollider* meshCollider = dynamic_cast<MeshCollider*>(colA);
+		else if ( colA->GetShapeType() == COLLISIONSHAPE_MESH )
+		{
+			MeshCollider* meshCollider = dynamic_cast< MeshCollider* >( colA );
 
 			float tempDistance;
 			Vector4 tempInter;
-			if (!meshCollider->CheckCollisionRay(ray, &tempDistance, &tempInter)) continue;
-			if (tempDistance >= distance) continue;
+			if ( !meshCollider->CheckCollisionRay(ray,&tempDistance,&tempInter) ) continue;
+			if ( tempDistance >= distance ) continue;
 
 			result = true;
 			distance = tempDistance;
@@ -358,7 +387,8 @@ bool CollisionManager::Raycast(const Ray& ray, unsigned short attribute, Raycast
 		}
 	}
 
-	if (result && hitInfo) {
+	if ( result && hitInfo )
+	{
 		hitInfo->distance = distance;
 		hitInfo->inter = inter;
 		hitInfo->collider = *it_hit;
@@ -367,7 +397,7 @@ bool CollisionManager::Raycast(const Ray& ray, unsigned short attribute, Raycast
 	return result;
 }
 
-void CollisionManager::QuerySphere(const Sphere& sphere, QueryCallback* callback, unsigned short attribute)
+void CollisionManager::QuerySphere(const Sphere& sphere,QueryCallback* callback,unsigned short attribute)
 {
 	assert(callback);
 
@@ -375,21 +405,24 @@ void CollisionManager::QuerySphere(const Sphere& sphere, QueryCallback* callback
 
 	// 全てのコライダーと総当りチェック
 	it = colliders.begin();
-	for (; it != colliders.end(); ++it) {
+	for ( ; it != colliders.end(); ++it )
+	{
 		BaseCollider* col = *it;
 
 		// 属性が合わなければスキップ
-		if (!(col->attribute & attribute)) {
+		if ( !( col->attribute & attribute ) )
+		{
 			continue;
 		}
 
 		// 球
-		if (col->GetShapeType() == COLLISIONSHAPE_SPHERE) {
-			Sphere* sphereB = dynamic_cast<Sphere*>(col);
+		if ( col->GetShapeType() == COLLISIONSHAPE_SPHERE )
+		{
+			Sphere* sphereB = dynamic_cast< Sphere* >( col );
 
 			Vector4 tempInter;
 			Vector4 tempReject;
-			if (!Collision::CheckSphere2Sphere(sphere, *sphereB, &tempInter, &tempReject)) continue;
+			if ( !Collision::CheckSphere2Sphere(sphere,*sphereB,&tempInter,&tempReject) ) continue;
 
 			// 交差情報をセット
 			QueryHit info;
@@ -398,18 +431,20 @@ void CollisionManager::QuerySphere(const Sphere& sphere, QueryCallback* callback
 			info.reject = tempReject;
 
 			// クエリーコールバック呼び出し
-			if (!callback->OnQueryHit(info)) {
-				// 戻り値がfalseの場合、継続せず終了
+			if ( !callback->OnQueryHit(info) )
+			{
+// 戻り値がfalseの場合、継続せず終了
 				return;
 			}
 		}
 		// メッシュ
-		else if (col->GetShapeType() == COLLISIONSHAPE_MESH) {
-			MeshCollider* meshCollider = dynamic_cast<MeshCollider*>(col);
+		else if ( col->GetShapeType() == COLLISIONSHAPE_MESH )
+		{
+			MeshCollider* meshCollider = dynamic_cast< MeshCollider* >( col );
 
 			Vector4 tempInter;
 			Vector4 tempReject;
-			if (!meshCollider->CheckCollisionSphere(sphere, &tempInter, &tempReject)) continue;
+			if ( !meshCollider->CheckCollisionSphere(sphere,&tempInter,&tempReject) ) continue;
 
 			// 交差情報をセット
 			QueryHit info;
@@ -418,8 +453,9 @@ void CollisionManager::QuerySphere(const Sphere& sphere, QueryCallback* callback
 			info.reject = tempReject;
 
 			// クエリーコールバック呼び出し
-			if (!callback->OnQueryHit(info)) {
-				// 戻り値がfalseの場合、継続せず終了
+			if ( !callback->OnQueryHit(info) )
+			{
+// 戻り値がfalseの場合、継続せず終了
 				return;
 			}
 		}
@@ -460,7 +496,7 @@ Vector3 CollisionManager::ResolveCollision(const Sphere& sphereA,const Sphere& s
 	if ( DetectCollision(sphereA,sphereB,collision_depth_direction) )
 	{
 
-		
+
 
 	}
 

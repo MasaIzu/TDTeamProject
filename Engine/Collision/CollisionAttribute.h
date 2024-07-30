@@ -18,5 +18,6 @@ const unsigned short COLLISION_ATTR_CAMERA = 0b1010;//カメラ
 const unsigned short COLLISION_ATTR_ENEMY_ULT = 0b1011;//敵ULT
 const unsigned short COLLISION_ATTR_ENEMY_ULTSAFEZONE = 0b1100;//ULTセーフゾーン
 
-const unsigned short COLLISION_ATTR_PLAYER_METEORITE = 0b1100;//空からの攻撃
+const unsigned short COLLISION_ATTR_PLAYER_METEORITE = 0b1101;//空からの攻撃
+const unsigned short COLLISION_ATTR_PLAYER_CLOSE = 0b1110;//近い敵
 
