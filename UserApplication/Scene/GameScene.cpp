@@ -146,7 +146,7 @@ void GameScene::Update() {
 	randomMap->Update();
 
 	startBanner->Update();
-	
+
 	ui_->Update();
 
 	//全ての衝突をチェック
@@ -247,4 +247,22 @@ void GameScene::Finalize()
 bool GameScene::IsSlow()
 {
 	return false;
+}
+
+void GameScene::Phase(int32_t gametime) {
+	switch ( nowPhase )
+	{
+	case 1:
+
+		break;
+	case 2:
+
+		break;
+	case 3:
+
+		break;
+	default:
+		break;
+	}
+
 }

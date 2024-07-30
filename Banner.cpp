@@ -16,24 +16,7 @@ void Banner::Update()
 {
 	Vector2 move = { 0,0 };
 	Vector3 easepos = { 0,0,0 };
-	//if(Input::GetInstance()->PushKey(DIK_L) ){
-	//	move.x = 1;
-	//}
-	//if (Input::GetInstance()->PushKey(DIK_J)) {
-	//	move.x = -1;
-	//}
-	//if (Input::GetInstance()->PushKey(DIK_I)) {
-	//	move.y = -1;
-	//}
-	//if (Input::GetInstance()->PushKey(DIK_K)) {
-	//	move.y = 1;
-	//}
-	if (Input::GetInstance()->TriggerKey(DIK_R)) {
-		startPos_ = { -100,720 / 2 };
-		bannerTime = 0;
-		isBannerEaseOut = false;
-		isAnimEnd = false;
-	}
+
 	if (isAnimEnd == false) {
 		bannerTime++;
 	}
