@@ -33,7 +33,7 @@ public:
 	~Enemy();
 
 	//初期化
-	void Initialize(ViewProjection* viewProjection_,Vector3 enemyPos,int actionNmb,Player* player,const unsigned short Attribute,int power,int hp);
+	void Initialize(ViewProjection* viewProjection_,Model* model,Vector3 enemyPos,int actionNmb,Player* player,const unsigned short Attribute,int power,int hp);
 	//更新
 	void Update();
 	//描画
@@ -74,7 +74,8 @@ private:
 
 	WorldTransform worldTransform_;
 	ViewProjection* viewProjection_;
-	std::unique_ptr<Model> model_;// 3Dモデル
+	Model* model_;// 3Dモデル
+	Model* sakabanModel_;// 3Dモデル
 	Player* player_;
 
 	std::list<std::unique_ptr<EnemyBullet>> EnemyBullets_;
