@@ -39,6 +39,15 @@ void Player::Initialize(const unsigned short Attribute,ViewProjection* viewProje
 
 	speed = 1.0f;
 
+	weekAttackSp_ = std::make_unique<Sprite>();
+	weekAttackSp_ = Sprite::Create(TextureManager::Load("sprite/weekAttack.png"));
+	weekAttackSp_->SetSize({ 124.0f,96.0f });
+	weekAttackSp_->SetAnchorPoint({ 0.5f,1.0f });
+
+	weekAttackCoolTimeSp_ = std::make_unique<Sprite>();
+	weekAttackCoolTimeSp_ = Sprite::Create(TextureManager::Load("sprite/Green30.png"));
+	weekAttackCoolTimeSp_->SetAnchorPoint({ 0.5f,1.0f });
+
 	// コリジョンマネージャに追加
 	float sphereF = 0;
 	playerCollider = new SphereCollider(Vector4(sphereF,playerRadius,sphereF,sphereF),playerRadius);
@@ -99,6 +108,14 @@ void Player::Update(Input* input)
 	isBladeAttack = false;
 	isLeftAttack = false;
 	isHit_ = false;
+
+	//クールタイムを表示するスプライトの座標のサイズを更新する処理
+	currentWeekAttackCoolTime_ = ( weekAttackCoolTime_ / 60 );
+	//weekAttackCoolTimePos = { 124.0f,(float)96.0 * currentWeekAttackCoolTime_ };
+	//weekAttackCoolTimeSp_->SetSize(weekAttackCoolTimePos);
+
+	weekAttackCoolTimePos.y = 96.0* currentWeekAttackCoolTime_;
+	weekAttackCoolTimeSp_->SetSize({ 124.0f,weekAttackCoolTimePos.y });
 
 	if ( playerCollider->GetHitSphere() )
 	{
@@ -178,6 +195,17 @@ void Player::Update(Input* input)
 		PlayerSunderAttackCollider[ i ]->Update(SunderColWorldTrans[ i ].matWorld_);
 	}
 
+
+
+
+	//ImGui::Begin("coolTime");
+	//ImGui::SetWindowPos({ 200 , 200 });
+	//ImGui::SetWindowSize({ 500,100 });
+	//ImGui::InputInt("weekAttack",&weekAttackCoolTime_);
+	////ImGui::InputInt("Nextexpeience", &experienceToNextLevel);
+	////ImGui::InputInt("level", &level);
+	////ImGui::InputInt("score_",&score_);
+	//ImGui::End();
 }
 
 void Player::Draw(const ViewProjection& LightViewProjection_)
@@ -231,14 +259,7 @@ void Player::Move(Input* input)
 	playerCollider->Update(animation2->GetBonePos(static_cast< uint32_t >( Numbers::Three )) * worldTransform_.matWorld_);
 	playerCloseCollider->Update(animation2->GetBonePos(static_cast< uint32_t >( Numbers::Three )) * worldTransform_.matWorld_);
 
-	//ImGui::Begin("experience");
-	//ImGui::SetWindowPos({ 200 , 200 });
-	//ImGui::SetWindowSize({ 500,100 });
-	////ImGui::InputInt("expeience", &experience);
-	////ImGui::InputInt("Nextexpeience", &experienceToNextLevel);
-	////ImGui::InputInt("level", &level);
-	//ImGui::InputInt("score_",&score_);
-	//ImGui::End();
+
 }
 
 void Player::CSUpdate(ID3D12GraphicsCommandList* cmdList)
@@ -260,6 +281,12 @@ void Player::FbxDraw(const ViewProjection& lightViewProjection_)
 void Player::FbxShadowDraw(const ViewProjection& lightViewProjection_)
 {
 	animation->FbxShadowDraw(worldTransform_,lightViewProjection_);
+}
+
+void Player::SpriteDraw()
+{
+	weekAttackSp_->Draw({1150,700},{ 1,1,1,1 },1);
+	weekAttackCoolTimeSp_->Draw({ 1150,700 /*+ (weekAttackCoolTimePos.y/2) */},{ 1,1,1,0.5 },1);
 }
 
 void Player::CheckHitCollision()
@@ -338,7 +365,8 @@ void Player::AttackUpdate()
 {
 	if ( isBladeAttacking == true )
 	{
-		if ( isPreparation == false )
+		weekAttackCoolTime_++;
+		if (isPreparation == false)
 		{
 			if ( BladeAttackTime < BladeMaxAttackTime )
 			{
@@ -363,9 +391,14 @@ void Player::AttackUpdate()
 		}
 		else
 		{
-			if ( animation2->GetAnimAlmostOver(BladeColEndHasten) )
+			if ( weekAttackCoolTime_ >= 60 )
 			{
 				isBladeAttacking = false;
+				weekAttackCoolTime_ = 0;
+			}
+			if (animation2->GetAnimAlmostOver(BladeColEndHasten))
+			{
+				
 				BladeAttributeSet(COLLISION_ATTR_NOTATTACK);
 				CollisionManager::GetInstance()->ResetMeleeAttack();
 				//CollisionManager::GetInstance()->ResetPlayerSkillAttack();
