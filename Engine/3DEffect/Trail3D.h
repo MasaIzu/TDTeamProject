@@ -50,6 +50,12 @@ protected:
 	bool isSenterPointSize = false;
 	bool isEndPointSize = true;
 
+	bool isAlphaDown = false;
+
+	size_t alphaTime = 0;
+	size_t MaxAlphaTime = 0;
+
+	float alpha = 1.0f;
 	float MaxSize = 3.0f;
 	float MinSize = 2.0f;
 
@@ -89,7 +95,7 @@ public:
 	void PreDraw();
 	void Draw(const ViewProjection& view);
 
-	void ResetTrail(const Vector3& resetPos = { 0,0,0 });
+	void ResetTrail(const Vector3& resetPos = { 0,0,0 },const size_t& time = 0);
 
 	void SetFirstColor(const Vector3& color);
 	void SetEndColor(const Vector3& color);
