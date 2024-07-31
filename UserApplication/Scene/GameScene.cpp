@@ -205,6 +205,7 @@ void GameScene::Draw() {
 	if ( startBanner->GetAnimEnd() == true )
 	{
 		mouseSprite_->Draw({ 1000,600 },{ 1,1,1,1 },1);
+		player_->SpriteDraw();
 	}
 //	timeSprite_->Draw({ 600,100 },{ 1,1,1,1 },1);
 

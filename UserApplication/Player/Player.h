@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Sprite3D.h"
-
+#include "Sprite.h"
 #include "ViewProjection.h"
 #include "WorldTransform.h"
 #include "Input.h"
@@ -58,6 +58,8 @@ public:
 	void FbxDraw(const ViewProjection& lightViewProjection_);
 	//描画
 	void FbxShadowDraw(const ViewProjection& lightViewProjection_);
+
+	void SpriteDraw();
 
 	void CheckHitCollision();
 
@@ -144,6 +146,11 @@ private:
 	uint32_t BladeAttackEndPos = 39;
 
 	float hitCooltime_ = 5.0f;
+
+	//弱攻撃のクールタイム(アニメーションに基づいた時間)
+	float weekAttackCoolTime_ = 0;
+	//現在のクールタイム
+	float currentWeekAttackCoolTime_ = 0;
 
 #pragma region
 	PlayerStateNeedMaterial playerStateNeedMaterial;
@@ -240,7 +247,8 @@ private:
 
 
 #pragma endregion
-
-
+	std::unique_ptr<Sprite> weekAttackSp_ = nullptr;
+	std::unique_ptr<Sprite> weekAttackCoolTimeSp_ = nullptr;
+	Vector2 weekAttackCoolTimePos;
 };
 
