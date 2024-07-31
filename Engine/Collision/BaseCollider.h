@@ -49,6 +49,10 @@ public:
 	inline bool GetIsUltHit() { return isUltHit; }
 	//UltSafeZoneにあたった
 	inline bool GetIsUltSafeZoneHit() { return isUltSafeZoneHit; }
+	//UltSafeZoneにあたった
+	inline bool GetIsPlayerCloseHit() {
+		return isHitPlayerColse;
+	}
 
 	//UltSafeZoneにあたった
 	inline bool GetIsPlayerSkillAttackHit() {
@@ -57,6 +61,10 @@ public:
 
 	//排斥ベクトルの位置ゲット
 	inline Vector3 GetRejectVec() { return rejectVec; }
+	//排斥ベクトルの位置ゲット
+	inline Vector3 GetClosePosVec() {
+		return HitPos;
+	}
 	//inrerベクトルの位置ゲット
 	inline Vector4 GetInterVec() { return inter; }
 	//位置ゲット
@@ -169,6 +177,10 @@ public:
 		isHitPlayerSkillAttack = false;
 	}
 
+	inline void PlayerCloseHitReset() {
+		isHitPlayerColse = false;
+	}
+
 protected:
 	// 形状タイプ
 	CollisionShapeType shapeType = SHAPE_UNKNOWN;
@@ -188,8 +200,10 @@ protected:
 	bool isHitFinalSplineRail = false;
 
 	bool isHitPlayerSkillAttack = false;
+	bool isHitPlayerColse = false;
 
 	Vector3 rejectVec;//排斥ベクトル
+	Vector3 HitPos;
 	Vector4 inter;
 
 	//位置

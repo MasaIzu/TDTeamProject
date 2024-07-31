@@ -14,10 +14,10 @@ Player::~Player()
 {
 }
 
-void Player::Initialize(const unsigned short Attribute, ViewProjection* viewProjection)
+void Player::Initialize(const unsigned short Attribute,ViewProjection* viewProjection)
 {
 	input_ = Input::GetInstance();
-	model_.reset(Model::CreateFromOBJ("sphere", true));
+	model_.reset(Model::CreateFromOBJ("sphere",true));
 	playerFbx_;
 
 	worldTransform_.Initialize();
@@ -41,26 +41,32 @@ void Player::Initialize(const unsigned short Attribute, ViewProjection* viewProj
 
 	// コリジョンマネージャに追加
 	float sphereF = 0;
-	playerCollider = new SphereCollider(Vector4(sphereF, playerRadius, sphereF, sphereF), playerRadius);
+	playerCollider = new SphereCollider(Vector4(sphereF,playerRadius,sphereF,sphereF),playerRadius);
 	CollisionManager::GetInstance()->AddCollider(playerCollider);
 	Attribute_ = Attribute;
 	playerCollider->SetAttribute(Attribute_);
 
 	playerCollider->Update(animation2->GetBonePos(0) * worldTransform_.matWorld_);
 
-	for (uint32_t i = 0; i < AttackColSphereCount; i++)
+	// コリジョンマネージャに追加
+	playerCloseCollider = new SphereCollider(Vector4(sphereF,playerColseRadius,sphereF,sphereF),playerColseRadius);
+	CollisionManager::GetInstance()->AddCollider(playerCloseCollider);
+	playerCloseCollider->SetAttribute(COLLISION_ATTR_PLAYER_CLOSE);
+	playerCloseCollider->Update(animation2->GetBonePos(0) * worldTransform_.matWorld_);
+
+	for ( uint32_t i = 0; i < AttackColSphereCount; i++ )
 	{
-		BladeColWorldTrans[i].scale_ = Vector3(PlayerBladeRadius, PlayerBladeRadius, PlayerBladeRadius);
-		BladeColWorldTrans[i].Initialize();
-		PlayerBladeAttackCollider[i] = new SphereCollider(Vector4(sphereF, PlayerBladeRadius, sphereF, sphereF), PlayerBladeRadius);
-		CollisionManager::GetInstance()->AddCollider(PlayerBladeAttackCollider[i]);
-		PlayerBladeAttackCollider[i]->SetAttribute(COLLISION_ATTR_NOTATTACK);
-		PlayerBladeAttackCollider[i]->Update(worldTransform_.matWorld_);
+		BladeColWorldTrans[ i ].scale_ = Vector3(PlayerBladeRadius,PlayerBladeRadius,PlayerBladeRadius);
+		BladeColWorldTrans[ i ].Initialize();
+		PlayerBladeAttackCollider[ i ] = new SphereCollider(Vector4(sphereF,PlayerBladeRadius,sphereF,sphereF),PlayerBladeRadius);
+		CollisionManager::GetInstance()->AddCollider(PlayerBladeAttackCollider[ i ]);
+		PlayerBladeAttackCollider[ i ]->SetAttribute(COLLISION_ATTR_NOTATTACK);
+		PlayerBladeAttackCollider[ i ]->Update(worldTransform_.matWorld_);
 	}
 
 	int MaxParticleCountB = 20000;
 	particleEditor = std::make_unique<ParticleEditor>();
-	particleEditor->Initialize(MaxParticleCountB, true, "HonooBlade");
+	particleEditor->Initialize(MaxParticleCountB,true,"HonooBlade");
 	particleEditor->SetTextureHandle(TextureManager::Load("sprite/effect4.png"));
 
 	trail3D_ = std::make_unique<Trail3D>(50);
@@ -100,14 +106,20 @@ void Player::Update(Input* input)
 		playerCollider->ResetSphere();
 	}
 
+	if ( playerCloseCollider->GetHitSphere() )
+	{
+		isHit_ = true;
+		playerCloseCollider->ResetSphere();
+	}
+
 
 	Move(input);
 
 
 	//近接攻撃
-	if (isBladeAttacking == false)
+	if ( isBladeAttacking == false )
 	{
-		if (input_->MouseInputTrigger(static_cast<int>(1)) || input_->ButtonInput(RT))
+		if ( input_->MouseInputTrigger(static_cast< int >( 1 )) || input_->ButtonInput(RT) )
 		{
 			isBladeAttack = true;
 		}
@@ -125,7 +137,7 @@ void Player::Update(Input* input)
 	}
 
 	AttackUpdate();
-	if (isBladeAttack == true)
+	if ( isBladeAttack == true )
 	{
 		PlayerBladeAttack();
 	}
@@ -148,20 +160,20 @@ void Player::Update(Input* input)
 
 	BladeColRatio = MyMath::Vec4ToVec3(ParticleEndPos) - MyMath::Vec4ToVec3(ParticleStartPos);
 	ParticleMilEndPos = ParticleStartPos + MyMath::Vec3ToVec4(BladeColRatio.norm() * MaxBladeColDetection);
-	BladeColRatio = (BladeColRatio.norm() * MaxBladeColDetection) / AttackColSphereCount;
+	BladeColRatio = ( BladeColRatio.norm() * MaxBladeColDetection ) / AttackColSphereCount;
 
 	//剣攻撃のコライダー
-	for (uint32_t i = 0; i < AttackColSphereCount; i++)
+	for ( uint32_t i = 0; i < AttackColSphereCount; i++ )
 	{
-		BladeColWorldTrans[i].translation_ = MyMath::Vec4ToVec3(ParticleStartPos) + (BladeColRatio * static_cast<float>(i));
-		BladeColWorldTrans[i].TransferMatrix();
-		PlayerBladeAttackCollider[i]->Update(BladeColWorldTrans[i].matWorld_);
+		BladeColWorldTrans[ i ].translation_ = MyMath::Vec4ToVec3(ParticleStartPos) + ( BladeColRatio * static_cast< float >( i ) );
+		BladeColWorldTrans[ i ].TransferMatrix();
+		PlayerBladeAttackCollider[ i ]->Update(BladeColWorldTrans[ i ].matWorld_);
 	}
 
 	//落雷攻撃のコライダー
 	for ( uint32_t i = 0; i < SunderAttackColSphereCount; i++ )
 	{
-		SunderColWorldTrans[ i ].translation_ = MyMath::Vec4ToVec3(ParticleStartPos) + ( BladeColRatio * static_cast< float >( i ) );
+		SunderColWorldTrans[ i ].translation_ = SunderTopPos - ( DowncolPos * static_cast< float >( i ) );
 		SunderColWorldTrans[ i ].TransferMatrix();
 		PlayerSunderAttackCollider[ i ]->Update(SunderColWorldTrans[ i ].matWorld_);
 	}
@@ -172,9 +184,9 @@ void Player::Draw(const ViewProjection& LightViewProjection_)
 {
 	//model_->Draw(worldTransform_, *viewProjection_, LightViewProjection_);
 
-	//for (uint32_t i = 0; i < AttackColSphereCount; i++)
+	//for (uint32_t i = 0; i < SunderAttackColSphereCount; i++)
 	//{
-	//	model_->Draw(BladeColWorldTrans[i], *viewProjection_, LightViewProjection_);
+	//	model_->Draw(SunderColWorldTrans[i], *viewProjection_, LightViewProjection_);
 	//}
 }
 
@@ -211,12 +223,13 @@ void Player::Move(Input* input)
 	//}
 
 
-	if (playerCollider->GetHit())
+	if ( playerCollider->GetHit() )
 	{
 		score_ -= addscore_;
 	}
 
 	playerCollider->Update(animation2->GetBonePos(static_cast< uint32_t >( Numbers::Three )) * worldTransform_.matWorld_);
+	playerCloseCollider->Update(animation2->GetBonePos(static_cast< uint32_t >( Numbers::Three )) * worldTransform_.matWorld_);
 
 	//ImGui::Begin("experience");
 	//ImGui::SetWindowPos({ 200 , 200 });
@@ -230,7 +243,7 @@ void Player::Move(Input* input)
 
 void Player::CSUpdate(ID3D12GraphicsCommandList* cmdList)
 {
-	particleEditor->CSUpdate(cmdList, ParticleStartPos, ParticleEndPos, static_cast<uint32_t>(isBladeAttacking));
+	particleEditor->CSUpdate(cmdList,ParticleStartPos,ParticleEndPos,static_cast< uint32_t >( isBladeAttacking ));
 }
 
 void Player::ParticleDraw()
@@ -241,17 +254,17 @@ void Player::ParticleDraw()
 void Player::FbxDraw(const ViewProjection& lightViewProjection_)
 {
 	//animation->FbxDraw(worldTransform_, *viewProjection_, lightViewProjection_);
-	animation2->FbxDraw(worldTransform_, *viewProjection_, lightViewProjection_);
+	animation2->FbxDraw(worldTransform_,*viewProjection_,lightViewProjection_);
 }
 
 void Player::FbxShadowDraw(const ViewProjection& lightViewProjection_)
 {
-	animation->FbxShadowDraw(worldTransform_, lightViewProjection_);
+	animation->FbxShadowDraw(worldTransform_,lightViewProjection_);
 }
 
 void Player::CheckHitCollision()
 {
-	if (playerCollider->GetHit())
+	if ( playerCollider->GetHit() )
 	{
 		isHit_ = true;
 		playerCollider->Reset();//当たった判定をリセット
@@ -263,16 +276,16 @@ void Player::CheckHitCollision()
 void Player::HpUpdate()
 {
 	//多段攻撃を防ぐための処理
-	if (hitCooltime_ <= 0)
+	if ( hitCooltime_ <= 0 )
 	{
 		isHit_ = false;
 		hitCooltime_ = 5.0f;
 	}
 
-	if (isHit_ == true)
+	if ( isHit_ == true )
 	{
 		//ヒットのクールタイムが初期値だったら
-		if (hitCooltime_ >= 5.0f)
+		if ( hitCooltime_ >= 5.0f )
 		{
 			hp_ -= 1;
 		}
@@ -281,7 +294,7 @@ void Player::HpUpdate()
 	}
 
 
-	if (hp_ > FloatNumber(fNumbers::fZero))
+	if ( hp_ > FloatNumber(fNumbers::fZero) )
 	{
 
 	}
@@ -296,7 +309,8 @@ void Player::HpUpdate()
 void Player::AddExperience(int amount)
 {
 	experience += amount;
-	while (experience >= experienceToNextLevel) {
+	while ( experience >= experienceToNextLevel )
+	{
 		LevelUp();
 	}
 }
@@ -310,37 +324,37 @@ void Player::LevelUp()
 
 int Player::CalculateNextLevelExperience() const
 {
-	return static_cast<int>(baseExperience * pow(ratio, level - 1));//この場合は1→2は100経験値、それ以降は前のレベルアップで必要になった経験値の1.5倍必要になる想定
+	return static_cast< int >( baseExperience * pow(ratio,level - 1) );//この場合は1→2は100経験値、それ以降は前のレベルアップで必要になった経験値の1.5倍必要になる想定
 }
 
 void Player::PlayerBladeAttack()
 {
 	isBladeAttacking = true;
 	isPreparation = false;
-	BladeAttackTime = static_cast<uint32_t>(Numbers::Zero);
+	BladeAttackTime = static_cast< uint32_t >( Numbers::Zero );
 }
 
 void Player::AttackUpdate()
 {
-	if (isBladeAttacking == true)
+	if ( isBladeAttacking == true )
 	{
-		if (isPreparation == false)
+		if ( isPreparation == false )
 		{
-			if (BladeAttackTime < BladeMaxAttackTime)
+			if ( BladeAttackTime < BladeMaxAttackTime )
 			{
 				BladeAttackTime++;
 
-				animation2->SetKeepAnimation(static_cast<uint32_t>(PlayerAnimation::HandAttack), static_cast<uint32_t>(Numbers::Ten), playerAnimTime.BladeAttack);
-				if (input_->MouseInputTrigger(static_cast<int>(Numbers::One)))
+				animation2->SetKeepAnimation(static_cast< uint32_t >( PlayerAnimation::HandAttack ),static_cast< uint32_t >( Numbers::Ten ),playerAnimTime.BladeAttack);
+				if ( input_->MouseInputTrigger(static_cast< int >( Numbers::One )) )
 				{
 					BladeAttackTime = BladeMaxAttackTime;
-					animation2->SetAnimation(static_cast<uint32_t>(PlayerAnimation::HandAttack), static_cast<uint32_t>(Numbers::Ten), playerAnimTime.BladeAttack, false);
+					animation2->SetAnimation(static_cast< uint32_t >( PlayerAnimation::HandAttack ),static_cast< uint32_t >( Numbers::Ten ),playerAnimTime.BladeAttack,false);
 				}
 			}
 			else
 			{
 				isPreparation = true;
-				animation2->SetAnimation(static_cast<uint32_t>(PlayerAnimation::HandAttack), static_cast<uint32_t>(Numbers::Ten), playerAnimTime.BladeAttack, false);
+				animation2->SetAnimation(static_cast< uint32_t >( PlayerAnimation::HandAttack ),static_cast< uint32_t >( Numbers::Ten ),playerAnimTime.BladeAttack,false);
 				BladeAttributeSet(COLLISION_ATTR_MELEEATTACK);
 
 				//BladeAttributeSet(COLLISION_ATTR_PLAYER_METEORITE);
@@ -349,7 +363,7 @@ void Player::AttackUpdate()
 		}
 		else
 		{
-			if (animation2->GetAnimAlmostOver(BladeColEndHasten))
+			if ( animation2->GetAnimAlmostOver(BladeColEndHasten) )
 			{
 				isBladeAttacking = false;
 				BladeAttributeSet(COLLISION_ATTR_NOTATTACK);
@@ -360,20 +374,30 @@ void Player::AttackUpdate()
 	}
 	Vector3 SetPos;
 	//trail3D_->SetPos(SetPos);
-	trail3D_->Update();
+
+	EnemyPos = playerCloseCollider->GetClosePosVec();
 
 	if ( isLeftAttack )
 	{
-		SunderTopPos = EnemyPos + UpPos;
+		SunderTopPos = EnemyPos + SunderStartPos;
 		SunderBottomPos = EnemyPos;
-		trail3D_->ResetTrail(SunderRail[0]);
+
+
+		SunderRail.clear();
+		for ( int i = 0; i < 5; i++ )
+		{
+			Vector3 pos = SunderTopPos - ( DownPos * i );
+			SunderRail.push_back(pos);
+		}
+
+		trail3D_->ResetTrail(SunderRail[ 0 ]);
 
 		SunderAttributeSet(COLLISION_ATTR_PLAYER_METEORITE);
 
 
 		for ( int i = 0; i < 5; i++ )
 		{
-			SetPos = SunderRail[i];
+			SetPos = SunderRail[ i ];
 			trail3D_->SetPos(SetPos);
 			trail3D_->SetIsVisible(true);
 			trail3D_->Update();
@@ -383,13 +407,15 @@ void Player::AttackUpdate()
 	else
 	{
 		SunderAttributeSet(COLLISION_ATTR_NOTATTACK);
-		CollisionManager::GetInstance() ->ResetPlayerSkillAttack();
+		CollisionManager::GetInstance()->ResetPlayerSkillAttack();
 	}
+	trail3D_->SetPos(SunderBottomPos);
+	trail3D_->Update();
 }
 
 void Player::BladeAttributeSet(const unsigned short Attribute_)
 {
-	for (auto&& col : PlayerBladeAttackCollider)
+	for ( auto&& col : PlayerBladeAttackCollider )
 	{
 		col->SetAttribute(Attribute_);
 	}
@@ -408,9 +434,9 @@ void Player::PlayerRot()
 	playerMovement->PlayerAngle();
 	RotKeep = Vec3Number(fNumbers::fZero);
 
-	RotKeep = Vector3(FloatNumber(fNumbers::fZero), MyMath::GetAngle(playerMovement->GetPlayerAngle()), FloatNumber(fNumbers::fZero));
+	RotKeep = Vector3(FloatNumber(fNumbers::fZero),MyMath::GetAngle(playerMovement->GetPlayerAngle()),FloatNumber(fNumbers::fZero));
 	playerRotWorldTrans.SetRot(RotKeep);
-	worldTransform_.SetRot(Vector3(FloatNumber(fNumbers::fZero), MyMath::GetAngle(playerMovement->GetPlayerAngle()), FloatNumber(fNumbers::fZero)));
+	worldTransform_.SetRot(Vector3(FloatNumber(fNumbers::fZero),MyMath::GetAngle(playerMovement->GetPlayerAngle()),FloatNumber(fNumbers::fZero)));
 
 
 	//値更新
@@ -476,7 +502,7 @@ void Player::UpdatePlayerStatusData()
 	std::string line;
 
 	//コマンド実行ループ
-	while (getline(playerStatusCommands,line) )
+	while ( getline(playerStatusCommands,line) )
 	{
 		//1行分の文字列をストリームに変換して解析しやすくする
 		std::istringstream line_stream(line);
