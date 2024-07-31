@@ -46,8 +46,12 @@ protected:
 	bool isStartColor = false;
 	bool isEndColor = false;
 
+	bool isFirstPointSize = false;
+	bool isSenterPointSize = false;
+	bool isEndPointSize = true;
+
 	float MaxSize = 3.0f;
-	float MinSize = 0.0f;
+	float MinSize = 2.0f;
 
 	// 頂点バッファビューの作成
 	D3D12_VERTEX_BUFFER_VIEW vbView_{};
@@ -89,6 +93,8 @@ public:
 
 	void SetFirstColor(const Vector3& color);
 	void SetEndColor(const Vector3& color);
+
+	void SetSizeWeightPoint(const bool& first,const bool& center,const bool& end);
 
 private:
 	//データ転送
