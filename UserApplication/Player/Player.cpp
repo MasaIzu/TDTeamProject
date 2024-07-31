@@ -48,7 +48,9 @@ void Player::Initialize(const unsigned short Attribute,ViewProjection* viewProje
 
 	playerCollider->Update(animation2->GetBonePos(0) * worldTransform_.matWorld_);
 
-
+	// コリジョンマネージャに追加
+	playerCloseCollider = new SphereCollider(Vector4(sphereF,playerColseRadius,sphereF,sphereF),playerColseRadius);
+	CollisionManager::GetInstance()->AddCollider(playerCloseCollider);
 	playerCloseCollider->SetAttribute(COLLISION_ATTR_PLAYER_CLOSE);
 	playerCloseCollider->Update(animation2->GetBonePos(0) * worldTransform_.matWorld_);
 
@@ -171,7 +173,7 @@ void Player::Update(Input* input)
 	//落雷攻撃のコライダー
 	for ( uint32_t i = 0; i < SunderAttackColSphereCount; i++ )
 	{
-		SunderColWorldTrans[ i ].translation_ = MyMath::Vec4ToVec3(ParticleStartPos) + ( BladeColRatio * static_cast< float >( i ) );
+		SunderColWorldTrans[ i ].translation_ = SunderTopPos - ( DowncolPos * static_cast< float >( i ) );
 		SunderColWorldTrans[ i ].TransferMatrix();
 		PlayerSunderAttackCollider[ i ]->Update(SunderColWorldTrans[ i ].matWorld_);
 	}
@@ -182,9 +184,9 @@ void Player::Draw(const ViewProjection& LightViewProjection_)
 {
 	//model_->Draw(worldTransform_, *viewProjection_, LightViewProjection_);
 
-	//for (uint32_t i = 0; i < AttackColSphereCount; i++)
+	//for (uint32_t i = 0; i < SunderAttackColSphereCount; i++)
 	//{
-	//	model_->Draw(BladeColWorldTrans[i], *viewProjection_, LightViewProjection_);
+	//	model_->Draw(SunderColWorldTrans[i], *viewProjection_, LightViewProjection_);
 	//}
 }
 
@@ -372,7 +374,8 @@ void Player::AttackUpdate()
 	}
 	Vector3 SetPos;
 	//trail3D_->SetPos(SetPos);
-	trail3D_->Update();
+
+	EnemyPos = playerCloseCollider->GetClosePosVec();
 
 	if ( isLeftAttack )
 	{
@@ -406,6 +409,8 @@ void Player::AttackUpdate()
 		SunderAttributeSet(COLLISION_ATTR_NOTATTACK);
 		CollisionManager::GetInstance()->ResetPlayerSkillAttack();
 	}
+	trail3D_->SetPos(SunderBottomPos);
+	trail3D_->Update();
 }
 
 void Player::BladeAttributeSet(const unsigned short Attribute_)

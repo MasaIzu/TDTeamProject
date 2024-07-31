@@ -61,6 +61,10 @@ public:
 
 	//排斥ベクトルの位置ゲット
 	inline Vector3 GetRejectVec() { return rejectVec; }
+	//排斥ベクトルの位置ゲット
+	inline Vector3 GetClosePosVec() {
+		return HitPos;
+	}
 	//inrerベクトルの位置ゲット
 	inline Vector4 GetInterVec() { return inter; }
 	//位置ゲット

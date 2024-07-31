@@ -201,7 +201,7 @@ private:
 	BaseCollider* playerCloseCollider;
 	CollisionManager* collisionManager = nullptr;
 	float playerRadius = 0.5f;
-	float playerColseRadius = 10.0f;
+	float playerColseRadius = 20.0f;
 
 #pragma endregion
 
@@ -216,6 +216,7 @@ private:
 	bool isLeftAttacking = false;
 
 	Vector3 DownPos = { 0,20.0f,0 };
+	Vector3 DowncolPos = { 0,4.0f,0 };
 	Vector3 SunderStartPos = { 0,80.0f,0 };
 	Vector3 EnemyPos;
 
@@ -227,14 +228,14 @@ private:
 	std::vector<Vector3> SunderRail;
 
 
-	static const uint32_t SunderAttackColSphereCount = 4;//当たり判定の数
+	static const uint32_t SunderAttackColSphereCount = 20;//当たり判定の数
 	const float MaxSunderColDetection = 15.0f;
 
 	std::array<WorldTransform,SunderAttackColSphereCount> SunderColWorldTrans;//落雷攻撃のWorldTransform
 	std::array<BaseCollider*,SunderAttackColSphereCount> PlayerSunderAttackCollider;//落雷攻撃のコライダー
 	//std::unique_ptr<ParticleEditor> particleEditor;
 
-	const float PlayerSunderRadius = 2.0f;
+	const float PlayerSunderRadius = 4.0f;
 
 	Vector3 SunderColRatio;
 
