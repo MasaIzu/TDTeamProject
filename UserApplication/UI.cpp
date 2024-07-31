@@ -28,20 +28,19 @@ void UI::Initialize()
 		downPLHp_ = false;
 		playerOldHP_ = 20;
 	}
-	timeSprite_ = Sprite::Create(TextureManager::Load("sprite/Green30.png"));
+	timeSprite_ = Sprite::Create(TextureManager::Load("sprite/white1x1.png"));
 }
 
 void UI::Update()
 {
 	PlayerHPUpdate();
-
-	timeSprite_->SetSize({ ( float ) timeGauge_,50.0f });
+	TimeUpdate();
 }
 
 void UI::Draw()
 {
 	playerHPBAR_->Draw(playerHPBARPos_,playerHPColor_);
-	timeSprite_->Draw({ WinApp::GetInstance()->GetWindowSize().x / 2,100 },{ 1,1,1,1 },1);
+	timeSprite_->Draw({ WinApp::GetInstance()->GetWindowSize().x / 2,100 },timeColor_);
 }
 
 float UI::lerpFloat(const float start,const float end,const float t) {
@@ -69,4 +68,24 @@ void UI::PlayerHPUpdate()
 		playerHPColor_ = { 0.8f,0.8f,0.8f,1 };
 	}
 	playerOldHP_ = playerHP_;
+}
+
+void UI::TimeUpdate()
+{
+	timeSprite_->SetSize({ ( float ) timeGauge_,50.0f });
+	switch ( nowPhase_ )
+	{
+	case 1:
+		timeColor_ = { 0,1,0,1 };
+		break;
+	case 2:
+		timeColor_ = { 1,0.5f,0,1 };
+		break;
+	case 3:
+		timeColor_ = { 1,0,0,1 };
+		break;
+	default:
+		break;
+	}
+
 }

@@ -115,17 +115,18 @@ void GameScene::Initialize() {
 void GameScene::Update() {
 	ui_->SetPlayerHP(player_->GetHp());
 	ui_->SetTimeGauge(timeGauge);
+	ui_->SetNowPhase(nowPhase);
 	if ( startBanner->GetAnimEnd() == true )
 	{
 		timeGauge--;
 
 		score_ = player_->GetScore();
+		Phase(timeGauge);
 		if ( timeGauge <= 0 )
 		{
 
-
 			sceneManager_->ChangeScene("SELECT",score_);
-
+			timeGauge = 0;
 		}
 
 		gameCamera->SetLookDownPos(player_->GetPosition());
@@ -250,18 +251,27 @@ bool GameScene::IsSlow()
 }
 
 void GameScene::Phase(int32_t gametime) {
-	switch ( nowPhase )
+	int32_t time;
+	if ( gametime != 0 )
+	{
+		time = 1200 / gametime;
+	}
+
+	switch ( time )
 	{
 	case 1:
-
+		nowPhase = 1;
 		break;
 	case 2:
-
+		nowPhase = 2;
 		break;
 	case 3:
-
-		break;
+		nowPhase = 3;
 	default:
+		if ( time > 3 )
+		{
+			nowPhase = 3;
+		}
 		break;
 	}
 
