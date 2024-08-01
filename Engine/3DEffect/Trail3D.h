@@ -51,6 +51,7 @@ protected:
 	bool isEndPointSize = true;
 
 	bool isAlphaDown = false;
+	bool isEasing = false;
 
 	size_t alphaTime = 0;
 	size_t MaxAlphaTime = 0;
@@ -93,6 +94,7 @@ public:
 	void SetColor(const Vector4& color) { color_ = color; }
 	void SetTexture(const uint32_t& texNum_);
 	void SetScale(const float& firstScale,const float& endScale);
+	void SetEasing(const bool& easingOn);
 	void PreDraw();
 	void Draw(const ViewProjection& view);
 

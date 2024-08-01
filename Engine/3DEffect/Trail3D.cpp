@@ -2,6 +2,7 @@
 #include <cassert>
 #include "DirectXCore.h"
 #include <imgui.h>
+#include <Easing.h>
 
 Microsoft::WRL::ComPtr<ID3D12RootSignature> Trail3D::sRootSignature_;
 Microsoft::WRL::ComPtr<ID3D12PipelineState> Trail3D::sPipelineState_;
@@ -100,7 +101,7 @@ void Trail3D::InitializeGraphicsPipeline()
 	   "TEXCOLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, D3D12_APPEND_ALIGNED_ELEMENT,
 	   D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0},
 	   {// uv座標(1行で書いたほうが見やすい)
-	    "SIZE", 0, DXGI_FORMAT_R32_FLOAT, 0, D3D12_APPEND_ALIGNED_ELEMENT,
+		"SIZE", 0, DXGI_FORMAT_R32_FLOAT, 0, D3D12_APPEND_ALIGNED_ELEMENT,
 	   D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0},
 	};
 
@@ -311,6 +312,11 @@ void Trail3D::SetScale(const float& firstScale,const float& endScale)
 	MaxSize = endScale;
 }
 
+void Trail3D::SetEasing(const bool& easingOn)
+{
+	isEasing = easingOn;
+}
+
 void Trail3D::PreDraw()
 {
 	ID3D12GraphicsCommandList* commandList = DirectXCore::GetInstance()->GetCommandList();
@@ -428,25 +434,37 @@ void Trail3D::TransferBuff()
 		vertex_[ i ].uv = Vector2(v,1.0f);
 		vertex_[ i + 1 ].uv = Vector2(v + amount,1.0f);
 
-		if ( isFirstPointSize )
+
+		if ( isEasing == true )
 		{
-			vertex_[ i ].Size = MaxSize - (Size * i);
-			vertex_[ i + 1 ].Size = MaxSize - ( Size * i + Size);
+
+			uint32_t time = MaxAlphaTime - alphaTime;
+
+			float easingSize = Easing::EaseOutQuint(MinSize,MaxSize,In,MaxAlphaTime);
+			float easingSizeAddOne = Easing::EaseOutQuint(MinSize,MaxSize,In + 1,MaxAlphaTime);
+
+			vertex_[ i ].Size = easingSize;
+			vertex_[ i + 1 ].Size = easingSizeAddOne;
+		}
+		else if ( isFirstPointSize )
+		{
+			vertex_[ i ].Size = MaxSize - ( Size * i );
+			vertex_[ i + 1 ].Size = MaxSize - ( Size * i + Size );
 		}
 		else if ( isSenterPointSize )
 		{
 			size_t half = vertex_.size() / 2;
-			float haflV = (MaxSize - MinSize) / half;
+			float haflV = ( MaxSize - MinSize ) / half;
 
 			if ( half > i )
 			{
 				vertex_[ i ].Size = haflV * i + MinSize;
-				vertex_[ i + 1 ].Size = haflV * (i + 1) + MinSize;
+				vertex_[ i + 1 ].Size = haflV * ( i + 1 ) + MinSize;
 			}
 			else
 			{
-				vertex_[ i ].Size = haflV * half - haflV * (i - half) + MinSize;
-				vertex_[ i + 1 ].Size = haflV * half - haflV * ( i - half + 1) + MinSize;
+				vertex_[ i ].Size = haflV * half - haflV * ( i - half ) + MinSize;
+				vertex_[ i + 1 ].Size = haflV * half - haflV * ( i - half + 1 ) + MinSize;
 			}
 		}
 		else if ( isEndPointSize )

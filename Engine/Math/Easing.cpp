@@ -26,13 +26,6 @@ float Easing::EaseOutQuart(const float& start, const float& end,const uint32_t& 
 	return start + (end - start) * x;
 }
 
-float Easing::EaseOutQuint(const float& start,const float& end,const float& time,const float& max_time)
-{
-	float Time = time / max_time;
-	float x = 1 - powf(1 - Time,5);
-	return start + ( end - start ) * x;
-}
-
 float Easing::EaseOutQuint(const float& start,const float& end,const uint32_t& time,const uint32_t& max_time)
 {
 	float Time = static_cast< float >( time ) / static_cast< float >( max_time );

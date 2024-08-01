@@ -16,7 +16,6 @@ namespace Easing
 
 	float easeOutCubic(const float& start,const float& end,const uint32_t& time,const uint32_t& max_time);
 	float EaseOutQuart(const float& start,const float& end,const uint32_t& time,const uint32_t& max_time);
-	float EaseOutQuint(const float& start,const float& end,const float& time,const float& max_time);
 	float EaseOutQuint(const float& start,const float& end,const uint32_t& time,const uint32_t& max_time);
 	float EaseInSine(const float& start,const float& end,const uint32_t& time,const uint32_t& max_time);
 	float EaseInCubic(const float& start,const float& end,const uint32_t& time,const uint32_t& max_time);
