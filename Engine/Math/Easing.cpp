@@ -54,6 +54,17 @@ float Easing::EaseInQuint(const float& start,const float& end,const uint32_t& ti
 	return start + ( end - start ) * x;
 }
 
+float Easing::EaseINOutQuint(const float& start,const float& end,const uint32_t& time,const uint32_t& max_time)
+{
+	return start + ( end - start ) * INOutQuint(time,max_time);
+}
+
+float Easing::INOutQuint(const uint32_t& time,const uint32_t& max_time)
+{
+	float Time = static_cast< float >( time ) / static_cast< float >( max_time );
+	return Time < 0.5 ? 16 * Time * Time * Time * Time * Time : 1 - std::pow(-2 * Time + 2,5) / 2;
+}
+
 Vector3 Easing::EaseInBackVec3(const Vector3& start,const Vector3& end,const uint32_t& time,const uint32_t& max_time)
 {
 	Vector3 easeInBackVec3;
