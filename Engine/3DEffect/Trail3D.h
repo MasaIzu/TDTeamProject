@@ -53,6 +53,9 @@ protected:
 	bool isAlphaDown = false;
 	bool isEasing = false;
 
+	bool isEasingFinish = false;
+	bool isEasingAfterAplha = false;
+
 	size_t alphaTime = 0;
 	size_t MaxAlphaTime = 0;
 

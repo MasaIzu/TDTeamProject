@@ -278,7 +278,7 @@ void Trail3D::Update()
 		}
 		else
 		{
-
+			isEasingFinish = true;
 		}
 
 		//先頭の値を配列の後ろへ代入していく
@@ -361,7 +361,7 @@ void Trail3D::ResetTrail(const Vector3& resetPos,const size_t& time)
 {
 	PosBuffer reset;
 	reset.position = resetPos;
-
+	isEasingFinish = false;
 	for ( size_t i = 0; i < posArray_.size(); i++ )
 	{
 		posArray_[ i ] = reset;
@@ -484,6 +484,17 @@ void Trail3D::TransferBuff()
 			vertex_[ i ].Color = colorSet;
 			colorSet = Vector4(FirstColor_.x,FirstColor_.y,FirstColor_.z,alpha);
 			vertex_[ i + 1 ].Color = colorSet;
+		}
+
+		if ( isEasingAfterAplha == true && isEasingFinish == false )
+		{
+			vertex_[ i ].Color.w = 1.0f;
+			vertex_[ i + 1 ].Color.w = 1.0f;
+		}
+		else
+		{
+			vertex_[ i ].Color.w = alpha;
+			vertex_[ i + 1 ].Color.w = alpha;
 		}
 
 		v += amount;
