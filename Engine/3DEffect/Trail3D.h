@@ -50,8 +50,14 @@ protected:
 	bool isSenterPointSize = false;
 	bool isEndPointSize = true;
 
+	bool isAlphaDown = false;
+
+	size_t alphaTime = 0;
+	size_t MaxAlphaTime = 0;
+
+	float alpha = 1.0f;
 	float MaxSize = 3.0f;
-	float MinSize = 2.0f;
+	float MinSize = 3.0f;
 
 	// 頂点バッファビューの作成
 	D3D12_VERTEX_BUFFER_VIEW vbView_{};
@@ -86,10 +92,11 @@ public:
 	void SetIsVisible(bool flag) { isVisible_ = flag; }
 	void SetColor(const Vector4& color) { color_ = color; }
 	void SetTexture(const uint32_t& texNum_);
+	void SetScale(const float& firstScale,const float& endScale);
 	void PreDraw();
 	void Draw(const ViewProjection& view);
 
-	void ResetTrail(const Vector3& resetPos = { 0,0,0 });
+	void ResetTrail(const Vector3& resetPos = { 0,0,0 },const size_t& time = 0);
 
 	void SetFirstColor(const Vector3& color);
 	void SetEndColor(const Vector3& color);

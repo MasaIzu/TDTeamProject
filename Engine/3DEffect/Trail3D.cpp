@@ -192,6 +192,8 @@ Trail3D::Trail3D(uint32_t vertSize)
 {
 	HRESULT result;
 	posArray_.resize(vertSize);
+	alphaTime = posArray_.size();
+	MaxAlphaTime = posArray_.size();
 	vertex_.resize(posArray_.size() * 2 - 2);
 	UINT sizeVB =
 		static_cast< UINT >( sizeof(SwordTrailVertex) * vertex_.size() );
@@ -270,6 +272,15 @@ void Trail3D::Update()
 {
 	if ( isStop_ )
 	{
+		if ( alphaTime > 0 )
+		{
+			alphaTime--;
+		}
+		else
+		{
+
+		}
+
 		//先頭の値を配列の後ろへ代入していく
 		for ( size_t i = posArray_.size() - 1; i > 0; --i )
 		{
@@ -293,6 +304,12 @@ void Trail3D::SetPos(const Vector3& pos)
 void Trail3D::SetTexture(const uint32_t& texNum_)
 {
 	TexNum = texNum_;
+}
+
+void Trail3D::SetScale(const float& firstScale,const float& endScale)
+{
+	MinSize = firstScale;
+	MaxSize = endScale;
 }
 
 void Trail3D::PreDraw()
@@ -335,7 +352,7 @@ void Trail3D::Draw(const ViewProjection& view)
 	}
 }
 
-void Trail3D::ResetTrail(const Vector3& resetPos)
+void Trail3D::ResetTrail(const Vector3& resetPos,const size_t& time)
 {
 	PosBuffer reset;
 	reset.position = resetPos;
@@ -344,6 +361,17 @@ void Trail3D::ResetTrail(const Vector3& resetPos)
 	{
 		posArray_[ i ] = reset;
 	}
+	isAlphaDown = false;
+	if ( time == 0 )
+	{
+		alphaTime = posArray_.size();
+	}
+	else
+	{
+		alphaTime = time;
+		MaxAlphaTime = time;
+	}
+
 }
 
 void Trail3D::SetFirstColor(const Vector3& color)
@@ -377,6 +405,8 @@ void Trail3D::TransferBuff()
 	float v = 0;
 	float Size = ( MaxSize - MinSize ) / posArray_.size();
 	float AddSize = 0;
+
+	float alpha = static_cast< float >( alphaTime ) / static_cast< float >( MaxAlphaTime );
 
 	vertex_.clear();
 	vertex_.resize(posArray_.size() * 2 - 2);
@@ -428,14 +458,14 @@ void Trail3D::TransferBuff()
 
 		if ( !isStartColor )
 		{
-			vertex_[ i ].Color = Vector4(1,1,1,1 - v);
-			vertex_[ i + 1 ].Color = Vector4(1,1,1,1 - (v + amount ));
+			vertex_[ i ].Color = Vector4(1,1,1,alpha);
+			vertex_[ i + 1 ].Color = Vector4(1,1,1,alpha);
 		}
 		else
 		{
-			Vector4 colorSet = Vector4(FirstColor_.x,FirstColor_.y,FirstColor_.z,1 - v);
+			Vector4 colorSet = Vector4(FirstColor_.x,FirstColor_.y,FirstColor_.z,alpha);
 			vertex_[ i ].Color = colorSet;
-			colorSet = Vector4(FirstColor_.x,FirstColor_.y,FirstColor_.z,1 - ( v + amount ));
+			colorSet = Vector4(FirstColor_.x,FirstColor_.y,FirstColor_.z,alpha);
 			vertex_[ i + 1 ].Color = colorSet;
 		}
 

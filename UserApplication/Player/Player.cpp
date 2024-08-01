@@ -80,6 +80,7 @@ void Player::Initialize(const unsigned short Attribute,ViewProjection* viewProje
 
 	trail3D_ = std::make_unique<Trail3D>(50);
 	trail3D_->SetTexture(TextureManager::Load("sprite/gomi.png"));
+	trail3D_->SetScale(1.0f,4.0f);
 
 	SunderRail.push_back(Vector3(0,80,0));
 	SunderRail.push_back(Vector3(0,60,0));
@@ -423,7 +424,7 @@ void Player::AttackUpdate()
 			SunderRail.push_back(pos);
 		}
 
-		trail3D_->ResetTrail(SunderRail[ 0 ]);
+		trail3D_->ResetTrail(SunderRail[ 0 ],50);
 
 		SunderAttributeSet(COLLISION_ATTR_PLAYER_METEORITE);
 
