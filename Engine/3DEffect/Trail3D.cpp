@@ -305,6 +305,12 @@ void Trail3D::SetTexture(const uint32_t& texNum_)
 	TexNum = texNum_;
 }
 
+void Trail3D::SetScale(const float& firstScale,const float& endScale)
+{
+	MinSize = firstScale;
+	MaxSize = endScale;
+}
+
 void Trail3D::PreDraw()
 {
 	ID3D12GraphicsCommandList* commandList = DirectXCore::GetInstance()->GetCommandList();
@@ -399,7 +405,7 @@ void Trail3D::TransferBuff()
 	float Size = ( MaxSize - MinSize ) / posArray_.size();
 	float AddSize = 0;
 
-	float alpha = alphaTime / MaxAlphaTime;
+	float alpha = static_cast< float >( alphaTime ) / static_cast< float >( MaxAlphaTime );
 
 	vertex_.clear();
 	vertex_.resize(posArray_.size() * 2 - 2);
