@@ -22,6 +22,8 @@
 #include<vector>
 #include <Animation.h>
 
+#include "ParticleEditor.h"
+
 class Player;
 
 class Enemy
@@ -36,6 +38,11 @@ public:
 	void Initialize(ViewProjection* viewProjection_,Model* model,Vector3 enemyPos,int actionNmb,Player* player,const unsigned short Attribute,int power,int hp);
 	//更新
 	void Update();
+
+	//パーティクルを出す用
+	void CSUpdate(ID3D12GraphicsCommandList* cmdList);
+	void ParticleDraw();
+
 	//描画
 	void Draw(const ViewProjection& LightViewProjection_);
 	//移動
@@ -78,6 +85,8 @@ private:
 	Model* sakabanModel_;// 3Dモデル
 	Player* player_;
 
+	std::unique_ptr<ParticleEditor> deadParticleEditor_;
+
 	std::list<std::unique_ptr<EnemyBullet>> EnemyBullets_;
 	std::unique_ptr<EnemyNormalBulletAttack> enemyNormalBullet;
 
@@ -105,6 +114,9 @@ private:
 
 	WorldTransform debugTransform;
 	std::unique_ptr<Model> debugModel_;
+
+	Vector4 ParticleStartPos;
+	Vector4 ParticleEndPos;
 
 #pragma endregion
 	float Angle;

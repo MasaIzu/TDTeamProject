@@ -22,6 +22,11 @@ public:
 	////更新
 	///</summary>
 	void Update();
+	//パーティクルを出す用
+	void CSUpdate(ID3D12GraphicsCommandList* cmdList);
+
+	void ParticleDraw();
+
 	///<summary>
 	////描画
 	///</summary>
