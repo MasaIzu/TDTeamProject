@@ -80,7 +80,7 @@ void Player::Initialize(const unsigned short Attribute,ViewProjection* viewProje
 
 	trail3D_ = std::make_unique<Trail3D>(50);
 	trail3D_->SetTexture(TextureManager::Load("sprite/gomi.png"));
-	trail3D_->SetScale(2.0f,5.0f);
+	trail3D_->SetScale(1.0f,5.0f);
 	trail3D_->SetEasing(true);
 
 	SunderRail.push_back(Vector3(0,80,0));
