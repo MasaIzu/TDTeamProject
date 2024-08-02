@@ -54,6 +54,9 @@ public:
 	void CSUpdate(ID3D12GraphicsCommandList* cmdList);
 	void ParticleDraw();
 
+
+	void SpriteUpdate();
+
 	//描画
 	void FbxDraw(const ViewProjection& lightViewProjection_);
 	//描画
@@ -151,6 +154,13 @@ private:
 	float weekAttackCoolTime_ = 0;
 	//現在のクールタイム
 	float currentWeekAttackCoolTime_ = 0;
+
+
+	//スキル攻撃のクールタイム
+	float skillAttackCoolTime_ = 600;
+	const float MAX_SKILLCOOLTIME = 300;
+	//現在のクールタイム
+	float currentSkillAttackCoolTime_ = 0;
 
 #pragma region
 	PlayerStateNeedMaterial playerStateNeedMaterial;
@@ -256,6 +266,8 @@ private:
 	std::unique_ptr<Sprite> weekAttackCoolTimeSp_ = nullptr;
 	Vector2 weekAttackCoolTimePos;
 
-
+	std::unique_ptr<Sprite> skillAttackSp_ = nullptr;//スキル攻撃のスプライト
+	std::unique_ptr<Sprite> skillAttackCoolTimeSp_ = nullptr;//スキル攻撃のスプライトのクールタイム
+	Vector2 skillAttackCoolTimePos;//スキル攻撃のスプライトの座標
 };
 
