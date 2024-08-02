@@ -118,6 +118,12 @@ public:
 	void SetHp(int hp) {
 		hp_= hp;
 	}
+	int GetSkillPower() {
+		return skillPower_;
+	}
+	void SetSkillPower(int skillPower) {
+		skillPower_ = skillPower;
+	}
 
 	bool getFileNames(std::string folderPath,std::vector<std::string>& file_names);
 	void LoadPlayerStatusData();
@@ -144,6 +150,7 @@ private:
 	int score_ = 0;
 	const int addscore_ = 1;
 	int power_;
+	int skillPower_;
 
 	uint32_t RightBoneNum = 34;
 	uint32_t BladeAttackEndPos = 39;

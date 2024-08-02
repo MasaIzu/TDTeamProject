@@ -54,14 +54,18 @@ void Enemy::Update()
 {
 
 	//ParticleStartPos = MyMath::Vec3ToVec4(MyMath::GetWorldTransform(worldTransform_.matWorld_));
-	//ParticleEndPos = MyMath::Vec3ToVec4(MyMath::GetWorldTransform((worldTransform_.matWorld_*worldTransform_.matWorld_)));
+	//ParticleEndPos = MyMath::Vec3ToVec4(MyMath::GetWorldTransform((worldTransform_.matWorld_)));
 
 	//BladeColRatio = MyMath::Vec4ToVec3(ParticleEndPos) - MyMath::Vec4ToVec3(ParticleStartPos);
 	//ParticleMilEndPos = ParticleStartPos + MyMath::Vec3ToVec4(BladeColRatio.norm() * MaxBladeColDetection);
 	//BladeColRatio = ( BladeColRatio.norm() * MaxBladeColDetection ) / AttackColSphereCount;
 
 
-	Move();
+	if ( isHitStop == false )
+	{
+		Move();
+	}
+
 	//enemyNormalBullet->Update(this);
 	worldTransform_.TransferMatrix();
 	enemyCollider->Update(worldTransform_.matWorld_);
@@ -72,21 +76,28 @@ void Enemy::Update()
 	{
 		//livingTimer_ = 0;
 		Damage();
-		player_->addScore();
+		isHitStop = true;
 		enemyCollider->ResetMeleeHit();
-		CollisionManager::GetInstance()->RemoveCollider(enemyCollider);
-
 	}
 
 	//プレイヤーのスキル攻撃と当たったときの処理
 	if ( enemyCollider->GetIsPlayerSkillAttackHit() )
 	{
 		//livingTimer_ = 0;
-		Damage();
-		player_->addScore();
+		SkillDamage();
+		isHitStop = true;
 		enemyCollider ->PlayerSkillAttackHitReset();
-		CollisionManager::GetInstance()->RemoveCollider(enemyCollider);
+	}
 
+	//被弾時にヒットストップを入れる
+	if ( isHitStop == true )
+	{
+		hitStopTimer_++;
+	}
+	if ( hitStopTimer_ > MAX_HITSTOP )//ある程度経ったらヒットストップを解除する
+	{
+		hitStopTimer_ = 0;
+		isHitStop = false;
 	}
 
 	if ( enemyCollider->GetHit() )
@@ -99,13 +110,8 @@ void Enemy::Update()
 	{
 		isDead_ = true;
 		livingTimer_ = 300;
+		CollisionManager::GetInstance()->RemoveCollider(enemyCollider);
 	}
-	//if ( isDead_ == true )
-	//{
-
-	//}
-
-
 
 
 }
@@ -141,13 +147,29 @@ void Enemy::Move()
 
 void Enemy::Damage()
 {
-	damage_ = player_->GetPower();
-	hp_ -= damage_;
+
+		damage_ = player_->GetPower();
+		hp_ -= damage_;
 
 	if ( hp_ <= 0 )
 	{
 		hp_ = 0;
 		livingTimer_ = 0;
+		player_->addScore();
+	}
+
+}
+
+void Enemy::SkillDamage()
+{
+	skillDamage_ = player_->GetSkillPower();
+	hp_ -= skillDamage_;
+
+	if ( hp_ <= 0 )
+	{
+		hp_ = 0;
+		livingTimer_ = 0;
+		player_->addScore();
 	}
 
 }

@@ -50,6 +50,8 @@ public:
 
 	void Damage();
 
+	void SkillDamage();
+
 	//経験値のセッター
 	void SetExp(int experience) {
 		experience_ = experience;
@@ -103,6 +105,14 @@ private:
 	int hp_;//体力
 	int power_;//攻撃力
 	int damage_;//被ダメージ量
+
+	int skillDamage_;//スキル攻撃による被ダメージ量
+
+	bool isHitStop = false;
+	float hitStopTimer_ = 0;
+	const float MAX_HITSTOP = 30;
+
+	float hitDalay = false;
 #pragma region
 
 	bool isHit_ = false;

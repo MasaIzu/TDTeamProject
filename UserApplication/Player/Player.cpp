@@ -604,14 +604,22 @@ void Player::UpdatePlayerStatusData()
 		}
 
 		//HPコマンド
-		else if ( word.find("HP") == 0 )
+		if ( word.find("HP") == 0 )
 		{
 			//x座標
 			getline(line_stream,word,',');
 			int hp = ( int ) std::atoi(word.c_str());
 			SetHp(hp);
-			break;
+			
 		}
 
+		else if ( word.find("SKILLPOWER") == 0 )
+		{
+			//x座標
+			getline(line_stream,word,',');
+			int skillPower = ( int ) std::atoi(word.c_str());
+			SetSkillPower(skillPower);
+			break;
+		}
 	}
 }

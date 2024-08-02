@@ -11,7 +11,8 @@ class Player;
 ///<summary>
 ///雑魚敵とボスの生成のまとめ
 ///</summary>
-class EnemyManager {
+class EnemyManager
+{
 public:
 	EnemyManager();
 	~EnemyManager();
@@ -74,9 +75,18 @@ public:
 		return hp_;
 	}//体力のゲッター
 
+	int32_t GetPhase() {
+		return nowPhase;
+	}
+
+	void SetPhase(int32_t phase) {
+		nowPhase = phase;
+	}
 private:
 
 	Player* player_ = nullptr;
+
+	int32_t nowPhase = 0;
 
 	bool waitflag = false;
 	int waitTimer = 0;
