@@ -48,6 +48,16 @@ void Player::Initialize(const unsigned short Attribute,ViewProjection* viewProje
 	weekAttackCoolTimeSp_ = Sprite::Create(TextureManager::Load("sprite/Green30.png"));
 	weekAttackCoolTimeSp_->SetAnchorPoint({ 0.5f,1.0f });
 
+
+	skillAttackSp_ = std::make_unique<Sprite>();
+	skillAttackSp_ = Sprite::Create(TextureManager::Load("sprite/sunder.jpg"));
+	skillAttackSp_->SetSize({ 124.0f,96.0f });
+	skillAttackSp_->SetAnchorPoint({ 0.5f,1.0f });
+
+	skillAttackCoolTimeSp_ = std::make_unique<Sprite>();
+	skillAttackCoolTimeSp_ = Sprite::Create(TextureManager::Load("sprite/Green30.png"));
+	skillAttackCoolTimeSp_->SetAnchorPoint({ 0.5f,1.0f });
+
 	// コリジョンマネージャに追加
 	float sphereF = 0;
 	playerCollider = new SphereCollider(Vector4(sphereF,playerRadius,sphereF,sphereF),playerRadius);
@@ -111,14 +121,11 @@ void Player::Update(Input* input)
 	isLeftAttack = false;
 	isHit_ = false;
 
-	//クールタイムを表示するスプライトの座標のサイズを更新する処理
-	currentWeekAttackCoolTime_ = ( weekAttackCoolTime_ / 60 );
-	//weekAttackCoolTimePos = { 124.0f,(float)96.0 * currentWeekAttackCoolTime_ };
-	//weekAttackCoolTimeSp_->SetSize(weekAttackCoolTimePos);
+	
 
-	weekAttackCoolTimePos.y = 96.0* currentWeekAttackCoolTime_;
-	weekAttackCoolTimeSp_->SetSize({ 124.0f,weekAttackCoolTimePos.y });
+	SpriteUpdate();//スプライトに関する更新処理
 
+	
 	if ( playerCollider->GetHitSphere() )
 	{
 		isHit_ = true;
@@ -151,6 +158,7 @@ void Player::Update(Input* input)
 	{
 		if ( input_->MouseInputTrigger(static_cast< int >( 0 )) || input_->ButtonInput(RT) )
 		{
+			isLeftAttacking = true;
 			isLeftAttack = true;
 		}
 	}
@@ -196,9 +204,6 @@ void Player::Update(Input* input)
 		SunderColWorldTrans[ i ].TransferMatrix();
 		PlayerSunderAttackCollider[ i ]->Update(SunderColWorldTrans[ i ].matWorld_);
 	}
-
-
-
 
 	//ImGui::Begin("coolTime");
 	//ImGui::SetWindowPos({ 200 , 200 });
@@ -274,6 +279,38 @@ void Player::ParticleDraw()
 	particleEditor->Draw(*viewProjection_);
 }
 
+void Player::SpriteUpdate()
+{
+	//弱攻撃のクールタイムを表示するスプライトの座標のサイズを更新する処理
+	currentWeekAttackCoolTime_ = ( weekAttackCoolTime_ / 60 );
+	//weekAttackCoolTimePos = { 124.0f,(float)96.0 * currentWeekAttackCoolTime_ };
+	//weekAttackCoolTimeSp_->SetSize(weekAttackCoolTimePos);
+
+	weekAttackCoolTimePos.y = 96.0 * currentWeekAttackCoolTime_;
+	weekAttackCoolTimeSp_->SetSize({ 124.0f,weekAttackCoolTimePos.y });
+
+
+	//スキル攻撃のクールタイムを表示するスプライトの座標のサイズを更新する処理
+	currentSkillAttackCoolTime_ = ( skillAttackCoolTime_ / MAX_SKILLCOOLTIME );
+	//weekAttackCoolTimePos = { 124.0f,(float)96.0 * currentWeekAttackCoolTime_ };
+	//weekAttackCoolTimeSp_->SetSize(weekAttackCoolTimePos);
+
+	skillAttackCoolTimePos.y = 96.0 * currentSkillAttackCoolTime_;
+	skillAttackCoolTimeSp_->SetSize({ 124.0f,skillAttackCoolTimePos.y });
+
+
+	if ( skillAttackCoolTime_ >= MAX_SKILLCOOLTIME )
+	{
+		skillAttackCoolTime_ = 0;
+		isLeftAttacking = false;
+	}
+	else
+	{
+		skillAttackCoolTime_++;
+	}
+
+}
+
 void Player::FbxDraw(const ViewProjection& lightViewProjection_)
 {
 	//animation->FbxDraw(worldTransform_, *viewProjection_, lightViewProjection_);
@@ -289,6 +326,12 @@ void Player::SpriteDraw()
 {
 	weekAttackSp_->Draw({1150,700},{ 1,1,1,1 },1);
 	weekAttackCoolTimeSp_->Draw({ 1150,700 /*+ (weekAttackCoolTimePos.y/2) */},{ 1,1,1,0.5 },1);
+
+	if ( isLeftAttacking == true )
+	{
+		skillAttackCoolTimeSp_->Draw({ 250,700 },{ 1,1,1,0.5 },1);
+	}
+	skillAttackSp_->Draw({ 250,700 },{ 1,1,1,0.5 },1);
 }
 
 void Player::CheckHitCollision()
@@ -416,7 +459,6 @@ void Player::AttackUpdate()
 	{
 		SunderTopPos = EnemyPos + SunderStartPos;
 		SunderBottomPos = EnemyPos;
-
 
 		SunderRail.clear();
 		for ( int i = 0; i < 5; i++ )
