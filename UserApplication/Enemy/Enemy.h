@@ -75,6 +75,9 @@ public:
 	void SetHp(int hp) {hp_ = hp;}//体力のセッター
 	int GetHp(){return hp_;}//体力のゲッター
 
+	void HitPlayerMotion() {
+		isDead_ = true;
+	}
 
 
 private:
