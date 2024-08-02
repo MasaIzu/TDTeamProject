@@ -136,6 +136,7 @@ public: // サブクラス
 		uint32_t GettingUpDownScale = 0;
 		float PostEffectPow = 0.0f;
 		uint32_t DivisionCount = 1;
+		uint32_t SideDivisionCount = 1;
 		uint32_t pad = 0;
 	};
 	ShaderDetailPointGenerationParameters shaderDetailParameters;
@@ -188,6 +189,7 @@ public: // サブクラス
 		float VelocityAdjustment[ 3 ] = { 1,1,1 };
 		float PostEffectPow = 0.0f;
 		uint32_t DivisionCount = 1;
+		uint32_t SideDivisionCount = 1;
 		uint32_t pad = 0;
 	};
 	SendPointGenerationParameters sendParameters;
