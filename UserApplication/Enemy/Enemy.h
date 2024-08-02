@@ -86,6 +86,7 @@ private:
 	Player* player_;
 
 	std::unique_ptr<ParticleEditor> deadParticleEditor_;
+	std::unique_ptr<ParticleEditor> NormalHitParticleEditor_;
 
 	std::list<std::unique_ptr<EnemyBullet>> EnemyBullets_;
 	std::unique_ptr<EnemyNormalBulletAttack> enemyNormalBullet;
