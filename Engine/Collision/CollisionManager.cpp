@@ -147,11 +147,11 @@ void CollisionManager::CheckAllCollisions()
 								if ( colB->attribute == COLLISION_ATTR_MELEEATTACK )
 								{
 									colA->isHitPlayerMeleeAttack = true;
-									//colB->attribute = COLLISION_ATTR_NOTATTACK;
+									colB->attribute = COLLISION_ATTR_NOTATTACK;
 								}
 								else if ( colA->attribute == COLLISION_ATTR_MELEEATTACK )
 								{
-									//colA->attribute = COLLISION_ATTR_NOTATTACK;
+									colA->attribute = COLLISION_ATTR_NOTATTACK;
 									colB->isHitPlayerMeleeAttack = true;
 								}
 							}

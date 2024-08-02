@@ -3,6 +3,7 @@
 
 EnemyManager::EnemyManager()
 {
+
 }
 
 EnemyManager::~EnemyManager()
@@ -78,7 +79,7 @@ void EnemyManager::LoadEnemyPopData()
 	}
 	int randCSV = rand() % fileNmb;
 
-	file.open(CSVFileNames[0]);
+	file.open(CSVFileNames[1]);
 
 	assert(file.is_open());
 
