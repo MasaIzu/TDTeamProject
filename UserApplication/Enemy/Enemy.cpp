@@ -36,6 +36,12 @@ void Enemy::Initialize(ViewProjection* viewProjection,Model* model,Vector3 enemy
 	deadParticleEditor_->Initialize(MaxParticleCountB,true,"HitE2");
 	deadParticleEditor_->SetTextureHandle(TextureManager::Load("sprite/effect4.png"));
 
+
+	NormalHitParticleEditor_ = std::make_unique<ParticleEditor>();
+	NormalHitParticleEditor_->Initialize("EnemyNormalHit");
+	NormalHitParticleEditor_->SetTextureHandle(TextureManager::Load("sprite/effect4.png"));
+
+
 	// コリジョンマネージャに追加
 	float sphereF = 0;
 	enemyCollider = new SphereCollider(Vector4(sphereF, enemyRadius, sphereF, sphereF), enemyRadius);
@@ -121,11 +127,13 @@ void Enemy::Update()
 void Enemy::CSUpdate(ID3D12GraphicsCommandList* cmdList)
 {
 	deadParticleEditor_->CSUpdate(cmdList,ParticleStartPos,static_cast< uint32_t >( isDead_ ));
+	NormalHitParticleEditor_->CSUpdate(cmdList,ParticleStartPos,isHit_);
 }
 
 void Enemy::ParticleDraw()
 {
 	deadParticleEditor_->Draw(*viewProjection_);
+	NormalHitParticleEditor_->Draw(*viewProjection_);
 }
 
 void Enemy::Draw(const ViewProjection& LightViewProjection_)
