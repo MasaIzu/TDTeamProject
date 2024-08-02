@@ -20,7 +20,6 @@ UI* UI::Get_Instans()
 
 void UI::Initialize()
 {
-	// PlayerHP Initialize
 	{
 		playerHPBAR_ = Sprite::Create(TextureManager::Load("sprite/white1x1.png"));
 		playerHPBARPos_.x = WinApp::GetInstance()->GetWindowSize().x / 2;
@@ -29,17 +28,51 @@ void UI::Initialize()
 		playerOldHP_ = 20;
 	}
 	timeSprite_ = Sprite::Create(TextureManager::Load("sprite/white1x1.png"));
+
+	easeTimer_ = 0;
+	easeMaxTime_ = 50;
+	easeHalfOver_ = false;
+
+	timeColor_ = { 0,1,0,1 };
 }
 
-void UI::Update()
+void UI::Update(const bool& startBannerEnd)
 {
-	PlayerHPUpdate();
-	TimeUpdate();
+	if ( startBannerEnd == true )
+	{
+		PlayerHPUpdate();
+		TimeUpdate();
+	}
+	else
+	{
+		float guageSize = 0;
+		drawStart_ = false;
+		easeTimer_++;
+		if ( easeHalfOver_ )
+		{
+			guageSize = Easing::EaseInQuint(0,timeRest_,( float ) easeTimer_,( float ) easeMaxTime_);
+		}
+		timeSprite_->SetSize({ guageSize,50.0f });
+		if ( easeTimer_ >= 50 && easeHalfOver_ == false )
+		{
+			easeHalfOver_ = true;
+			easeTimer_ = 0;
+		}
+		else if ( easeTimer_ >= 50 && easeHalfOver_ == true )
+		{
+			drawStart_ = true;
+			easeTimer_ = 50;
+		}
+	}
+
 }
 
 void UI::Draw()
 {
-	playerHPBAR_->Draw(playerHPBARPos_,playerHPColor_);
+	if ( drawStart_ )
+	{
+		playerHPBAR_->Draw(playerHPBARPos_,playerHPColor_);
+	}
 	timeSprite_->Draw({ WinApp::GetInstance()->GetWindowSize().x / 2,100 },timeColor_);
 }
 

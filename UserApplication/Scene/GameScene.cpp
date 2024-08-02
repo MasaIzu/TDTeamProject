@@ -108,6 +108,7 @@ void GameScene::Initialize() {
 	randomMap->LoadNewTile(std::move(yellowTile));
 
 	timeGauge = 1200;
+	ui_->SetTimeRest(timeGauge);
 	ui_->SetTimeGauge(timeGauge);
 	ui_->SetPlayerStartHP(player_->GetHp());
 }
@@ -148,7 +149,7 @@ void GameScene::Update() {
 
 	startBanner->Update();
 
-	ui_->Update();
+	ui_->Update(startBanner->GetAnimEnd());
 
 	//全ての衝突をチェック
 	collisionManager->CheckAllCollisions();
