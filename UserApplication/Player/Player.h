@@ -255,5 +255,7 @@ private:
 	std::unique_ptr<Sprite> weekAttackSp_ = nullptr;
 	std::unique_ptr<Sprite> weekAttackCoolTimeSp_ = nullptr;
 	Vector2 weekAttackCoolTimePos;
+
+
 };
 

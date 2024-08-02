@@ -31,6 +31,11 @@ void Enemy::Initialize(ViewProjection* viewProjection,Model* model,Vector3 enemy
 	enemyNormalBullet = std::make_unique<EnemyNormalBulletAttack>();
 	enemyNormalBullet->Initialize(model_);
 
+	int MaxParticleCountB = 1000;
+	deadParticleEditor_ = std::make_unique<ParticleEditor>();
+	deadParticleEditor_->Initialize(MaxParticleCountB,true,"HitEffect");
+	deadParticleEditor_->SetTextureHandle(TextureManager::Load("sprite/effect1.png"));
+
 	// コリジョンマネージャに追加
 	float sphereF = 0;
 	enemyCollider = new SphereCollider(Vector4(sphereF, enemyRadius, sphereF, sphereF), enemyRadius);
@@ -48,6 +53,12 @@ void Enemy::Initialize(ViewProjection* viewProjection,Model* model,Vector3 enemy
 void Enemy::Update()
 {
 
+	//ParticleStartPos = MyMath::Vec3ToVec4(MyMath::GetWorldTransform(worldTransform_.matWorld_));
+	//ParticleEndPos = MyMath::Vec3ToVec4(MyMath::GetWorldTransform((worldTransform_.matWorld_*worldTransform_.matWorld_)));
+
+	//BladeColRatio = MyMath::Vec4ToVec3(ParticleEndPos) - MyMath::Vec4ToVec3(ParticleStartPos);
+	//ParticleMilEndPos = ParticleStartPos + MyMath::Vec3ToVec4(BladeColRatio.norm() * MaxBladeColDetection);
+	//BladeColRatio = ( BladeColRatio.norm() * MaxBladeColDetection ) / AttackColSphereCount;
 
 
 	Move();
@@ -97,6 +108,16 @@ void Enemy::Update()
 
 
 
+}
+
+void Enemy::CSUpdate(ID3D12GraphicsCommandList* cmdList)
+{
+	deadParticleEditor_->CSUpdate(cmdList,ParticleStartPos,ParticleEndPos,static_cast< uint32_t >( isDead_ ));
+}
+
+void Enemy::ParticleDraw()
+{
+	deadParticleEditor_->Draw(*viewProjection_);
 }
 
 void Enemy::Draw(const ViewProjection& LightViewProjection_)

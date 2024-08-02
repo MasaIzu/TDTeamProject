@@ -174,6 +174,7 @@ void GameScene::PostEffectDraw()
 	player_->FbxDraw(*LightViewProjection.get());
 
 	player_->ParticleDraw();
+	enemyManager->ParticleDraw();
 
 	player_->TarilDraw();
 
@@ -186,6 +187,7 @@ void GameScene::BackgroundDraw()
 void GameScene::CSUpdate()
 {
 	player_->CSUpdate(DirectXCore::GetInstance()->GetCommandList());
+	enemyManager->CSUpdate(DirectXCore::GetInstance()->GetCommandList());
 
 }
 

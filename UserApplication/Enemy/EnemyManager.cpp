@@ -1,5 +1,6 @@
 #include "EnemyManager.h"
 
+
 EnemyManager::EnemyManager()
 {
 }
@@ -36,6 +37,22 @@ void EnemyManager::Update()
 	UpdateEnemyPopCommands();
 
 
+}
+
+void EnemyManager::CSUpdate(ID3D12GraphicsCommandList* cmdList)
+{
+	for ( std::unique_ptr<Enemy>& enemy : enemy_ )
+	{
+		enemy->CSUpdate(cmdList);
+	}
+}
+
+void EnemyManager::ParticleDraw()
+{
+	for ( std::unique_ptr<Enemy>& enemy : enemy_ )
+	{
+		enemy->ParticleDraw();
+	}
 }
 
 void EnemyManager::Draw(const ViewProjection& LightViewProjection_)
