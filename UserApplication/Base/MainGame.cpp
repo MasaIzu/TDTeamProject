@@ -9,7 +9,7 @@ void MainGame::Initialize()
 	sceneFactory_ = std::make_unique<SceneFactory>();
 	SceneManager::GetInstance()->SetSceneFactory(sceneFactory_.get());
 #ifdef _Editor
-	SceneManager::GetInstance()->ChangeScene("Debug");
+	SceneManager::GetInstance()->ChangeScene("Debug",0);
 #elif _DEBUG
 	SceneManager::GetInstance()->ChangeScene("TITLE",0);
 #else

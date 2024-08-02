@@ -247,19 +247,19 @@ void main(uint3 id : SV_DispatchThreadID)
         
         
         
-        float UVDiv = 1.0f / VerticalDivisionCount;
+        //float UVDiv = 1.0f / VerticalDivisionCount;
     
-        float allDivCount = VerticalDivisionCount * SideDivisionCount;
+        //float allDivCount = VerticalDivisionCount * SideDivisionCount;
         
-        float MaxLifeDiv = gParticles[index].MaxLifeTime / allDivCount;
+        //float MaxLifeDiv = gParticles[index].MaxLifeTime / allDivCount;
     
-        float NowLife = gParticles[index].MaxLifeTime - gParticles[index].lifeTime;
-        float LifeDiv = NowLife / MaxLifeDiv;
+        //float NowLife = gParticles[index].MaxLifeTime - gParticles[index].lifeTime;
+        //float LifeDiv = NowLife / MaxLifeDiv;
     
-        uint LifeUint = LifeDiv;
+        //uint LifeUint = LifeDiv;
     
-        gParticles[index].LeftUVPos = UVDiv * LifeUint;
-        gParticles[index].RightUVPos = gParticles[index].LeftUVPos + UVDiv;
+        //gParticles[index].LeftUVPos = UVDiv * LifeUint;
+        //gParticles[index].RightUVPos = gParticles[index].LeftUVPos + UVDiv;
     }
     
     
@@ -271,6 +271,11 @@ ConsumeStructuredBuffer<uint> gFreeIndexList : register(u1);
 [numthreads(128, 1, 1)]
 void emitParticle(uint3 id : SV_DispatchThreadID)
 {
+    if (id.x > MaxParticleCount)
+    {
+        return;
+    }
+    
     uint index = id.x;
     
     if (gParticles[index].isActive > 0)
@@ -286,7 +291,7 @@ void emitParticle(uint3 id : SV_DispatchThreadID)
         float GraceOfTimeMax = 100.0f;
         float GraceOfTimeMin = 1.0f;
         float GraceOfTime = Rand(seed, GraceOfTimeMax, GraceOfTimeMin);
-        gParticles[index].graceOfTime = GraceOfTime;
+        gParticles[index].graceOfTime = 10.0f;
         return;
     }
     gParticles[index].isActive = 1;
@@ -439,7 +444,7 @@ void emitParticle(uint3 id : SV_DispatchThreadID)
         
     }
     else if (ShapeNumber == 1)
-    {   
+    {
         NowPosition = GenerateRandomPoint(seed, indexAdd, indexAdd2, NowPosition, Width, Height, Depth);
         NowPosition *= ShapeScale.xyz;
     }

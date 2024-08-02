@@ -1,5 +1,5 @@
 {
-    "Resources/ParticleData/HitEffect.json": {
+    "Resources/ParticleData/HitE2.json": {
         "StartPos": {
             "value0": 0.0,
             "value1": 0.0,
@@ -36,9 +36,9 @@
         "RandomLife": true,
         "RandomSpeed": true,
         "RandomScale": true,
-        "Speed": 0.8809999823570252,
+        "Speed": 1.1540000438690186,
         "LerpStrength": 0.05000000074505806,
-        "Scale": 1.3910000324249268,
+        "Scale": 3.690999984741211,
         "ScaleTinker": 0.0,
         "MaxLife": 60.0,
         "MaxParticleCount": 20000,
