@@ -38,26 +38,26 @@
         "RandomScale": true,
         "Speed": 0.8809999823570252,
         "LerpStrength": 0.05000000074505806,
-        "Scale": 1.3910000324249268,
+        "Scale": 5.208000183105469,
         "ScaleTinker": 0.0,
         "MaxLife": 60.0,
         "MaxParticleCount": 100,
         "AdditiveSynthesis": true,
         "RandomLifeMinMax": {
-            "value0": 14.104000091552735,
-            "value1": 33.5620002746582
+            "value0": 9.567999839782715,
+            "value1": 60.72600173950195
         },
         "RandomSpeedMinMax": {
             "value0": 1.0,
             "value1": 10.0
         },
         "RandomScaleMinMax": {
-            "value0": 1.0,
-            "value1": 6.178999900817871
+            "value0": 2.799999952316284,
+            "value1": 7.514999866485596
         },
         "SpeedDivideSize": 54.79499816894531,
         "ScaleDivideSize": 1.0,
-        "GravityStrength": -0.04500000178813934,
+        "GravityStrength": 0.0,
         "Interlocking": false,
         "InterlockingStrength": 0.0,
         "InterlockingLength": 15.0,

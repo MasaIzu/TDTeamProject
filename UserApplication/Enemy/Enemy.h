@@ -101,7 +101,7 @@ private:
 	bool isDead_ = false;
 
 	float enemySpeed = 0.3f;
-	int livingTimer_ = 300;//生存時間
+	int livingTimer_ = 480;//生存時間
 
 	int hp_;//体力
 	int power_;//攻撃力
@@ -111,7 +111,7 @@ private:
 
 	bool isHitStop = false;
 	float hitStopTimer_ = 0;
-	const float MAX_HITSTOP = 30;
+	const float MAX_HITSTOP = 45;
 
 	float hitDalay = false;
 #pragma region
