@@ -50,7 +50,7 @@ void UI::Update(const bool& startBannerEnd)
 		easeTimer_++;
 		if ( easeHalfOver_ )
 		{
-			guageSize = Easing::EaseInQuint(0,timeRest_,( float ) easeTimer_,( float ) easeMaxTime_);
+			guageSize = Easing::EaseInSine(0,timeRest_,( float ) easeTimer_,( float ) easeMaxTime_);
 		}
 		timeSprite_->SetSize({ guageSize,50.0f });
 		if ( easeTimer_ >= 50 && easeHalfOver_ == false )
