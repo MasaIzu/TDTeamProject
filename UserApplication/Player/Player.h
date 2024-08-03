@@ -276,5 +276,16 @@ private:
 	std::unique_ptr<Sprite> skillAttackSp_ = nullptr;//スキル攻撃のスプライト
 	std::unique_ptr<Sprite> skillAttackCoolTimeSp_ = nullptr;//スキル攻撃のスプライトのクールタイム
 	Vector2 skillAttackCoolTimePos;//スキル攻撃のスプライトの座標
+
+
+#pragma region
+	//オーディオ
+	uint32_t NormalSoundNum = 0;
+	uint32_t SkillSoundNum = 0;
+	float soundVol = 0.2f;
+
+#pragma endregion
+
+
 };
 

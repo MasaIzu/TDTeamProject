@@ -3,6 +3,7 @@
 #include "SphereCollider.h"
 #include "CollisionAttribute.h"
 #include "ImGuiManager.h"
+#include <AudioManager.h>
 Enemy::Enemy()
 {
 }
@@ -54,6 +55,11 @@ void Enemy::Initialize(ViewProjection* viewProjection,Model* model,Vector3 enemy
 	power_ = power;
 	hp_ = hp;
 
+
+	HitSoundNum = AudioManager::GetInstance()->LoadAudio("Resources/Sound/attackHit.mp3",soundVol,false);
+	SponeSoundNum = AudioManager::GetInstance()->LoadAudio("Resources/Sound/enemySpawn.mp3",soundVol,false);
+
+	AudioManager::GetInstance()->PlayWave(SponeSoundNum);
 }
 
 void Enemy::Update()
@@ -86,6 +92,8 @@ void Enemy::Update()
 		Damage();
 		isHitStop = true;
 		enemyCollider->ResetMeleeHit();
+
+		AudioManager::GetInstance()->PlayWave(HitSoundNum);
 	}
 
 	//プレイヤーのスキル攻撃と当たったときの処理
@@ -95,6 +103,8 @@ void Enemy::Update()
 		SkillDamage();
 		isHitStop = true;
 		enemyCollider ->PlayerSkillAttackHitReset();
+
+		AudioManager::GetInstance()->PlayWave(HitSoundNum);
 	}
 
 	//被弾時にヒットストップを入れる
