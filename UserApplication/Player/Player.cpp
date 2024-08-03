@@ -5,6 +5,7 @@
 #include "CollisionAttribute.h"
 #include "Numbers.h"
 #include "PlayerEnum.h"
+#include <AudioManager.h>
 
 Player::Player()
 {
@@ -57,6 +58,12 @@ void Player::Initialize(const unsigned short Attribute,ViewProjection* viewProje
 	skillAttackCoolTimeSp_ = std::make_unique<Sprite>();
 	skillAttackCoolTimeSp_ = Sprite::Create(TextureManager::Load("sprite/Green30.png"));
 	skillAttackCoolTimeSp_->SetAnchorPoint({ 0.5f,1.0f });
+
+
+	//オーディオ
+	NormalSoundNum = AudioManager::GetInstance()->LoadAudio("Resources/Sound/playerAttack.mp3",soundVol,false);
+
+	SkillSoundNum = AudioManager::GetInstance()->LoadAudio("Resources/Sound/playerSkill.mp3",soundVol,false);
 
 	// コリジョンマネージャに追加
 	float sphereF = 0;
@@ -411,6 +418,7 @@ void Player::AttackUpdate()
 	if ( isBladeAttacking == true )
 	{
 		weekAttackCoolTime_++;
+		
 		if (isPreparation == false)
 		{
 			if ( BladeAttackTime < BladeMaxAttackTime )
@@ -429,7 +437,7 @@ void Player::AttackUpdate()
 				isPreparation = true;
 				animation2->SetAnimation(static_cast< uint32_t >( PlayerAnimation::HandAttack ),static_cast< uint32_t >( Numbers::Ten ),playerAnimTime.BladeAttack,false);
 				BladeAttributeSet(COLLISION_ATTR_MELEEATTACK);
-
+				AudioManager::GetInstance()->PlayWave(NormalSoundNum);
 				//BladeAttributeSet(COLLISION_ATTR_PLAYER_METEORITE);
 
 			}
@@ -470,7 +478,7 @@ void Player::AttackUpdate()
 		trail3D_->ResetTrail(SunderRail[ 0 ],50);
 
 		SunderAttributeSet(COLLISION_ATTR_PLAYER_METEORITE);
-
+		AudioManager::GetInstance()->PlayWave(SkillSoundNum);
 
 		for ( int i = 0; i < 5; i++ )
 		{

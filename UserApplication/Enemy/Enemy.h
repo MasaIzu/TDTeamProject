@@ -131,6 +131,15 @@ private:
 
 #pragma endregion
 	float Angle;
+
+#pragma region
+	//オーディオ
+	uint32_t HitSoundNum = 0;
+	uint32_t SponeSoundNum = 0;
+	float soundVol = 0.2f;
+
+#pragma endregion
+
 };
 
 
