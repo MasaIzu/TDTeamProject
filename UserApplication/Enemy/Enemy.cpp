@@ -60,7 +60,7 @@ void Enemy::Update()
 {
 
 
-	//ParticleStartPos = MyMath::Vec3ToVec4(MyMath::GetWorldTransform(worldTransform_.matWorld_));
+	ParticleStartPos = MyMath::Vec3ToVec4(MyMath::GetWorldTransform(worldTransform_.matWorld_));
 	//ParticleEndPos = MyMath::Vec3ToVec4(MyMath::GetWorldTransform((worldTransform_.matWorld_)));
 
 
@@ -117,17 +117,23 @@ void Enemy::Update()
 	if ( livingTimer_ <= 0 )
 	{
 		isDead_ = true;
-		livingTimer_ = 300;
+		livingTimer_ = 480;
 		CollisionManager::GetInstance()->RemoveCollider(enemyCollider);
 	}
 
+	if ( hp_ <= 0 )
+	{
+		hp_ = 0;
+		isDead_ = true;
+		player_->addScore();
+	}
 
 }
 
 void Enemy::CSUpdate(ID3D12GraphicsCommandList* cmdList)
 {
-	deadParticleEditor_->CSUpdate(cmdList,ParticleStartPos,static_cast< uint32_t >( isDead_ ));
-	NormalHitParticleEditor_->CSUpdate(cmdList,ParticleStartPos,isHit_);
+	deadParticleEditor_->CSUpdate(cmdList,ParticleStartPos,isDead_);
+	NormalHitParticleEditor_->CSUpdate(cmdList,ParticleStartPos,isHitStop);
 }
 
 void Enemy::ParticleDraw()
@@ -158,15 +164,8 @@ void Enemy::Move()
 void Enemy::Damage()
 {
 
-		damage_ = player_->GetPower();
-		hp_ -= damage_;
-
-	if ( hp_ <= 0 )
-	{
-		hp_ = 0;
-		livingTimer_ = 0;
-		player_->addScore();
-	}
+	damage_ = player_->GetPower();
+	hp_ -= damage_;
 
 }
 
@@ -174,13 +173,6 @@ void Enemy::SkillDamage()
 {
 	skillDamage_ = player_->GetSkillPower();
 	hp_ -= skillDamage_;
-
-	if ( hp_ <= 0 )
-	{
-		hp_ = 0;
-		livingTimer_ = 0;
-		player_->addScore();
-	}
 
 }
 
