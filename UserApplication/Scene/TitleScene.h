@@ -78,5 +78,9 @@ private: // メンバ変数
 
 	int score_;
 
+
+	//音
+	uint32_t SelectSoundNum = 0;
+	float soundVol = 0.05f;
 };
 

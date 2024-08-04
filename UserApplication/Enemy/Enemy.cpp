@@ -154,7 +154,7 @@ void Enemy::ParticleDraw()
 
 void Enemy::Draw(const ViewProjection& LightViewProjection_)
 {
-	sakabanModel_->Draw(worldTransform_, *viewProjection_, LightViewProjection_);
+	sakabanModel_->Draw(worldTransform_, *viewProjection_, LightViewProjection_,0);
 	//enemyNormalBullet->Draw(LightViewProjection_);
 	//debugModel_->Draw(debugTransform,*viewProjection_,LightViewProjection_);
 }

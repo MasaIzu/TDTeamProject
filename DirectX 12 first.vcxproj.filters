@@ -261,6 +261,7 @@
     <None Include="Resources\Shaders\Trail.hlsli">
       <Filter>ResourceFile\Shaders\Trail</Filter>
     </None>
+    <None Include="Resources\Shaders\Trail3D.hlsli" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\PrimitivePS.hlsl">
@@ -446,6 +447,9 @@
     <FxCompile Include="Resources\Shaders\TrailVS.hlsl">
       <Filter>ResourceFile\Shaders\Trail</Filter>
     </FxCompile>
+    <FxCompile Include="Resources\Shaders\TrailGS3D.hlsl" />
+    <FxCompile Include="Resources\Shaders\TrailPS3D.hlsl" />
+    <FxCompile Include="Resources\Shaders\TrailVS3D.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Sound\AudioManager.h">
@@ -724,6 +728,9 @@
     <ClInclude Include="UserApplication\UI.h">
       <Filter>UserFile\UserHeaderFile</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\3DEffect\Trail3D.h">
+      <Filter>UserFile\UserHeaderFile</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -945,8 +952,11 @@
     <ClCompile Include="UserApplication\UI.cpp">
       <Filter>UserFile\UserSourceFile</Filter>
     </ClCompile>
-    <ClCompile Include="UserApplication\Scene\TitleScene.cpp">
+    <ClCompile Include="Engine\3DEffect\Trail3D.cpp">
       <Filter>UserFile\UserSourceFile</Filter>
+    </ClCompile>
+    <ClCompile Include="UserApplication\Scene\TitleScene.cpp">
+      <Filter>UserFile\UserSourceFile\Scene</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

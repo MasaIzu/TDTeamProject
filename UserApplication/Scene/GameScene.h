@@ -85,12 +85,17 @@ private: // メンバ変数
 	std::unique_ptr<ViewProjection> LightViewProjection;//ライトビュープロジェクション
 	std::unique_ptr<Model> model_;// 3Dモデル
 	WorldTransform worldTransform_;//ワールド変換データ
+	WorldTransform worldTransformJimen_;//ワールド変換データ
 	CollisionManager* collisionManager = nullptr;//当たり判定
 	SceneManager* sceneManager_ = nullptr;//シーンマネージャー
 	std::unique_ptr<LoadLevelEditor> levelData;
 	std::unique_ptr<TouchableObject> touchableObject;
 
 	std::unique_ptr<EnemyManager> enemyManager;//エネミーマネージャー
+
+	//音
+	uint32_t BGMSoundNum = 0;
+	float soundVol = 0.01f;
 
 	bool isFinishGame = false;
 
@@ -111,7 +116,7 @@ private: // メンバ変数
 	float gamecameraDistans_;
 
 	std::unique_ptr<Model> skydome;
-
+	std::unique_ptr<Model> Jimen;
 	std::unique_ptr<Sprite> mouseSprite_ = nullptr;
 	std::unique_ptr<Banner> startBanner;
 
