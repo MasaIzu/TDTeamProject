@@ -35,7 +35,7 @@ void TitleScene::Initialize() {
 	sprite_ = Sprite::Create(TextureManager::Load("sprite/0.png"));
 	titleSprite_ = Sprite::Create(TextureManager::Load("sprite/title_.png"));
 	loadSprite_ = Sprite::Create(TextureManager::Load("sprite/LORDING.png"));
-	mouseMprite_ = Sprite::Create(TextureManager::Load("sprite/M_LEFT.png"));
+	mouseSprite_ = Sprite::Create(TextureManager::Load("sprite/M_LEFT.png"));
 
 	viewProjection_ = std::make_unique<ViewProjection>();
 	viewProjection_->Initialize();
@@ -124,7 +124,7 @@ void TitleScene::Draw() {
 	{
 		//sprite_->Draw({ 100,100 },{ 1,1,1,1 },1);
 		titleSprite_->Draw({ 625, 325 },{ 1,1,1,1 },1);
-		mouseMprite_->Draw({ 625, 600 },{ 1,1,1,1 },1);
+		mouseSprite_->Draw({ 625, 600 },{ 1,1,1,1 },1);
 	}
 #pragma endregion
 

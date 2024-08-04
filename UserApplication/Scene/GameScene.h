@@ -117,7 +117,8 @@ private: // メンバ変数
 
 	std::unique_ptr<Model> skydome;
 	std::unique_ptr<Model> Jimen;
-	std::unique_ptr<Sprite> mouseSprite_ = nullptr;
+	std::unique_ptr<Sprite> mouseLSprite_ = nullptr;
+	std::unique_ptr<Sprite> mouseRSprite_ = nullptr;
 	std::unique_ptr<Banner> startBanner;
 
 	std::unique_ptr<UI> ui_;

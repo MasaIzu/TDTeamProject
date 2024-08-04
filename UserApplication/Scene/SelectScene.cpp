@@ -116,15 +116,15 @@ void SelectScene::Draw() {
 
 	mouseSprite_->Draw({ 625, 600 },{ 1,1,1,1 },1);
 
-	if ( score_ <= 10 )
+	if ( score_ <= 25 )
 	{
 		rankBSprite_->Draw({ 1000,150 },{ 1,1,1,1 },1);
 	}
-	else if ( score_ > 10 && score_ <= 20 )
+	else if ( score_ > 25 && score_ <= 54 )
 	{
 		rankASprite_->Draw({ 1000,150 },{ 1,1,1,1 },1);
 	}
-	else if ( score_ > 20 )
+	else if ( score_ >= 55 )
 	{
 		rankSSprite_->Draw({ 1000,150 },{ 1,1,1,1 },1);
 	}

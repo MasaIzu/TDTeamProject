@@ -33,8 +33,11 @@ void GameScene::Initialize() {
 
 	//timeSprite_ = Sprite::Create(TextureManager::Load("sprite/Green30.png"));
 
-	mouseSprite_ = Sprite::Create(TextureManager::Load("sprite/M_RIGHT.png"));
-	mouseSprite_->SetSize({ 100.0f,100.0f });
+	mouseLSprite_ = Sprite::Create(TextureManager::Load("sprite/M_LEFT.png"));
+	mouseLSprite_->SetSize({ 100.0f,100.0f });
+
+	mouseRSprite_ = Sprite::Create(TextureManager::Load("sprite/M_RIGHT.png"));
+	mouseRSprite_->SetSize({ 100.0f,100.0f });
 
 	viewProjection_ = std::make_unique<ViewProjection>();
 	viewProjection_->Initialize();
@@ -112,7 +115,7 @@ void GameScene::Initialize() {
 	randomMap->LoadNewTile(std::move(greenTile));
 	randomMap->LoadNewTile(std::move(yellowTile));
 
-	timeGauge = 1200;
+	timeGauge = 3600;
 	ui_->SetTimeRest(timeGauge);
 	ui_->SetTimeGauge(timeGauge);
 	ui_->SetPlayerStartHP(player_->GetHp());
@@ -131,6 +134,13 @@ void GameScene::Update() {
 
 	if ( startBanner->GetAnimEnd() == true )
 	{
+		if ( player_->GetPlayerCollider()->GetHitSphere() )//敵とぶつかった際に
+		{
+			if ( player_->GetHitCoolTime() == 30.0f )
+			{
+				timeGauge -= 60;//制限時間を1秒分減らす
+			}
+		}
 		timeGauge--;
 
 		enemyManager->SetPhase(nowPhase);
@@ -227,7 +237,8 @@ void GameScene::Draw() {
 
 	if ( startBanner->GetAnimEnd() == true )
 	{
-		mouseSprite_->Draw({ 1000,600 },{ 1,1,1,1 },1);
+		mouseLSprite_->Draw({ 100,600 },{ 1,1,1,1 },1);
+		mouseRSprite_->Draw({ 1000,600 },{ 1,1,1,1 },1);
 		player_->SpriteDraw();
 	}
 //	timeSprite_->Draw({ 600,100 },{ 1,1,1,1 },1);
