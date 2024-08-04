@@ -77,5 +77,9 @@ private: // メンバ変数
 	std::unique_ptr<Sprite> rankASprite_ = nullptr;
 	std::unique_ptr<Sprite> rankSSprite_ = nullptr;
 	int score_;
+
+	//音
+	uint32_t SelectSoundNum = 0;
+	float soundVol = 0.05f;
 };
 

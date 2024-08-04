@@ -8,6 +8,7 @@
 #include "Collision.h"
 #include"PostEffect.h"
 #include"WinApp.h"
+#include <AudioManager.h>
 
 
 SelectScene::SelectScene(int score) {
@@ -56,6 +57,7 @@ void SelectScene::Initialize() {
 
 	collisionManager = CollisionManager::GetInstance();
 
+	SelectSoundNum = AudioManager::GetInstance()->LoadAudio("Resources/Sound/scenechange.mp3",soundVol,false);
 }
 
 void SelectScene::Update() {
@@ -63,6 +65,7 @@ void SelectScene::Update() {
 	int a = 0;
 	if ( input_->MouseInputTrigger(static_cast< int >( 0 )) )
 	{
+		AudioManager::GetInstance()->PlayWave(SelectSoundNum,false);
 		sceneManager_->ChangeScene("TITLE",0);
 	}
 }
