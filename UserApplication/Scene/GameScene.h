@@ -93,6 +93,10 @@ private: // メンバ変数
 
 	std::unique_ptr<EnemyManager> enemyManager;//エネミーマネージャー
 
+	//音
+	uint32_t BGMSoundNum = 0;
+	float soundVol = 0.01f;
+
 	bool isFinishGame = false;
 
 	uint32_t textureHandle_ = 0;//テクスチャハンドル
