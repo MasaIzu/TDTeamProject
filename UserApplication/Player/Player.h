@@ -125,6 +125,16 @@ public:
 		skillPower_ = skillPower;
 	}
 
+	bool GetIsLeftAttacking() {
+		return isLeftAttacking;
+	}
+	float GetCurrentWeekAttackCoolTime() {
+		return currentWeekAttackCoolTime_;
+	}
+	float GetCurrentSkillAttackCoolTime() {
+		return currentSkillAttackCoolTime_;
+	}
+
 	bool getFileNames(std::string folderPath,std::vector<std::string>& file_names);
 	void LoadPlayerStatusData();
 	void UpdatePlayerStatusData();
@@ -276,6 +286,8 @@ private:
 	std::unique_ptr<Sprite> skillAttackSp_ = nullptr;//スキル攻撃のスプライト
 	std::unique_ptr<Sprite> skillAttackCoolTimeSp_ = nullptr;//スキル攻撃のスプライトのクールタイム
 	Vector2 skillAttackCoolTimePos;//スキル攻撃のスプライトの座標
+
+
 
 
 #pragma region

@@ -27,6 +27,27 @@ void UI::Initialize()
 		downPLHp_ = false;
 		playerOldHP_ = 20;
 	}
+	{
+		weekAttackSp_ = std::make_unique<Sprite>();
+		weekAttackSp_ = Sprite::Create(TextureManager::Load("sprite/weekAttack.png"));
+		weekAttackSp_->SetSize({ 124.0f,96.0f });
+		weekAttackSp_->SetAnchorPoint({ 0.5f,1.0f });
+
+		weekAttackCoolTimeSp_ = std::make_unique<Sprite>();
+		weekAttackCoolTimeSp_ = Sprite::Create(TextureManager::Load("sprite/Green30.png"));
+		weekAttackCoolTimeSp_->SetAnchorPoint({ 0.5f,1.0f });
+
+
+		skillAttackSp_ = std::make_unique<Sprite>();
+		skillAttackSp_ = Sprite::Create(TextureManager::Load("sprite/sunder.jpg"));
+		skillAttackSp_->SetSize({ 124.0f,96.0f });
+		skillAttackSp_->SetAnchorPoint({ 0.5f,1.0f });
+
+		skillAttackCoolTimeSp_ = std::make_unique<Sprite>();
+		skillAttackCoolTimeSp_ = Sprite::Create(TextureManager::Load("sprite/Green30.png"));
+		skillAttackCoolTimeSp_->SetAnchorPoint({ 0.5f,1.0f });
+
+	}
 	timeSprite_ = Sprite::Create(TextureManager::Load("sprite/white1x1.png"));
 
 	easeTimer_ = 0;
@@ -42,6 +63,18 @@ void UI::Update(const bool& startBannerEnd)
 	{
 		PlayerHPUpdate();
 		TimeUpdate();
+
+		{
+			//弱攻撃のクールタイムを表示するスプライトの座標のサイズを更新する処理
+			weekAttackCoolTimePos.y = 96.0 * currentWeekAttackCoolTime_;
+			weekAttackCoolTimeSp_->SetSize({ 124.0f,weekAttackCoolTimePos.y });
+
+			//スキル攻撃のクールタイムを表示するスプライトの座標のサイズを更新する処理
+			skillAttackCoolTimePos.y = 96.0 * currentSkillAttackCoolTime_;
+			skillAttackCoolTimeSp_->SetSize({ 124.0f,skillAttackCoolTimePos.y });
+		}
+
+
 	}
 	else
 	{
@@ -72,6 +105,14 @@ void UI::Draw()
 	if ( drawStart_ )
 	{
 		playerHPBAR_->Draw(playerHPBARPos_,playerHPColor_);
+
+		weekAttackSp_->Draw({ 1150,700 },{ 1,1,1,1 },1);
+		weekAttackCoolTimeSp_->Draw({ 1150,700 },{ 1,1,1,0.5 },1);
+		if ( isLeftAttacking_ == true )
+		{
+			skillAttackCoolTimeSp_->Draw({ 250,700 },{ 1,1,1,0.5 },1);
+		}
+		skillAttackSp_->Draw({ 250,700 },{ 1,1,1,0.5 },1);
 	}
 	timeSprite_->Draw({ WinApp::GetInstance()->GetWindowSize().x / 2,100 },timeColor_);
 }
