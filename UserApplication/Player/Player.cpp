@@ -321,7 +321,8 @@ void Player::SpriteUpdate()
 void Player::FbxDraw(const ViewProjection& lightViewProjection_)
 {
 	//animation->FbxDraw(worldTransform_, *viewProjection_, lightViewProjection_);
-	animation2->FbxDraw(worldTransform_,*viewProjection_,lightViewProjection_);
+
+	animation2->FbxDraw(worldTransform_,*viewProjection_,lightViewProjection_,isHit_);
 }
 
 void Player::FbxShadowDraw(const ViewProjection& lightViewProjection_)

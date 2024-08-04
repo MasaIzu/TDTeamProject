@@ -19,6 +19,7 @@ void Animation::Initialize(const string& modelName)
 	fbxObj3d_->PlayAnimation(AnmNumNumber_);
 	fbxObj3d_->Update();
 
+	texNum = fbxObj3d_->GetTex();
 
 }
 
@@ -46,9 +47,17 @@ void Animation::Update()
 	fbxObj3d_->Update(AnmNumNumber_,nowAnmFCount_,maxFcount);
 }
 
-void Animation::FbxDraw(const WorldTransform& worldTransform,const ViewProjection& viewProjection_,const ViewProjection& lightViewProjection_)
+void Animation::FbxDraw(const WorldTransform& worldTransform,const ViewProjection& viewProjection_,const ViewProjection& lightViewProjection_,bool isHit)
 {
-	fbxObj3d_->Draw(worldTransform,viewProjection_,lightViewProjection_,0);
+	if ( isHit == true )
+	{
+		texNum = 1;
+	}
+	else
+	{
+		texNum = 0;
+	}
+	fbxObj3d_->Draw(worldTransform,viewProjection_,lightViewProjection_,texNum);
 }
 
 void Animation::FbxShadowDraw(const WorldTransform& worldTransform,const ViewProjection& lightViewProjection_)
