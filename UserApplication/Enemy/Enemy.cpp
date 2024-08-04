@@ -10,6 +10,7 @@ Enemy::Enemy()
 
 Enemy::~Enemy()
 {
+	CollisionManager::GetInstance()->RemoveCollider(enemyCollider);
 }
 
 void Enemy::Initialize(ViewProjection* viewProjection,Model* model,Vector3 enemyPos,int actionNmb, Player* player, const unsigned short Attribute,int power,int hp)
