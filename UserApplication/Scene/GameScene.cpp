@@ -42,13 +42,17 @@ void GameScene::Initialize() {
 
 	LightViewProjection = std::make_unique<ViewProjection>();
 	LightViewProjection->Initialize();
-	LightViewProjection->eye = { 0,100,0 };
+	LightViewProjection->eye = { 0,100,50 };
 	LightViewProjection->UpdateMatrix();
 
 	worldTransform_.Initialize();
 	worldTransform_.translation_ = { 0,0,0 };
 	worldTransform_.scale_ = { 1000.0f,1000.0f,1000.0f };
 	worldTransform_.TransferMatrix();
+
+	worldTransformJimen_.Initialize();
+	worldTransformJimen_.translation_ = { 0,0,0 };
+	worldTransformJimen_.TransferMatrix();
 
 	skydome.reset(Model::CreateFromOBJ("skydome",true));
 
@@ -111,6 +115,8 @@ void GameScene::Initialize() {
 	ui_->SetTimeRest(timeGauge);
 	ui_->SetTimeGauge(timeGauge);
 	ui_->SetPlayerStartHP(player_->GetHp());
+
+	Jimen.reset(Model::CreateFromOBJ("jimen",true));
 }
 
 void GameScene::Update() {
@@ -175,7 +181,6 @@ void GameScene::PostEffectDraw()
 
 	Model::PostDraw();
 
-	player_->FbxDraw(*LightViewProjection.get());
 
 	player_->ParticleDraw();
 	enemyManager->ParticleDraw();
@@ -186,6 +191,12 @@ void GameScene::PostEffectDraw()
 
 void GameScene::BackgroundDraw()
 {
+	ID3D12GraphicsCommandList* commandList = dxCommon_->GetCommandList();
+	Model::PreDraw(commandList);
+
+	//Jimen->Draw(worldTransformJimen_,*viewProjection_,*LightViewProjection.get());
+
+	Model::PostDraw();
 }
 
 void GameScene::CSUpdate()
@@ -223,6 +234,7 @@ void GameScene::Draw() {
 	//// 3Dオブジェクト描画前処理
 	Model::PreDraw(commandList);
 	skydome->Draw(worldTransform_,*viewProjection_,*LightViewProjection.get());
+	Jimen->Draw(worldTransformJimen_,*viewProjection_,*LightViewProjection.get());
 	enemyManager->Draw(*LightViewProjection.get());
 	player_->Draw(*LightViewProjection.get());
 
@@ -234,6 +246,7 @@ void GameScene::Draw() {
 	//3Dオブジェクト描画後処理
 	Model::PostDraw();
 
+	player_->FbxDraw(*LightViewProjection.get());
 
 
 #pragma endregion

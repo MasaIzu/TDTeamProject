@@ -85,6 +85,7 @@ private: // メンバ変数
 	std::unique_ptr<ViewProjection> LightViewProjection;//ライトビュープロジェクション
 	std::unique_ptr<Model> model_;// 3Dモデル
 	WorldTransform worldTransform_;//ワールド変換データ
+	WorldTransform worldTransformJimen_;//ワールド変換データ
 	CollisionManager* collisionManager = nullptr;//当たり判定
 	SceneManager* sceneManager_ = nullptr;//シーンマネージャー
 	std::unique_ptr<LoadLevelEditor> levelData;
@@ -111,7 +112,7 @@ private: // メンバ変数
 	float gamecameraDistans_;
 
 	std::unique_ptr<Model> skydome;
-
+	std::unique_ptr<Model> Jimen;
 	std::unique_ptr<Sprite> mouseSprite_ = nullptr;
 	std::unique_ptr<Banner> startBanner;
 
