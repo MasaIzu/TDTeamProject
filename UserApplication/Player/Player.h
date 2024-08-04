@@ -294,7 +294,7 @@ private:
 	//オーディオ
 	uint32_t NormalSoundNum = 0;
 	uint32_t SkillSoundNum = 0;
-	float soundVol = 0.2f;
+	float soundVol = 0.08f;
 
 #pragma endregion
 

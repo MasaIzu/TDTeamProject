@@ -136,7 +136,7 @@ private:
 	//オーディオ
 	uint32_t HitSoundNum = 0;
 	uint32_t SponeSoundNum = 0;
-	float soundVol = 0.2f;
+	float soundVol = 0.08f;
 
 #pragma endregion
 

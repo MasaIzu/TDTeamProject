@@ -58,6 +58,8 @@ void SelectScene::Initialize() {
 	collisionManager = CollisionManager::GetInstance();
 
 	SelectSoundNum = AudioManager::GetInstance()->LoadAudio("Resources/Sound/scenechange.mp3",soundVol,false);
+	BGMSoundNum = AudioManager::GetInstance()->LoadAudio("Resources/Sound/title01.mp3",soundVol,false);
+	AudioManager::GetInstance()->PlayWave(BGMSoundNum,true);
 }
 
 void SelectScene::Update() {
@@ -66,6 +68,7 @@ void SelectScene::Update() {
 	if ( input_->MouseInputTrigger(static_cast< int >( 0 )) )
 	{
 		AudioManager::GetInstance()->PlayWave(SelectSoundNum,false);
+		AudioManager::GetInstance()->StopWave(BGMSoundNum);
 		sceneManager_->ChangeScene("TITLE",0);
 	}
 }

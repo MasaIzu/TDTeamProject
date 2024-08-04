@@ -57,7 +57,7 @@ void GameScene::Initialize() {
 
 	skydome.reset(Model::CreateFromOBJ("skydome",true));
 
-	BGMSoundNum = AudioManager::GetInstance()->LoadAudio("Resources/Sound/BGM.mp3",soundVol,false);
+	BGMSoundNum = AudioManager::GetInstance()->LoadAudio("Resources/Sound/game01.mp3",soundVol,false);
 
 	collisionManager = CollisionManager::GetInstance();
 	player_ = std::make_unique<Player>();

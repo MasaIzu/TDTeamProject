@@ -57,6 +57,8 @@ void TitleScene::Initialize() {
 
 
 	SelectSoundNum = AudioManager::GetInstance()->LoadAudio("Resources/Sound/scenechange.mp3",soundVol,false);
+	BGMSoundNum = AudioManager::GetInstance()->LoadAudio("Resources/Sound/result03.mp3",soundVol,false);
+	AudioManager::GetInstance()->PlayWave(BGMSoundNum,true);
 }
 
 void TitleScene::Update() {
@@ -66,6 +68,7 @@ void TitleScene::Update() {
 	{
 		isLoad_ = true;
 		AudioManager::GetInstance()->PlayWave(SelectSoundNum,false);
+		AudioManager::GetInstance()->StopWave(BGMSoundNum);
 		sceneManager_->ChangeScene("GAMEPLAY",0);
 	}
 }

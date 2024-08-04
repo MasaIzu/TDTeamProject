@@ -81,6 +81,7 @@ private: // メンバ変数
 
 	//音
 	uint32_t SelectSoundNum = 0;
+	uint32_t BGMSoundNum = 0;
 	float soundVol = 0.05f;
 };
 
