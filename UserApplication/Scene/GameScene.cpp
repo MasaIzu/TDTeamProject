@@ -136,7 +136,7 @@ void GameScene::Update() {
 		Phase(timeGauge);
 		if ( timeGauge <= 0 )
 		{
-
+			AudioManager::GetInstance()->StopWave(BGMSoundNum);
 			sceneManager_->ChangeScene("SELECT",score_);
 			timeGauge = 0;
 		}
