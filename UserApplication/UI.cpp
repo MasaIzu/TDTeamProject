@@ -61,6 +61,7 @@ void UI::Update(const bool& startBannerEnd)
 {
 	if ( startBannerEnd == true )
 	{
+		drawStart_ = true;
 		PlayerHPUpdate();
 		TimeUpdate();
 

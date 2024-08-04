@@ -31,13 +31,13 @@ public:
 	void SetNowPhase(const int32_t& nowPhase) {
 		nowPhase_ = nowPhase;
 	}
-	void SetWeekAttackCoolTime(const int32_t& currentWeekAttackCoolTime) {
+	void SetWeekAttackCoolTime(const float& currentWeekAttackCoolTime) {
 		currentWeekAttackCoolTime_ = currentWeekAttackCoolTime;
 	}
-	void SetSkillAttackCoolTime(const int32_t& currentSkillAttackCoolTime) {
+	void SetSkillAttackCoolTime(const float& currentSkillAttackCoolTime) {
 		currentSkillAttackCoolTime_ = currentSkillAttackCoolTime;
 	}
-	void SetIsLeftAttacking(bool isLeftAttacking) {
+	void SetIsLeftAttacking(const bool& isLeftAttacking) {
 		isLeftAttacking_ = isLeftAttacking;
 	}
 
@@ -83,8 +83,8 @@ private:
 	std::unique_ptr<Sprite> skillAttackSp_ = nullptr;//スキル攻撃のスプライト
 	std::unique_ptr<Sprite> skillAttackCoolTimeSp_ = nullptr;//スキル攻撃のスプライトのクールタイム
 	Vector2 skillAttackCoolTimePos;//スキル攻撃のスプライトの座標
-	int32_t currentWeekAttackCoolTime_;
-	int32_t currentSkillAttackCoolTime_;
+	float currentWeekAttackCoolTime_;
+	float currentSkillAttackCoolTime_;
 	bool isLeftAttacking_;
 };
 

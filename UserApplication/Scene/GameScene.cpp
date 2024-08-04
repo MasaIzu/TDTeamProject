@@ -117,6 +117,9 @@ void GameScene::Update() {
 	ui_->SetPlayerHP(player_->GetHp());
 	ui_->SetTimeGauge(timeGauge);
 	ui_->SetNowPhase(nowPhase);
+	ui_->SetSkillAttackCoolTime(player_->GetCurrentSkillAttackCoolTime());
+	ui_->SetWeekAttackCoolTime(player_->GetCurrentWeekAttackCoolTime());
+	ui_->SetIsLeftAttacking(player_->GetIsLeftAttacking());
 
 	if ( startBanner->GetAnimEnd() == true )
 	{

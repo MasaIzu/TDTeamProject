@@ -331,14 +331,14 @@ void Player::FbxShadowDraw(const ViewProjection& lightViewProjection_)
 
 void Player::SpriteDraw()
 {
-	weekAttackSp_->Draw({1150,700},{ 1,1,1,1 },1);
-	weekAttackCoolTimeSp_->Draw({ 1150,700 /*+ (weekAttackCoolTimePos.y/2) */},{ 1,1,1,0.5 },1);
+	//weekAttackSp_->Draw({1150,700},{ 1,1,1,1 },1);
+	//weekAttackCoolTimeSp_->Draw({ 1150,700 /*+ (weekAttackCoolTimePos.y/2) */},{ 1,1,1,0.5 },1);
 
-	if ( isLeftAttacking == true )
-	{
-		skillAttackCoolTimeSp_->Draw({ 250,700 },{ 1,1,1,0.5 },1);
-	}
-	skillAttackSp_->Draw({ 250,700 },{ 1,1,1,0.5 },1);
+	//if ( isLeftAttacking == true )
+	//{
+	//	skillAttackCoolTimeSp_->Draw({ 250,700 },{ 1,1,1,0.5 },1);
+	//}
+	//skillAttackSp_->Draw({ 250,700 },{ 1,1,1,0.5 },1);
 }
 
 void Player::CheckHitCollision()
