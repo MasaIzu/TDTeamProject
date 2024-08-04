@@ -1,5 +1,5 @@
 {
-    "Resources/ParticleData/HitEffect.json": {
+    "Resources/ParticleData/EnemyNormalHit.json": {
         "StartPos": {
             "value0": 0.0,
             "value1": 0.0,
@@ -13,9 +13,9 @@
             "value3": 0.0
         },
         "StartColor": {
-            "value0": 1.0,
-            "value1": 0.0,
-            "value2": 0.2647061347961426,
+            "value0": 0.9656862616539002,
+            "value1": 0.07100635021924973,
+            "value2": 0.07100635021924973,
             "value3": 1.0
         },
         "EndColor": {
@@ -38,22 +38,22 @@
         "RandomScale": true,
         "Speed": 0.8809999823570252,
         "LerpStrength": 0.05000000074505806,
-        "Scale": 1.3910000324249268,
+        "Scale": 5.208000183105469,
         "ScaleTinker": 0.0,
         "MaxLife": 60.0,
-        "MaxParticleCount": 20000,
+        "MaxParticleCount": 100,
         "AdditiveSynthesis": true,
         "RandomLifeMinMax": {
-            "value0": 14.104000091552735,
-            "value1": 33.5620002746582
+            "value0": 9.567999839782715,
+            "value1": 60.72600173950195
         },
         "RandomSpeedMinMax": {
             "value0": 1.0,
             "value1": 10.0
         },
         "RandomScaleMinMax": {
-            "value0": 1.0,
-            "value1": 6.178999900817871
+            "value0": 2.799999952316284,
+            "value1": 7.514999866485596
         },
         "SpeedDivideSize": 54.79499816894531,
         "ScaleDivideSize": 1.0,

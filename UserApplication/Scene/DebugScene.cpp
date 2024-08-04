@@ -20,18 +20,6 @@ DebugScene::~DebugScene() {
 	LightData::GetInstance()->ClearLight();
 }
 
-// 指定ディレクトリのファイルリストを取得
-std::vector<std::string> getFileList(const std::filesystem::path& directory) {
-	std::vector<std::string> fileList;
-	for ( const auto& entry : std::filesystem::directory_iterator(directory) )
-	{
-		if ( entry.is_regular_file() )
-		{
-			fileList.push_back(entry.path().filename().string());
-		}
-	}
-	return fileList;
-}
 
 void DebugScene::Initialize() {
 
@@ -57,8 +45,8 @@ void DebugScene::Initialize() {
 	uint32_t MaxParticleCountB = 1000000;
 	particleEditor = std::make_unique<ParticleEditor>();
 	particleEditor->SetAddShield(AddShield_.get());
-	particleEditor->Initialize(MaxParticleCountB, true);
-	particleEditor->SetAnimationTextureHandle(TextureManager::Load("sprite/effect4.png"),10);
+	particleEditor->Initialize(MaxParticleCountB, true,"HitEffect");
+	particleEditor->SetTextureHandle(TextureManager::Load("sprite/effect4.png"));
 
 }
 
@@ -78,7 +66,6 @@ void DebugScene::PostEffectDraw()
 {
 	ID3D12GraphicsCommandList* commandList = dxCommon_->GetCommandList();
 
-	PostEffect::PreDrawScene(commandList);
 	PostEffect::SetShadeNumber(shadeNumber);
 	PostEffect::SetKernelSize(range);
 	PostEffect::SetRadialBlur(center, intensity, samples);
@@ -99,7 +86,6 @@ void DebugScene::PostEffectDraw()
 
 	particleEditor->Draw(*viewProjection_);
 
-	PostEffect::PostDrawScene();
 }
 
 void DebugScene::BackgroundDraw()

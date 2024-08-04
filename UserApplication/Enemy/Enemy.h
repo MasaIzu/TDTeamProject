@@ -50,6 +50,8 @@ public:
 
 	void Damage();
 
+	void SkillDamage();
+
 	//経験値のセッター
 	void SetExp(int experience) {
 		experience_ = experience;
@@ -86,6 +88,7 @@ private:
 	Player* player_;
 
 	std::unique_ptr<ParticleEditor> deadParticleEditor_;
+	std::unique_ptr<ParticleEditor> NormalHitParticleEditor_;
 
 	std::list<std::unique_ptr<EnemyBullet>> EnemyBullets_;
 	std::unique_ptr<EnemyNormalBulletAttack> enemyNormalBullet;
@@ -98,11 +101,19 @@ private:
 	bool isDead_ = false;
 
 	float enemySpeed = 0.3f;
-	int livingTimer_ = 300;//生存時間
+	int livingTimer_ = 480;//生存時間
 
 	int hp_;//体力
 	int power_;//攻撃力
 	int damage_;//被ダメージ量
+
+	int skillDamage_;//スキル攻撃による被ダメージ量
+
+	bool isHitStop = false;
+	float hitStopTimer_ = 0;
+	const float MAX_HITSTOP = 45;
+
+	float hitDalay = false;
 #pragma region
 
 	bool isHit_ = false;
@@ -120,6 +131,15 @@ private:
 
 #pragma endregion
 	float Angle;
+
+#pragma region
+	//オーディオ
+	uint32_t HitSoundNum = 0;
+	uint32_t SponeSoundNum = 0;
+	float soundVol = 0.2f;
+
+#pragma endregion
+
 };
 
 

@@ -117,9 +117,12 @@ void GameScene::Update() {
 	ui_->SetPlayerHP(player_->GetHp());
 	ui_->SetTimeGauge(timeGauge);
 	ui_->SetNowPhase(nowPhase);
+
 	if ( startBanner->GetAnimEnd() == true )
 	{
 		timeGauge--;
+
+		enemyManager->SetPhase(nowPhase);
 
 		score_ = player_->GetScore();
 		Phase(timeGauge);

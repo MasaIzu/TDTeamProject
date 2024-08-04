@@ -54,6 +54,9 @@ public:
 	void CSUpdate(ID3D12GraphicsCommandList* cmdList);
 	void ParticleDraw();
 
+
+	void SpriteUpdate();
+
 	//描画
 	void FbxDraw(const ViewProjection& lightViewProjection_);
 	//描画
@@ -115,6 +118,12 @@ public:
 	void SetHp(int hp) {
 		hp_= hp;
 	}
+	int GetSkillPower() {
+		return skillPower_;
+	}
+	void SetSkillPower(int skillPower) {
+		skillPower_ = skillPower;
+	}
 
 	bool getFileNames(std::string folderPath,std::vector<std::string>& file_names);
 	void LoadPlayerStatusData();
@@ -141,6 +150,7 @@ private:
 	int score_ = 0;
 	const int addscore_ = 1;
 	int power_;
+	int skillPower_;
 
 	uint32_t RightBoneNum = 34;
 	uint32_t BladeAttackEndPos = 39;
@@ -151,6 +161,13 @@ private:
 	float weekAttackCoolTime_ = 0;
 	//現在のクールタイム
 	float currentWeekAttackCoolTime_ = 0;
+
+
+	//スキル攻撃のクールタイム
+	float skillAttackCoolTime_ = 600;
+	const float MAX_SKILLCOOLTIME = 300;
+	//現在のクールタイム
+	float currentSkillAttackCoolTime_ = 0;
 
 #pragma region
 	PlayerStateNeedMaterial playerStateNeedMaterial;
@@ -255,6 +272,19 @@ private:
 	std::unique_ptr<Sprite> weekAttackSp_ = nullptr;
 	std::unique_ptr<Sprite> weekAttackCoolTimeSp_ = nullptr;
 	Vector2 weekAttackCoolTimePos;
+
+	std::unique_ptr<Sprite> skillAttackSp_ = nullptr;//スキル攻撃のスプライト
+	std::unique_ptr<Sprite> skillAttackCoolTimeSp_ = nullptr;//スキル攻撃のスプライトのクールタイム
+	Vector2 skillAttackCoolTimePos;//スキル攻撃のスプライトの座標
+
+
+#pragma region
+	//オーディオ
+	uint32_t NormalSoundNum = 0;
+	uint32_t SkillSoundNum = 0;
+	float soundVol = 0.2f;
+
+#pragma endregion
 
 
 };

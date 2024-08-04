@@ -3,6 +3,7 @@
 #include "SphereCollider.h"
 #include "CollisionAttribute.h"
 #include "ImGuiManager.h"
+#include <AudioManager.h>
 Enemy::Enemy()
 {
 }
@@ -33,8 +34,14 @@ void Enemy::Initialize(ViewProjection* viewProjection,Model* model,Vector3 enemy
 
 	int MaxParticleCountB = 1000;
 	deadParticleEditor_ = std::make_unique<ParticleEditor>();
-	deadParticleEditor_->Initialize(MaxParticleCountB,true,"HitEffect");
-	deadParticleEditor_->SetTextureHandle(TextureManager::Load("sprite/effect1.png"));
+	deadParticleEditor_->Initialize(MaxParticleCountB,true,"HitE2");
+	deadParticleEditor_->SetTextureHandle(TextureManager::Load("sprite/effect4.png"));
+
+
+	NormalHitParticleEditor_ = std::make_unique<ParticleEditor>();
+	NormalHitParticleEditor_->Initialize("EnemyNormalHit");
+	NormalHitParticleEditor_->SetTextureHandle(TextureManager::Load("sprite/effect4.png"));
+
 
 	// コリジョンマネージャに追加
 	float sphereF = 0;
@@ -48,20 +55,31 @@ void Enemy::Initialize(ViewProjection* viewProjection,Model* model,Vector3 enemy
 	power_ = power;
 	hp_ = hp;
 
+
+	HitSoundNum = AudioManager::GetInstance()->LoadAudio("Resources/Sound/attackHit.mp3",soundVol,false);
+	SponeSoundNum = AudioManager::GetInstance()->LoadAudio("Resources/Sound/enemySpawn.mp3",soundVol,false);
+
+	AudioManager::GetInstance()->PlayWave(SponeSoundNum);
 }
 
 void Enemy::Update()
 {
 
-	//ParticleStartPos = MyMath::Vec3ToVec4(MyMath::GetWorldTransform(worldTransform_.matWorld_));
-	//ParticleEndPos = MyMath::Vec3ToVec4(MyMath::GetWorldTransform((worldTransform_.matWorld_*worldTransform_.matWorld_)));
+
+	ParticleStartPos = MyMath::Vec3ToVec4(MyMath::GetWorldTransform(worldTransform_.matWorld_));
+	//ParticleEndPos = MyMath::Vec3ToVec4(MyMath::GetWorldTransform((worldTransform_.matWorld_)));
+
 
 	//BladeColRatio = MyMath::Vec4ToVec3(ParticleEndPos) - MyMath::Vec4ToVec3(ParticleStartPos);
 	//ParticleMilEndPos = ParticleStartPos + MyMath::Vec3ToVec4(BladeColRatio.norm() * MaxBladeColDetection);
 	//BladeColRatio = ( BladeColRatio.norm() * MaxBladeColDetection ) / AttackColSphereCount;
 
 
-	Move();
+	if ( isHitStop == false )
+	{
+		Move();
+	}
+
 	//enemyNormalBullet->Update(this);
 	worldTransform_.TransferMatrix();
 	enemyCollider->Update(worldTransform_.matWorld_);
@@ -72,21 +90,32 @@ void Enemy::Update()
 	{
 		//livingTimer_ = 0;
 		Damage();
-		player_->addScore();
+		isHitStop = true;
 		enemyCollider->ResetMeleeHit();
-		CollisionManager::GetInstance()->RemoveCollider(enemyCollider);
 
+		AudioManager::GetInstance()->PlayWave(HitSoundNum);
 	}
 
 	//プレイヤーのスキル攻撃と当たったときの処理
 	if ( enemyCollider->GetIsPlayerSkillAttackHit() )
 	{
 		//livingTimer_ = 0;
-		Damage();
-		player_->addScore();
+		SkillDamage();
+		isHitStop = true;
 		enemyCollider ->PlayerSkillAttackHitReset();
-		CollisionManager::GetInstance()->RemoveCollider(enemyCollider);
 
+		AudioManager::GetInstance()->PlayWave(HitSoundNum);
+	}
+
+	//被弾時にヒットストップを入れる
+	if ( isHitStop == true )
+	{
+		hitStopTimer_++;
+	}
+	if ( hitStopTimer_ > MAX_HITSTOP )//ある程度経ったらヒットストップを解除する
+	{
+		hitStopTimer_ = 0;
+		isHitStop = false;
 	}
 
 	if ( enemyCollider->GetHit() )
@@ -98,26 +127,29 @@ void Enemy::Update()
 	if ( livingTimer_ <= 0 )
 	{
 		isDead_ = true;
-		livingTimer_ = 300;
+		livingTimer_ = 480;
+		CollisionManager::GetInstance()->RemoveCollider(enemyCollider);
 	}
-	//if ( isDead_ == true )
-	//{
 
-	//}
-
-
-
+	if ( hp_ <= 0 )
+	{
+		hp_ = 0;
+		isDead_ = true;
+		player_->addScore();
+	}
 
 }
 
 void Enemy::CSUpdate(ID3D12GraphicsCommandList* cmdList)
 {
-	deadParticleEditor_->CSUpdate(cmdList,ParticleStartPos,ParticleEndPos,static_cast< uint32_t >( isDead_ ));
+	deadParticleEditor_->CSUpdate(cmdList,ParticleStartPos,isDead_);
+	NormalHitParticleEditor_->CSUpdate(cmdList,ParticleStartPos,isHitStop);
 }
 
 void Enemy::ParticleDraw()
 {
 	deadParticleEditor_->Draw(*viewProjection_);
+	NormalHitParticleEditor_->Draw(*viewProjection_);
 }
 
 void Enemy::Draw(const ViewProjection& LightViewProjection_)
@@ -141,14 +173,16 @@ void Enemy::Move()
 
 void Enemy::Damage()
 {
+
 	damage_ = player_->GetPower();
 	hp_ -= damage_;
 
-	if ( hp_ <= 0 )
-	{
-		hp_ = 0;
-		livingTimer_ = 0;
-	}
+}
+
+void Enemy::SkillDamage()
+{
+	skillDamage_ = player_->GetSkillPower();
+	hp_ -= skillDamage_;
 
 }
 

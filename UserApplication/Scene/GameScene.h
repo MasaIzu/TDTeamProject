@@ -71,6 +71,10 @@ public: // メンバ関数
 private:
 	void Phase(int32_t gametime);
 
+	int32_t GetPhase() {
+		return nowPhase;
+	}
+
 private: // メンバ変数
 	WinApp* winApp_ = nullptr;
 	DirectXCore* dxCommon_ = nullptr;
