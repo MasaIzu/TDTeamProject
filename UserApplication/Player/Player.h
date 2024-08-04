@@ -97,6 +97,9 @@ public:
 	int GetExperienceToNextLevel() const { return experienceToNextLevel; }
 	void GetEnemyPos(const Vector3& enemyPos);
 
+	
+	///setterとgetter
+	//スコア
 	int GetScore() {
 		return score_;
 	}
@@ -106,18 +109,21 @@ public:
 	void addScore() {
 		score_ += addscore_;
 	}
+	//攻撃力
 	int GetPower() {
 		return power_;
 	}
 	void SetPower(int power) {
 		power_ = power;
 	}
+	//体力
 	int GetHp() {
 		return hp_;
 	}
 	void SetHp(int hp) {
 		hp_= hp;
 	}
+	//スキルの攻撃力
 	int GetSkillPower() {
 		return skillPower_;
 	}
@@ -125,17 +131,38 @@ public:
 		skillPower_ = skillPower;
 	}
 
+	//被弾時フラグ
+	void SetIsHit(bool isHit) {
+		isHit_ = isHit;
+	}
+	bool GetIsHit() {
+		return isHit_;
+	}
+	//被弾時のクールタイム
+	float GetHitCoolTime() {
+		return hitCooltime_;
+	}
+
+	//左クリックでの攻撃
 	bool GetIsLeftAttacking() {
 		return isLeftAttacking;
 	}
+	//現在の弱攻撃のクールタイム
 	float GetCurrentWeekAttackCoolTime() {
 		return currentWeekAttackCoolTime_;
 	}
+	//現在のスキル攻撃のクールタイム
 	float GetCurrentSkillAttackCoolTime() {
 		return currentSkillAttackCoolTime_;
 	}
 
+	//プレイヤーのコライダー
+	BaseCollider* GetPlayerCollider() {
+		return playerCollider;
+	}
+	//CSVファイル
 	bool getFileNames(std::string folderPath,std::vector<std::string>& file_names);
+
 	void LoadPlayerStatusData();
 	void UpdatePlayerStatusData();
 private:

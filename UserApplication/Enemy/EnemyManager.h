@@ -105,6 +105,7 @@ private:
 
 	int enemySpornCount = 2;
 
+	int enemyModelColorNmb = 0;
 #pragma region
 	unsigned short Attribute_;
 
