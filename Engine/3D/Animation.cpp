@@ -19,6 +19,7 @@ void Animation::Initialize(const string& modelName)
 	fbxObj3d_->PlayAnimation(AnmNumNumber_);
 	fbxObj3d_->Update();
 
+
 }
 
 void Animation::Update()

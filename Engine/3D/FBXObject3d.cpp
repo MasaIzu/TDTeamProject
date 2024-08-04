@@ -738,4 +738,9 @@ void FBXObject3d::AnimFlameInter(const FbxTime& nowCount,const FbxTime& maxCount
 
 }
 
+uint32_t& FBXObject3d::GetTex()
+{
+	return fbxmodel->GetTex();
+}
+
 

@@ -103,6 +103,8 @@ public:
 	//getter
 	std::vector<Bone>& GetBones() { return bones; }
 
+	uint32_t& GetTex();
+
 private:
 	// モデル名
 	std::string name;

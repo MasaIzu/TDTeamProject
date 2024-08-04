@@ -175,3 +175,8 @@ const Matrix4& FBXModel::GetModelTransform()
 {
     return meshNode->globalTransform;
 }
+
+uint32_t& FBXModel::GetTex()
+{
+	return texNum;
+}

@@ -210,6 +210,9 @@ public: // メンバ関数
 
 	WorldTransform wtf;
 
+	uint32_t& GetTex();
+
+
 protected: // メンバ変数
 	// 定数バッファ
 	ComPtr<ID3D12Resource> constBuffTransform;
