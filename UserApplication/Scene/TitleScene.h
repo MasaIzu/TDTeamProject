@@ -74,7 +74,7 @@ private: // メンバ変数
 	uint32_t titleTexture_;
 	std::unique_ptr<Sprite> titleSprite_ = nullptr;
 	std::unique_ptr<Sprite> loadSprite_ = nullptr;
-	std::unique_ptr<Sprite> mouseMprite_ = nullptr;
+	std::unique_ptr<Sprite> mouseSprite_ = nullptr;
 
 	int score_;
 
