@@ -31,9 +31,19 @@ public:
 	void SetNowPhase(const int32_t& nowPhase) {
 		nowPhase_ = nowPhase;
 	}
-	float lerpFloat(const float start,const float end,const float t);
+	void SetWeekAttackCoolTime(const float& currentWeekAttackCoolTime) {
+		currentWeekAttackCoolTime_ = currentWeekAttackCoolTime;
+	}
+	void SetSkillAttackCoolTime(const float& currentSkillAttackCoolTime) {
+		currentSkillAttackCoolTime_ = currentSkillAttackCoolTime;
+	}
+	void SetIsLeftAttacking(const bool& isLeftAttacking) {
+		isLeftAttacking_ = isLeftAttacking;
+	}
+
 
 private:
+	float lerpFloat(const float start,const float end,const float t);
 	void PlayerHPUpdate();	// player関連
 	void TimeUpdate();
 public:
@@ -60,9 +70,21 @@ private:
 	int32_t easeTimer_ = 0;
 	int32_t easeMaxTime_ = 50;
 
-	bool downPLHp_ ;
+	bool downPLHp_;
 	bool isAnimEnd_;
 	bool easeHalfOver_;
 	bool drawStart_;
+
+	// player
+	std::unique_ptr<Sprite> weekAttackSp_ = nullptr;
+	std::unique_ptr<Sprite> weekAttackCoolTimeSp_ = nullptr;
+	Vector2 weekAttackCoolTimePos;
+
+	std::unique_ptr<Sprite> skillAttackSp_ = nullptr;//スキル攻撃のスプライト
+	std::unique_ptr<Sprite> skillAttackCoolTimeSp_ = nullptr;//スキル攻撃のスプライトのクールタイム
+	Vector2 skillAttackCoolTimePos;//スキル攻撃のスプライトの座標
+	float currentWeekAttackCoolTime_;
+	float currentSkillAttackCoolTime_;
+	bool isLeftAttacking_;
 };
 
