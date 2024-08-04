@@ -138,6 +138,22 @@ void FBXModel::Draw(ID3D12GraphicsCommandList* cmdList,const uint32_t& shadowMap
     cmdList->DrawIndexedInstanced((UINT)indices.size(), 1, 0, 0, 0);
 }
 
+void FBXModel::Draw(ID3D12GraphicsCommandList* cmdList,const uint32_t& shadowMapTextureIndex,const uint32_t& TexNum)
+{
+	// 頂点バッファをセット(VBV)
+	cmdList->IASetVertexBuffers(0,1,&vbView);
+	// インデックスバッファをセット(IBV)
+	cmdList->IASetIndexBuffer(&ibView);
+
+	// SRVをセット
+	TextureManager::GetInstance()->SetGraphicsRootDescriptorTable(cmdList,3,TexNum);
+
+	ShadowMap::SetGraphicsRootDescriptorTable(cmdList,shadowMapTextureIndex);
+
+	// 描画コマンド
+	cmdList->DrawIndexedInstanced(( UINT ) indices.size(),1,0,0,0);
+}
+
 void FBXModel::ShadowDraw(ID3D12GraphicsCommandList* cmdList)
 {
 	// 頂点バッファをセット(VBV)

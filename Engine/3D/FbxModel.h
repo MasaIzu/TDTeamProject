@@ -90,6 +90,7 @@ public:
 	void CreateBuffers(ID3D12Device* device);
 	// 描画
 	void Draw(ID3D12GraphicsCommandList* cmdList,const uint32_t& shadowMapTextureIndex);
+	void Draw(ID3D12GraphicsCommandList* cmdList,const uint32_t& shadowMapTextureIndex,const uint32_t& TexNum);
 	void ShadowDraw(ID3D12GraphicsCommandList* cmdList);
 
 	// モデルの変形行列取得

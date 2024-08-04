@@ -47,7 +47,7 @@ void Animation::Update()
 
 void Animation::FbxDraw(const WorldTransform& worldTransform,const ViewProjection& viewProjection_,const ViewProjection& lightViewProjection_)
 {
-	fbxObj3d_->Draw(worldTransform,viewProjection_,lightViewProjection_);
+	fbxObj3d_->Draw(worldTransform,viewProjection_,lightViewProjection_,0);
 }
 
 void Animation::FbxShadowDraw(const WorldTransform& worldTransform,const ViewProjection& lightViewProjection_)

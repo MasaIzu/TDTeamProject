@@ -93,7 +93,7 @@ public: // メンバ関数
 	/// 描画
 	/// </summary>
 	void Draw(const WorldTransform& worldTransform,const ViewProjection& viewProjection,const ViewProjection& lightViewProjection);
-
+	void Draw(const WorldTransform& worldTransform,const ViewProjection& viewProjection,const ViewProjection& lightViewProjection,const uint32_t& TexNum);
 
 	void ShadowDraw(const WorldTransform& worldTransform,const ViewProjection& viewProjection);
 

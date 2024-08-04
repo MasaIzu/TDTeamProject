@@ -530,6 +530,37 @@ void FBXObject3d::Draw(const WorldTransform& worldTransform,const ViewProjection
 	fbxmodel->Draw(DirectXCore::GetInstance()->GetCommandList(),6);
 }
 
+void FBXObject3d::Draw(const WorldTransform& worldTransform,const ViewProjection& viewProjection,const ViewProjection& lightViewProjection,const uint32_t& TexNum)
+{
+	// モデルの割り当てがなければ描画しない
+	if ( fbxmodel == nullptr )
+	{
+		return;
+	}
+
+	// パイプラインステートの設定
+	DirectXCore::GetInstance()->GetCommandList()->SetPipelineState(pipelinestate.Get());
+	// ルートシグネチャの設定
+	DirectXCore::GetInstance()->GetCommandList()->SetGraphicsRootSignature(rootsignature.Get());
+	// プリミティブ形状を設定
+	DirectXCore::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	// CBVをセット（ワールド行列）
+	DirectXCore::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(0,worldTransform.constBuff_->GetGPUVirtualAddress());
+
+	// CBVをセット（ビュープロジェクション行列）
+	DirectXCore::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(1,viewProjection.constBuff_->GetGPUVirtualAddress());
+
+	// CBVをセット（シャドマプ用ビュープロジェクション行列）
+	DirectXCore::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2,lightViewProjection.constBuff_->GetGPUVirtualAddress());
+
+	// ライトの描画
+	LightData::GetInstance()->GetLightGroupData()->Draw(DirectXCore::GetInstance()->GetCommandList(),4);
+	// 定数バッファビューをセット
+	DirectXCore::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(5,constBuffSkin->GetGPUVirtualAddress());
+	// モデル描画
+	fbxmodel->Draw(DirectXCore::GetInstance()->GetCommandList(),6,TexNum);
+}
+
 void FBXObject3d::ShadowDraw(const WorldTransform& worldTransform,const ViewProjection& viewProjection) {
 	// モデルの割り当てがなければ描画しない
 	if ( fbxmodel == nullptr )
