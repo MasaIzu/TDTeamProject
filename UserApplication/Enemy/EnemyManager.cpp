@@ -16,6 +16,12 @@ void EnemyManager::Initialize(ViewProjection* viewProjection,Player* player, con
 	player_ = player; 
 	Attribute_ = Attribute;
 
+
+	TextureManager::GetInstance()->Load("sprite/Sakaban.png");
+	TextureManager::GetInstance()->Load("sprite/Sakaban1.png");
+	TextureManager::GetInstance()->Load("sprite/Sakaban2.png");
+	TextureManager::GetInstance()->Load("sprite/Sakaban3.png");
+
 	model.reset(Model::CreateFromOBJ("Sakaban",true));
 }
 
