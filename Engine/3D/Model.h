@@ -111,8 +111,7 @@ public: // メンバ関数
 
 
 	void Draw(
-		const WorldTransform& worldTransform,const ViewProjection& viewProjection,
-		const uint32_t& textureHadle);
+		const WorldTransform& worldTransform,const ViewProjection& viewProjection,const ViewProjection& lightViewProjection,const uint32_t& textureHadle);
 
 	// メッシュコンテナを取得
 	inline const std::vector<Mesh*>& GetMeshes() { return meshes_; }

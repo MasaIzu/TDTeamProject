@@ -835,23 +835,23 @@ std::string Model::GetName()
 
 
 void Model::Draw(
-	const WorldTransform& worldTransform,const ViewProjection& viewProjection,
-	const uint32_t& textureHadle) {
+	const WorldTransform& worldTransform,const ViewProjection& viewProjection,const ViewProjection& lightViewProjection,const uint32_t& textureHadle) {
 
 	// ライトの描画
-	LightData::GetInstance()->GetLightGroupData()->Draw(sCommandList_,4);
+	LightData::GetInstance()->GetLightGroupData()->Draw(sCommandList_,6);
 
 	// CBVをセット（ワールド行列）
 	sCommandList_->SetGraphicsRootConstantBufferView(0,worldTransform.constBuff_->GetGPUVirtualAddress());
 
 	// CBVをセット（ビュープロジェクション行列）
 	sCommandList_->SetGraphicsRootConstantBufferView(1,viewProjection.constBuff_->GetGPUVirtualAddress());
+	// CBVをセット（ビュープロジェクション行列）
+	sCommandList_->SetGraphicsRootConstantBufferView(2,lightViewProjection.constBuff_->GetGPUVirtualAddress());
 
-	// 全メッシュを描画
-	for ( auto& mesh : meshes_ )
+
+	for ( int i = 0; i < meshes_.size(); i++ )
 	{
-		mesh->Draw(
-			sCommandList_,2,3,
-			textureHadle);
+// 全メッシュを描画
+		meshes_[ i ]->Draw(sCommandList_,3,4,textureHadle,5);
 	}
 }
