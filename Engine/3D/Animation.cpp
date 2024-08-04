@@ -55,7 +55,7 @@ void Animation::FbxDraw(const WorldTransform& worldTransform,const ViewProjectio
 	}
 	else
 	{
-		texNum = 0;
+		texNum = fbxObj3d_->GetTex();
 	}
 	fbxObj3d_->Draw(worldTransform,viewProjection_,lightViewProjection_,texNum);
 }
