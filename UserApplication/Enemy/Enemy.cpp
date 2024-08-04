@@ -12,7 +12,7 @@ Enemy::~Enemy()
 {
 }
 
-void Enemy::Initialize(ViewProjection* viewProjection,Model* model,Vector3 enemyPos,int actionNmb, Player* player, const unsigned short Attribute,int power,int hp)
+void Enemy::Initialize(ViewProjection* viewProjection,Model* model,Vector3 enemyPos,int actionNmb, Player* player, const unsigned short Attribute,int power,int hp,int enemyColorNmb)
 {
 
 	sakabanModel_ = model;
@@ -58,6 +58,27 @@ void Enemy::Initialize(ViewProjection* viewProjection,Model* model,Vector3 enemy
 
 	HitSoundNum = AudioManager::GetInstance()->LoadAudio("Resources/Sound/attackHit.mp3",soundVol,false);
 	SponeSoundNum = AudioManager::GetInstance()->LoadAudio("Resources/Sound/enemySpawn.mp3",soundVol,false);
+
+	if (enemyColorNmb==0 )
+	{
+		enemyColorNumbs = TextureManager::GetInstance()->Load("sprite/Sakaban.png");
+	}
+	else if ( enemyColorNmb == 1 )
+	{
+		enemyColorNumbs = TextureManager::GetInstance()->Load("sprite/Sakaban1.png");
+	}
+	else if ( enemyColorNmb == 2 )
+	{
+		enemyColorNumbs = TextureManager::GetInstance()->Load("sprite/Sakaban2.png");
+	}
+	else if ( enemyColorNmb == 3 )
+	{
+		enemyColorNumbs = TextureManager::GetInstance()->Load("sprite/Sakaban3.png");
+	}
+	else
+	{
+		enemyColorNumbs = TextureManager::GetInstance()->Load("sprite/Sakaban.png");
+	}
 
 	AudioManager::GetInstance()->PlayWave(SponeSoundNum);
 }
@@ -154,7 +175,7 @@ void Enemy::ParticleDraw()
 
 void Enemy::Draw(const ViewProjection& LightViewProjection_)
 {
-	sakabanModel_->Draw(worldTransform_, *viewProjection_, LightViewProjection_,0);
+	sakabanModel_->Draw(worldTransform_, *viewProjection_, LightViewProjection_,enemyColorNumbs);
 	//enemyNormalBullet->Draw(LightViewProjection_);
 	//debugModel_->Draw(debugTransform,*viewProjection_,LightViewProjection_);
 }
