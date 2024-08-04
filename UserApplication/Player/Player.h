@@ -235,7 +235,7 @@ private:
 	BaseCollider* playerCloseCollider;
 	CollisionManager* collisionManager = nullptr;
 	float playerRadius = 0.5f;
-	float playerColseRadius = 200.0f;
+	float playerColseRadius = 20.0f;
 
 #pragma endregion
 
