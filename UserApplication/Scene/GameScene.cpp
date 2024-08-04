@@ -8,6 +8,7 @@
 #include "Collision.h"
 #include"PostEffect.h"
 #include"WinApp.h"
+#include <AudioManager.h>
 
 
 GameScene::GameScene() {}
@@ -56,7 +57,7 @@ void GameScene::Initialize() {
 
 	skydome.reset(Model::CreateFromOBJ("skydome",true));
 
-
+	BGMSoundNum = AudioManager::GetInstance()->LoadAudio("Resources/Sound/BGM.mp3",soundVol,false);
 
 	collisionManager = CollisionManager::GetInstance();
 	player_ = std::make_unique<Player>();
@@ -117,6 +118,7 @@ void GameScene::Initialize() {
 	ui_->SetPlayerStartHP(player_->GetHp());
 
 	Jimen.reset(Model::CreateFromOBJ("jimen",true));
+	AudioManager::GetInstance()->PlayWave(BGMSoundNum,true);
 }
 
 void GameScene::Update() {
