@@ -79,7 +79,7 @@ void EnemyManager::LoadEnemyPopData()
 	}
 	int randCSV = rand() % fileNmb;
 
-	file.open(CSVFileNames[1]);
+	file.open(CSVFileNames[ randCSV ]);
 
 	assert(file.is_open());
 
@@ -161,7 +161,13 @@ void EnemyManager::UpdateEnemyPopCommands()
 			//敵を発生させる
 			ExistenceEnemy(Vector3(x, y, z));
 		}
-
+		else if ( word.find("ENEMYCOLOR") == 0 )
+		{
+			//x座標
+			getline(line_stream,word,',');
+			int x = ( int ) std::atof(word.c_str());
+			enemyModelColorNmb = x;
+		}
 
 		//WAITコマンド
 		else if (word.find("WAIT") == 0)
@@ -186,7 +192,7 @@ void EnemyManager::ExistenceEnemy(const Vector3& EnemyPos)
 {
 	//敵キャラの生成
 	std::unique_ptr<Enemy> newEnemy = std::make_unique<Enemy>();
-	newEnemy->Initialize(view,model.get(),EnemyPos,0,player_,Attribute_,power_,hp_);
+	newEnemy->Initialize(view,model.get(),EnemyPos,0,player_,Attribute_,power_,hp_,enemyModelColorNmb);
 
 	//リストに登録する
 	enemy_.push_back(std::move(newEnemy));

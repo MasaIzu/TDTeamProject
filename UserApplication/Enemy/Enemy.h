@@ -22,6 +22,8 @@
 #include<vector>
 #include <Animation.h>
 
+#include "TextureManager.h"
+
 #include "ParticleEditor.h"
 
 class Player;
@@ -35,7 +37,7 @@ public:
 	~Enemy();
 
 	//初期化
-	void Initialize(ViewProjection* viewProjection_,Model* model,Vector3 enemyPos,int actionNmb,Player* player,const unsigned short Attribute,int power,int hp);
+	void Initialize(ViewProjection* viewProjection_,Model* model,Vector3 enemyPos,int actionNmb,Player* player,const unsigned short Attribute,int power,int hp,int enemyColorNmb);
 	//更新
 	void Update();
 
@@ -128,6 +130,8 @@ private:
 
 	Vector4 ParticleStartPos;
 	Vector4 ParticleEndPos;
+
+	uint32_t enemyColorNumbs = 0;
 
 #pragma endregion
 	float Angle;
