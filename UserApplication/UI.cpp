@@ -105,7 +105,7 @@ void UI::Draw()
 {
 	if ( drawStart_ )
 	{
-		playerHPBAR_->Draw(playerHPBARPos_,playerHPColor_);
+		//playerHPBAR_->Draw(playerHPBARPos_,playerHPColor_);
 
 		weekAttackSp_->Draw({ 1150,700 },{ 1,1,1,1 },1);
 		weekAttackCoolTimeSp_->Draw({ 1150,700 },{ 1,1,1,0.5 },1);
@@ -147,7 +147,7 @@ void UI::PlayerHPUpdate()
 
 void UI::TimeUpdate()
 {
-	timeSprite_->SetSize({ ( float ) timeGauge_,50.0f });
+	timeSprite_->SetSize({ (( float ) timeGauge_/3),50.0f });
 	switch ( nowPhase_ )
 	{
 	case 1:

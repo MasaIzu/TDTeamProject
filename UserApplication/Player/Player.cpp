@@ -358,7 +358,7 @@ void Player::HpUpdate()
 	if ( hitCooltime_ <= 0 )
 	{
 		isHit_ = false;
-		hitCooltime_ = 5.0f;
+		hitCooltime_ = 30.0f;
 	}
 
 	if ( isHit_ == true )
